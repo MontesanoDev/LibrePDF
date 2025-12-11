@@ -3,13 +3,11 @@ package it.leonardomontemurro.localpdf.localpdf;
 import atlantafx.base.theme.Dracula;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class App extends Application {
     @Override
     public void start(Stage primaryStage){
         Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());

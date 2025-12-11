@@ -4,6 +4,7 @@ module it.leonardomontemurro.localpdf.localpdf {
 
     requires org.controlsfx.controls;
     requires org.kordamp.ikonli.javafx;
+    requires atlantafx.base;
 
     opens it.leonardomontemurro.localpdf.localpdf to javafx.fxml;
     exports it.leonardomontemurro.localpdf.localpdf;
