@@ -75,7 +75,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                it.leonardomontemurro.localpdf.localpdf/it.leonardomontemurro.localpdf.localpdf.App
+                                it.leonardomontemurro.localpdf.localpdf/it.leonardomontemurro.localpdf.App
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

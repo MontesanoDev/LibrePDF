@@ -1,6 +1,5 @@
-package it.leonardomontemurro.localpdf.localpdf;
+package it.leonardomontemurro.localpdf;
 
-import atlantafx.base.theme.Dracula;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -10,17 +9,14 @@ import javafx.stage.Stage;
 public class App extends Application {
     @Override
     public void start(Stage primaryStage){
-        Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
-
         StackPane root = new StackPane();
-
-        Scene scene = new Scene(root, 300, 250);
+        Scene mainScene = new Scene(root, 600 ,300);
         primaryStage.setTitle("LocalPDF");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(mainScene);
         primaryStage.show();
     }
-
     public static void main(String[] args) {
+
         launch();
     }
 }
