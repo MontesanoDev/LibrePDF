@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 public class App extends Application {
     @Override
     public void start(Stage primaryStage){
+        View view = new View();
+        view.setGlobalTheme();
+
         StackPane root = new StackPane();
         Scene mainScene = new Scene(root, 600 ,300);
         primaryStage.setTitle("LocalPDF");
