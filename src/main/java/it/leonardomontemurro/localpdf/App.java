@@ -11,6 +11,7 @@ public class App extends Application {
         view.initializeScene();
         primaryStage.setTitle("LocalPDF");
         primaryStage.setScene(view.getScene());
+        primaryStage.centerOnScreen();
         primaryStage.show();
     }
     public static void main(String[] args) {
