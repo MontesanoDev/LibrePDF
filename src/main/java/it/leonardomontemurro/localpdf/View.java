@@ -24,7 +24,7 @@ public class View {
     }
 
     private void setScene(StackPane root){
-        scene = new Scene(root, WIDTH_SIZE, HEIGHT_SIZE);
+        this.scene = new Scene(root, WIDTH_SIZE, HEIGHT_SIZE);
     }
 
     public Scene getScene(){
