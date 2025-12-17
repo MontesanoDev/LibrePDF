@@ -20,9 +20,16 @@ public class View {
     public void initializeScene(){
         StackPane root = new StackPane();
         BorderPane borderPane = new BorderPane();
+        GridPane gridPane = new GridPane();
+        borderPane.setCenter(gridPane);
+
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setGridLinesVisible(true);//debugging reason
+
         Button button = new Button();
         button.setText("Prova");
-        borderPane.setCenter(button);
+        gridPane.add(button,0,0);
         root.getChildren().add(borderPane);
         setScene(root);
     }
