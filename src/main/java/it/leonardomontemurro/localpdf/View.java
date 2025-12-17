@@ -2,6 +2,7 @@ package it.leonardomontemurro.localpdf;
 
 import atlantafx.base.theme.Dracula;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -25,6 +26,7 @@ public class View {
 
         gridPane.setHgap(10);
         gridPane.setVgap(10);
+        gridPane.setAlignment(Pos.CENTER);
         gridPane.setGridLinesVisible(true);//debugging reason
 
         Button button = new Button();
