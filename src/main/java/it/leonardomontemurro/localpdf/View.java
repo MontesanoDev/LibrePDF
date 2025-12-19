@@ -16,7 +16,7 @@ public class View {
     private final static int HEIGHT_SIZE = 720;
     private final static int WIDTH_SIZE = 1280;
     private final static int GRID_GAP = 15;
-    private ArrayList<Button> buttonArrayList = new ArrayList<Button>();
+    private final ArrayList<Button> buttonArrayList = new ArrayList<Button>();
     private Scene scene;
 
     public void setGlobalTheme(){
