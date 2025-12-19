@@ -9,10 +9,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
+
+
 public class View {
     private final static int HEIGHT_SIZE = 400;
     private final static int WIDTH_SIZE = 600;
     private final static int GRID_GAP = 15;
+    private ArrayList<Button> buttonArrayList = new ArrayList<Button>();
     private Scene scene;
 
     public void setGlobalTheme(){
@@ -51,6 +55,7 @@ public class View {
         Button testButton7 = new Button();
         testButton7.setText("Test Button 8");
 
+
         gridPane.add(testButton,0,0);
         gridPane.add(testButton1,1,0);
         gridPane.add(testButton2,2,0);
@@ -60,7 +65,6 @@ public class View {
         gridPane.add(testButton5,1,1);
         gridPane.add(testButton6,2,1);
         gridPane.add(testButton7,3,1);
-
 
         root.getChildren().add(borderPane);
         setScene(root);
@@ -72,5 +76,13 @@ public class View {
 
     public Scene getScene(){
         return scene;
+    }
+
+    public ArrayList<Button> getButtonArrayList() {
+        return buttonArrayList;
+    }
+
+    public void setButtonArrayList(ArrayList<Button> buttonArrayList) {
+        this.buttonArrayList = buttonArrayList;
     }
 }
