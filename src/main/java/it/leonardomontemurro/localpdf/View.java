@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 
 public class View {
-    private final static int HEIGHT_SIZE = 400;
-    private final static int WIDTH_SIZE = 600;
+    private final static int HEIGHT_SIZE = 720;
+    private final static int WIDTH_SIZE = 1280;
     private final static int GRID_GAP = 15;
     private ArrayList<Button> buttonArrayList = new ArrayList<Button>();
     private Scene scene;
@@ -36,38 +36,19 @@ public class View {
         AnchorPane.setRightAnchor(borderPane,0.0);
         borderPane.setCenter(gridPane);
 
-
-        Button testButton = new Button();
-        testButton.setText("Test Button 1");
-        Button testButton1 = new Button();
-        testButton1.setText("Test Button 2");
-        Button testButton2 = new Button();
-        testButton2.setText("Test Button 3");
-        Button testButton3 = new Button();
-        testButton3.setText("Test Button 4");
-
-        Button testButton4 = new Button();
-        testButton4.setText("Test Button 5");
-        Button testButton5 = new Button();
-        testButton5.setText("Test Button 6");
-        Button testButton6 = new Button();
-        testButton6.setText("Test Button 7");
-        Button testButton7 = new Button();
-        testButton7.setText("Test Button 8");
-
-
-        gridPane.add(testButton,0,0);
-        gridPane.add(testButton1,1,0);
-        gridPane.add(testButton2,2,0);
-        gridPane.add(testButton3,3,0);
-
-        gridPane.add(testButton4,0,1);
-        gridPane.add(testButton5,1,1);
-        gridPane.add(testButton6,2,1);
-        gridPane.add(testButton7,3,1);
+        buildButtons(gridPane);
 
         root.getChildren().add(borderPane);
         setScene(root);
+    }
+
+    public void buildButtons(GridPane gridPane){
+        String[] nameButtons = {"Merge", "Split", "Sign"};
+        for (String buttons: nameButtons ){
+            Button button = new Button();
+            button.setText(buttons);
+            addButtonToArrayList(button);
+        }
     }
 
     private void setScene(AnchorPane root){
@@ -82,7 +63,7 @@ public class View {
         return buttonArrayList;
     }
 
-    public void setButtonArrayList(ArrayList<Button> buttonArrayList) {
-        this.buttonArrayList = buttonArrayList;
+    public void addButtonToArrayList(Button buttonArrayList) {
+        getButtonArrayList().add(buttonArrayList);
     }
 }
