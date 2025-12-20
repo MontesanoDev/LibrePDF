@@ -11,11 +11,12 @@ import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
-
 public class View {
     private final static int HEIGHT_SIZE = 720;
     private final static int WIDTH_SIZE = 1280;
     private final static int GRID_GAP = 15;
+    private final static byte GRID_MAX_ROW = 2;
+    private final static byte GRID_MAX_COLOUMN = 4;
     private final ArrayList<Button> buttonArrayList = new ArrayList<Button>();
     private Scene scene;
 
@@ -43,12 +44,25 @@ public class View {
     }
 
     public void buildButtons(GridPane gridPane){
-        String[] nameButtons = {"Merge", "Split", "Sign"};
-        for (String buttons: nameButtons ){
+        String[] nameButtons = {"Test1", "Test2","Test3","Test4","Test5","Test6","Test7","Test8"};
+        byte current_grid_row = 0;
+        byte current_grid_coloumn = 0;
+        for (String buttons: nameButtons){
             Button button = new Button();
             button.setText(buttons);
+            if(current_grid_coloumn < GRID_MAX_COLOUMN){
+                System.out.println("[DEBUG] CURRENT ROW ->" + current_grid_row);
+                System.out.println("[DEBUG] CURRENT COLOUMN ->" + current_grid_coloumn);
+                gridPane.add(button,current_grid_coloumn,current_grid_row);
+                current_grid_coloumn++;
+                if(current_grid_coloumn == GRID_MAX_COLOUMN){
+                    current_grid_coloumn = 0;
+                    current_grid_row++;
+                }
+            }
             addButtonToArrayList(button);
         }
+
     }
 
     private void setScene(AnchorPane root){
