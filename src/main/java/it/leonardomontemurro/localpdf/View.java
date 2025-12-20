@@ -77,7 +77,7 @@ public class View {
         return buttonArrayList;
     }
 
-    public void addButtonToArrayList(Button buttonArrayList) {
-        getButtonArrayList().add(buttonArrayList);
+    public void addButtonToArrayList(Button button) {
+        getButtonArrayList().add(button);
     }
 }
