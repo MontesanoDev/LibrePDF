@@ -14,8 +14,10 @@ import java.util.ArrayList;
 public class View {
     private final static int HEIGHT_SIZE = 720;
     private final static int WIDTH_SIZE = 1280;
-    private final static int GRID_GAP = 15;
+    private final static int GRID_GAP = 25;
     private final static byte GRID_MAX_COLUMN = 4;
+    private final static int BUTTON_WIDTH = 200;
+    private final static int BUTTON_HEIGHT = 150;
     private final ArrayList<Button> buttonArrayList = new ArrayList<Button>();
     private Scene scene;
 
@@ -52,6 +54,7 @@ public class View {
         byte currentGridColum = 0;
         for (String buttons: nameButtons){
             Button button = new Button();
+            button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
             button.setText(buttons);
             if(currentGridColum < GRID_MAX_COLUMN){
                 gridPane.add(button,currentGridColum,currentGridRow);
