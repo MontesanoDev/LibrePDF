@@ -48,17 +48,17 @@ public class View {
                 "Test4","Test5","Test6",
                 "Test7","Test8"
         };
-        byte current_grid_row = 0;
-        byte current_grid_column = 0;
+        byte currentGridRow = 0;
+        byte currentGridColum = 0;
         for (String buttons: nameButtons){
             Button button = new Button();
             button.setText(buttons);
-            if(current_grid_column < GRID_MAX_COLUMN){
-                gridPane.add(button,current_grid_column,current_grid_row);
-                current_grid_column++;
-                if(current_grid_column == GRID_MAX_COLUMN){
-                    current_grid_column = 0;
-                    current_grid_row++;
+            if(currentGridColum < GRID_MAX_COLUMN){
+                gridPane.add(button,currentGridColum,currentGridRow);
+                currentGridColum++;
+                if(currentGridColum == GRID_MAX_COLUMN){
+                    currentGridColum = 0;
+                    currentGridRow++;
                 }
             }
             addButtonToArrayList(button);
