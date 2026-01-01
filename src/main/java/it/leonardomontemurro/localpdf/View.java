@@ -41,7 +41,7 @@ public class View {
         borderPane.setCenter(gridPane);
 
         buildButtons(gridPane);
-        resizeIcons();
+        buildIcons();
         root.getChildren().add(borderPane);
         setScene(root);
         getScene().getStylesheets().add("home.css");
@@ -72,7 +72,7 @@ public class View {
         }
     }
 
-    private void resizeIcons(){
+    private void buildIcons(){
         Region region = new Region();
         region.setPrefSize(ICON_PIXEL_SIZE-5, ICON_PIXEL_SIZE);
         region.setMinSize(ICON_PIXEL_SIZE-5, ICON_PIXEL_SIZE);
