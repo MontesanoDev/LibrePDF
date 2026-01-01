@@ -2,7 +2,6 @@ package it.leonardomontemurro.localpdf;
 
 import atlantafx.base.theme.Dracula;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,18 +9,17 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.SVGPath;
 
 import java.util.ArrayList;
 
 public class View {
     private final static int HEIGHT_SIZE = 720;
     private final static int WIDTH_SIZE = 1280;
-    private final static int GRID_GAP = 25;
+    private final static int GRID_GAP = 20;
     private final static byte GRID_MAX_COLUMN = 4;
-    private final static int BUTTON_WIDTH = 220;
-    private final static int BUTTON_HEIGHT = 190;
-    private final static byte ICON_PIXEL_SIZE = 46;
+    private final static int BUTTON_WIDTH = 240;
+    private final static int BUTTON_HEIGHT = 210;
+    private final static byte ICON_PIXEL_SIZE = 56;
     private final ArrayList<Button> buttonArrayList = new ArrayList<Button>();
     private Scene scene;
 
@@ -46,6 +44,7 @@ public class View {
         resizeIcons();
         root.getChildren().add(borderPane);
         setScene(root);
+        getScene().getStylesheets().add("home.css");
     }
 
     public void buildButtons(GridPane gridPane){
@@ -59,7 +58,7 @@ public class View {
         for (String buttons: nameButtons){
             Button button = new Button();
             button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-            button.setStyle("-fx-background-radius: 10px");
+            button.getStyleClass().add("homeButton");
             button.setText(buttons);
             if(currentGridColum < GRID_MAX_COLUMN){
                 gridPane.add(button,currentGridColum,currentGridRow);
@@ -74,20 +73,15 @@ public class View {
     }
 
     private void resizeIcons(){
-        String path = "m256-120-56-56 193-194q23-23 35-52t12-61v-204l-64 63-56-56 160-160 160 160-56 56-64-63v204q0 32 12 61t35 52l193 194-56 56-224-224-224 224Z";
-        SVGPath svgPath = new SVGPath();
-        svgPath.setContent(path);
         Region region = new Region();
         region.setPrefSize(ICON_PIXEL_SIZE-5, ICON_PIXEL_SIZE);
         region.setMinSize(ICON_PIXEL_SIZE-5, ICON_PIXEL_SIZE);
         region.setMaxSize(ICON_PIXEL_SIZE-5, ICON_PIXEL_SIZE);
-        region.setShape(svgPath);
         region.setBackground(Background.fill(Color.WHITE));
+        region.getStyleClass().add("iconButton");
         getButtonArrayList().getFirst().setContentDisplay(ContentDisplay.TOP);
         getButtonArrayList().getFirst().setGraphic(region);
         Label label = new Label();
-        label.setAlignment(Pos.CENTER);
-        label.setPadding(new Insets(30,10,10,10));
         label.setText("Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit");
         getButtonArrayList().getFirst().setText(label.getText());
     }

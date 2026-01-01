@@ -9,7 +9,7 @@ public class App extends Application {
         View view = new View();
         view.setGlobalTheme();
         view.initializeScene();
-        primaryStage.setTitle("LocalPDF");
+        primaryStage.setTitle("LibrePDF");
         primaryStage.setScene(view.getScene());
         primaryStage.centerOnScreen();
         primaryStage.show();
