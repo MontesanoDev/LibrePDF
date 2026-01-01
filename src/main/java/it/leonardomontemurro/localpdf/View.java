@@ -1,6 +1,7 @@
 package it.leonardomontemurro.localpdf;
 
 import atlantafx.base.theme.Dracula;
+import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class View {
     private final static byte GRID_MAX_COLUMN = 4;
     private final static int BUTTON_WIDTH = 240;
     private final static int BUTTON_HEIGHT = 210;
-    private final static byte ICON_PIXEL_SIZE = 56;
+
     private final ArrayList<Button> buttonArrayList = new ArrayList<Button>();
     private Scene scene;
 
@@ -73,17 +73,22 @@ public class View {
     }
 
     private void buildIcons(){
-        Region region = new Region();
-        region.setPrefSize(ICON_PIXEL_SIZE-5, ICON_PIXEL_SIZE);
-        region.setMinSize(ICON_PIXEL_SIZE-5, ICON_PIXEL_SIZE);
-        region.setMaxSize(ICON_PIXEL_SIZE-5, ICON_PIXEL_SIZE);
-        region.setBackground(Background.fill(Color.WHITE));
-        region.getStyleClass().add("iconButton");
-        getButtonArrayList().getFirst().setContentDisplay(ContentDisplay.TOP);
-        getButtonArrayList().getFirst().setGraphic(region);
-        Label label = new Label();
-        label.setText("Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit");
-        getButtonArrayList().getFirst().setText(label.getText());
+        String[] icons = {
+            "mergeIcon","splitIcon","rotateIcon",
+            "reorderIcon","metadataIcon","pdfToJpegIcon",
+            "protectIcon","unlockIcon"
+        };
+        byte i = 0;
+        for(String icon : icons) {
+            Region region = new Region();
+            region.getStyleClass().add(icon);
+            getButtonArrayList().get(i).setContentDisplay(ContentDisplay.TOP);
+            getButtonArrayList().get(i).setGraphic(region);
+            Label label = new Label();
+            label.setText("Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit");
+            getButtonArrayList().get(i).setText(label.getText());
+            i++;
+        }
     }
 
     private void setScene(AnchorPane root){
