@@ -90,20 +90,13 @@ public class View {
     }
 
     private void buildIcons(){
-        String[] icons = {
-            "mergeIcon","splitIcon","rotateIcon",
-            "reorderIcon","metadataIcon","pdfToJpegIcon",
-            "protectIcon","unlockIcon"
-        };
         byte i = 0;
-        for(String icon : icons) {
+        for(Icons icon : Icons.values()) {
             Region region = new Region();
-            region.getStyleClass().add(icon);
+            region.getStyleClass().add(icon.getName());
             getButtonArrayList().get(i).setContentDisplay(ContentDisplay.TOP);
             getButtonArrayList().get(i).setGraphic(region);
-            Label label = new Label();
-            label.setText("Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit");
-            getButtonArrayList().get(i).setText(label.getText());
+            getButtonArrayList().get(i).setText(icon.getDescription());
             i++;
         }
     }
