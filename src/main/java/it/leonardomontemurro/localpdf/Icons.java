@@ -21,5 +21,29 @@
 package it.leonardomontemurro.localpdf;
 
 public enum Icons {
+    MERGE("merge","Combine multiple PDF files into\na single document."),
+    SPLIT("split","Extract specific pages or divide\na document into multiple\nindependent files."),
+    ROTATE("rotate","Change the orientation of your\npages."),
+    SWAP("swap","Reorder pages order."),
+    METADATA("metadata","Clean or randomize metadata."),
+    PDFTOJPEG("pdftojpeg","Convert your pdf to JPEG."),
+    PROTECT("protect","Secure your documents with \nstrong encryption."),
+    UNLOCK("unlock", "Remove password from pdf.");
+
+    private final String name;
+    private final String description;
+
+    Icons(String name, String description){
+        this.name = name;
+        this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription(){
+        return description;
+    }
 
 }
