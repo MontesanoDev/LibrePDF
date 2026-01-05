@@ -24,6 +24,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
@@ -95,6 +96,7 @@ public class View {
             region.getStyleClass().add(icon.getName());
             getButtonArrayList().get(i).setContentDisplay(ContentDisplay.TOP);
             getButtonArrayList().get(i).setGraphic(region);
+            getButtonArrayList().get(i).setWrapText(true);
             getButtonArrayList().get(i).setText(icon.getDescription());
             i++;
         }

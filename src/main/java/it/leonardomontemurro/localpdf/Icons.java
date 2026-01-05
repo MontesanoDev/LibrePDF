@@ -21,13 +21,13 @@
 package it.leonardomontemurro.localpdf;
 
 public enum Icons {
-    MERGE("merge","Combine multiple PDF files into\na single document."),
-    SPLIT("split","Extract specific pages or divide\na document into multiple\nindependent files."),
-    ROTATE("rotate","Change the orientation of your\npages."),
+    MERGE("merge","Combine multiple PDF files into a single document."),
+    SPLIT("split","Extract specific pages or divide a document into multiple independent files."),
+    ROTATE("rotate","Change the orientation of your pages."),
     SWAP("swap","Reorder pages order."),
     METADATA("metadata","Clean or randomize metadata."),
     PDFTOJPEG("pdftojpeg","Convert your pdf to JPEG."),
-    PROTECT("protect","Secure your documents with \nstrong encryption."),
+    PROTECT("protect","Secure your documents with strong encryption."),
     UNLOCK("unlock", "Remove password from pdf.");
 
     private final String name;
