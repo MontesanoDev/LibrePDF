@@ -24,7 +24,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
@@ -65,27 +64,17 @@ public class View {
     }
 
     public void buildButtons(GridPane gridPane){
-        String[] nameButtons = {
-                "Merge", "Test2","Test3",
-                "Test4","Test5","Test6",
-                "Test7","Test8"
-        };
-        byte currentGridRow = 0;
-        byte currentGridColum = 0;
-        for (String buttons: nameButtons){
+        byte i = 0;
+        for(Icons icon : Icons.values()){
             Button button = new Button();
-            button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
             button.getStyleClass().add("homeButton");
-            button.setText(buttons);
-            if(currentGridColum < GRID_MAX_COLUMN){
-                gridPane.add(button,currentGridColum,currentGridRow);
-                currentGridColum++;
-                if(currentGridColum == GRID_MAX_COLUMN){
-                    currentGridColum = 0;
-                    currentGridRow++;
-                }
-            }
+            button.setWrapText(true);
+            button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+            int col = i % GRID_MAX_COLUMN;
+            int row = i / GRID_MAX_COLUMN;
+            gridPane.add(button,col,row);
             addButtonToArrayList(button);
+            i++;
         }
     }
 
@@ -96,7 +85,6 @@ public class View {
             region.getStyleClass().add(icon.getName());
             getButtonArrayList().get(i).setContentDisplay(ContentDisplay.TOP);
             getButtonArrayList().get(i).setGraphic(region);
-            getButtonArrayList().get(i).setWrapText(true);
             getButtonArrayList().get(i).setText(icon.getDescription());
             i++;
         }
