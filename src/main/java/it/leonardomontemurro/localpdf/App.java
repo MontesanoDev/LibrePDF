@@ -1,5 +1,5 @@
 /*
- * LibrePDF - Strumento per la manipolazione di PDF
+ * LibrePDF - A lightweight, native tool for manipulating PDF files.
  * Copyright (C) 2026 Leonardo Montemurro
  *
  * This program is free software: you can redistribute it and/or modify
