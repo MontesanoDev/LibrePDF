@@ -17,7 +17,6 @@
  */
 package it.leonardomontemurro.localpdf;
 
-import atlantafx.base.theme.Dracula;
 import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -58,6 +57,7 @@ public class View {
 
         buildButtons(gridPane);
         buildIcons();
+        getButtonArrayList().getFirst().setOnAction(actionEvent -> setHomeVisible(false));
         root.getChildren().add(borderPane);
         setScene(root);
         getScene().getStylesheets().add("home.css");
@@ -87,6 +87,12 @@ public class View {
             getButtonArrayList().get(i).setGraphic(region);
             getButtonArrayList().get(i).setText(icon.getDescription());
             i++;
+        }
+    }
+
+    private void setHomeVisible(Boolean bool) {
+        for(Button button : buttonArrayList){
+            button.setVisible(bool);
         }
     }
 
