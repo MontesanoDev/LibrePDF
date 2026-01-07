@@ -57,7 +57,6 @@ public class View {
 
         buildButtons(gridPane);
         buildIcons();
-        getButtonArrayList().getFirst().setOnAction(actionEvent -> setHomeVisible(false));
         root.getChildren().add(borderPane);
         setScene(root);
         getScene().getStylesheets().add("home.css");
@@ -65,7 +64,7 @@ public class View {
 
     public void buildButtons(GridPane gridPane){
         byte i = 0;
-        for(Icons icon : Icons.values()){
+        while(i < Icons.values().length){
             Button button = new Button();
             button.getStyleClass().add("homeButton");
             button.setWrapText(true);
