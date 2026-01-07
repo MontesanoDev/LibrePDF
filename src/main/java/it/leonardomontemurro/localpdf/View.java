@@ -36,7 +36,7 @@ public class View {
     private final static int BUTTON_WIDTH = 240;
     private final static int BUTTON_HEIGHT = 210;
 
-    private final ArrayList<Button> buttonArrayList = new ArrayList<Button>();
+    private final ArrayList<Button> buttonArrayList = new ArrayList<>();
     private Scene scene;
 
     public void setGlobalTheme(){
