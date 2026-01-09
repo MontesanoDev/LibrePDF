@@ -68,6 +68,7 @@ public class View {
             Button button = new Button();
             button.getStyleClass().add("homeButton");
             button.setWrapText(true);
+            button.setOnAction(actionEvent -> new Handler(this).handleOperation(false));
             button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
             int col = i % GRID_MAX_COLUMN;
             int row = i / GRID_MAX_COLUMN;
@@ -89,7 +90,7 @@ public class View {
         }
     }
 
-    private void setHomeVisible(Boolean bool) {
+    public void setHomeVisible(Boolean bool) {
         for(Button button : buttonArrayList){
             button.setVisible(bool);
         }
