@@ -25,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.*;
 
+
 import java.util.ArrayList;
 
 public class View {
@@ -36,16 +37,17 @@ public class View {
     private final static int BUTTON_HEIGHT = 210;
 
     private final ArrayList<Button> buttonArrayList = new ArrayList<>();
+
+    private final AnchorPane root = new AnchorPane();
+    private final BorderPane borderPane = new BorderPane();
+    private final GridPane gridPane = new GridPane();
+
     private Scene scene;
 
     public void setGlobalTheme(){
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
     }
     public void initializeScene(){
-        AnchorPane root = new AnchorPane();
-        BorderPane borderPane = new BorderPane();
-        GridPane gridPane = new GridPane();
-
         gridPane.setHgap(GRID_GAP);
         gridPane.setVgap(GRID_GAP);
         gridPane.setAlignment(Pos.CENTER);
@@ -68,7 +70,9 @@ public class View {
             Button button = new Button();
             button.getStyleClass().add("homeButton");
             button.setWrapText(true);
-            button.setOnAction(actionEvent -> new Handler(this).handleOperation(false));
+            button.setOnAction(_ -> {
+                setHomeVisible(false);
+            });
             button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
             int col = i % GRID_MAX_COLUMN;
             int row = i / GRID_MAX_COLUMN;
@@ -90,10 +94,13 @@ public class View {
         }
     }
 
-    public void setHomeVisible(Boolean bool) {
-        for(Button button : buttonArrayList){
-            button.setVisible(bool);
-        }
+    public GridPane getGridPane(){
+        return gridPane;
+    }
+
+    public void setHomeVisible( Boolean bool) {
+        getGridPane().setVisible(bool);
+        getGridPane().setDisable(bool);
     }
 
     private void setScene(AnchorPane root){

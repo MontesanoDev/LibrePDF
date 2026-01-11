@@ -19,13 +19,4 @@ package it.leonardomontemurro.localpdf;
 
 public class Handler {
 
-    private final View view;
-
-    public Handler(View view) {
-        this.view = view;
-    }
-
-    public void handleOperation(Boolean bool) {
-        view.setHomeVisible(bool);
-    }
 }
