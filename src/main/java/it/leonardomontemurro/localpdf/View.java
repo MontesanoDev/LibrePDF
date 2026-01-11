@@ -19,10 +19,12 @@ package it.leonardomontemurro.localpdf;
 
 import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
 
@@ -71,7 +73,7 @@ public class View {
             button.getStyleClass().add("homeButton");
             button.setWrapText(true);
             button.setOnAction(_ -> {
-                setHomeVisible(false);
+                buildDragAndDropScene();
             });
             button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
             int col = i % GRID_MAX_COLUMN;
@@ -98,7 +100,24 @@ public class View {
         return gridPane;
     }
 
-    public void setHomeVisible( Boolean bool) {
+    private void buildDragAndDropScene() {
+        setHomeVisible(false);
+        StackPane stackPane = new StackPane();
+        Pane region = new Pane();
+        region.maxWidthProperty().bind(stackPane.widthProperty().multiply(0.35));
+        region.maxHeightProperty().bind(stackPane.heightProperty().multiply(0.55));
+        Label Label = new Label();
+        Label.setText("PROVA");
+        Label.setPadding(new Insets(10,10,10,10));
+        Label.layoutXProperty().bind(region.widthProperty().subtract(Label.widthProperty()).divide(2));
+        region.getChildren().add(Label);
+        region.getStyleClass().add("dragAndDropArea");
+        stackPane.setAlignment(Pos.CENTER);
+        stackPane.getChildren().add(region);
+        borderPane.setCenter(stackPane);
+    }
+
+    private void setHomeVisible(Boolean bool) {
         getGridPane().setVisible(bool);
         getGridPane().setDisable(bool);
     }
