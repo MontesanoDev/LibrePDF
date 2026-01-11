@@ -63,3 +63,11 @@
     -fx-pref-height: 62px;
     -fx-pref-width: 48px;
 }
+
+.dragAndDropArea {
+    -fx-border-color: WHITE;
+    -fx-border-width: 2px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-border-style: segments(10, 10) line-cap round;
+}
