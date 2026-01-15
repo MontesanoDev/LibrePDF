@@ -19,18 +19,19 @@ package it.leonardomontemurro.localpdf;
 
 import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.text.TextAlignment;
 
 
 import java.util.ArrayList;
 
 public class View {
+
     private final static int HEIGHT_SIZE = 720;
     private final static int WIDTH_SIZE = 1280;
     private final static int GRID_GAP = 20;
@@ -43,6 +44,9 @@ public class View {
     private final AnchorPane root = new AnchorPane();
     private final BorderPane borderPane = new BorderPane();
     private final GridPane gridPane = new GridPane();
+    private final StackPane stackPane = new StackPane();
+    private final Pane dragAndDropPane = new Pane();
+    private final Label dragAndDropInfo = new Label();
 
     private Scene scene;
 
@@ -72,9 +76,7 @@ public class View {
             Button button = new Button();
             button.getStyleClass().add("homeButton");
             button.setWrapText(true);
-            button.setOnAction(_ -> {
-                buildDragAndDropScene();
-            });
+            button.setOnAction(_ -> buildDragAndDropScene());
             button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
             int col = i % GRID_MAX_COLUMN;
             int row = i / GRID_MAX_COLUMN;
@@ -96,30 +98,33 @@ public class View {
         }
     }
 
-    public GridPane getGridPane(){
-        return gridPane;
-    }
-
     private void buildDragAndDropScene() {
         setHomeVisible(false);
-        StackPane stackPane = new StackPane();
-        Pane region = new Pane();
-        region.maxWidthProperty().bind(stackPane.widthProperty().multiply(0.35));
-        region.maxHeightProperty().bind(stackPane.heightProperty().multiply(0.55));
-        Label Label = new Label();
-        Label.setText("PROVA");
-        Label.setPadding(new Insets(10,10,10,10));
-        Label.layoutXProperty().bind(region.widthProperty().subtract(Label.widthProperty()).divide(2));
-        region.getChildren().add(Label);
-        region.getStyleClass().add("dragAndDropArea");
+        dragAndDropPane.maxWidthProperty().bind(stackPane.widthProperty().multiply(0.35));
+        dragAndDropPane.maxHeightProperty().bind(stackPane.heightProperty().multiply(0.55));
+        dragAndDropPane.getChildren().add(setInfo());
+        dragAndDropPane.getStyleClass().add("dragAndDropArea");
         stackPane.setAlignment(Pos.CENTER);
-        stackPane.getChildren().add(region);
+        stackPane.getChildren().add(dragAndDropPane);
         borderPane.setCenter(stackPane);
     }
 
+    private Label setInfo(){
+        dragAndDropInfo.setText("Drag and drop PDF files here!");
+        dragAndDropInfo.getStyleClass().add("dragAndDropInfo");
+        dragAndDropInfo.maxWidthProperty().bind(dragAndDropPane.widthProperty());
+        dragAndDropInfo.setAlignment(Pos.CENTER);
+        dragAndDropInfo.setTextAlignment(TextAlignment.CENTER);
+        dragAndDropInfo.setWrapText(true);
+        dragAndDropInfo.layoutXProperty().bind(dragAndDropPane.widthProperty().subtract(dragAndDropInfo.widthProperty()).divide(2));
+        dragAndDropInfo.layoutYProperty().bind(dragAndDropPane.heightProperty().subtract(dragAndDropInfo.heightProperty()).divide(3));
+        return dragAndDropInfo;
+    }
+
     private void setHomeVisible(Boolean bool) {
-        getGridPane().setVisible(bool);
-        getGridPane().setDisable(bool);
+        gridPane.setVisible(bool);
+        gridPane.setManaged(bool);
+        gridPane.setDisable(!bool);
     }
 
     private void setScene(AnchorPane root){
