@@ -64,10 +64,18 @@
     -fx-pref-width: 48px;
 }
 
-.dragAndDropArea {
+.dragAndDropArea{
     -fx-border-color: WHITE;
     -fx-border-width: 2px;
     -fx-border-radius: 15px;
     -fx-background-radius: 15px;
     -fx-border-style: segments(10, 10) line-cap round;
+}
+
+.dragAndDropInfo{
+    -fx-padding: 30 10 10 10;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-fg-default;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0, 0, 1);
 }
