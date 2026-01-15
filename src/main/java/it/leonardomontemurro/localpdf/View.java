@@ -47,6 +47,7 @@ public class View {
     private final StackPane stackPane = new StackPane();
     private final Pane dragAndDropPane = new Pane();
     private final Label dragAndDropInfo = new Label();
+    private final Label footer = new Label();
 
     private Scene scene;
 
@@ -65,9 +66,19 @@ public class View {
 
         buildButtons(gridPane);
         buildIcons();
+        buildFooter();
+        BorderPane.setAlignment(footer, Pos.CENTER);
+        borderPane.setBottom(footer);
         root.getChildren().add(borderPane);
         setScene(root);
         getScene().getStylesheets().add("home.css");
+    }
+
+    private void buildFooter(){
+        footer.setText("Built with <3");
+        footer.setAlignment(Pos.CENTER);
+        footer.getStyleClass().add("footer");
+        footer.setTextAlignment(TextAlignment.CENTER);
     }
 
     public void buildButtons(GridPane gridPane){
