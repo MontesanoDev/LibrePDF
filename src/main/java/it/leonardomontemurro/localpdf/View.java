@@ -113,6 +113,7 @@ public class View {
         dragAndDropInfo.setText("Drag and drop PDF files here!");
         dragAndDropInfo.getStyleClass().add("dragAndDropInfo");
         dragAndDropInfo.maxWidthProperty().bind(dragAndDropPane.widthProperty());
+        dragAndDropInfo.maxHeightProperty().bind(dragAndDropPane.heightProperty());
         dragAndDropInfo.setAlignment(Pos.CENTER);
         dragAndDropInfo.setTextAlignment(TextAlignment.CENTER);
         dragAndDropInfo.setWrapText(true);
