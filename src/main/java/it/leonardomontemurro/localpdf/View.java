@@ -48,6 +48,7 @@ public class View {
     private final Pane dragAndDropPane = new Pane();
     private final Label dragAndDropInfo = new Label();
     private final Label footer = new Label();
+    private final Label top = new Label();
 
     private Scene scene;
 
@@ -74,6 +75,10 @@ public class View {
         getScene().getStylesheets().add("home.css");
     }
 
+    private void buildTop(){
+
+    }
+
     private void buildFooter(){
         footer.setText("Built with <3");
         footer.setAlignment(Pos.CENTER);
@@ -88,7 +93,7 @@ public class View {
             button.getStyleClass().add("homeButton");
             button.setWrapText(true);
             button.setOnAction(_ -> {
-                Handler handler = new Handler(icon.getName(), this);
+                Handler handler = new Handler(icon, this);
                 handler.buildAction();
             });
             button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);

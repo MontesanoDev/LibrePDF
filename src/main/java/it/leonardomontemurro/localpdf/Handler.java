@@ -19,10 +19,10 @@ package it.leonardomontemurro.localpdf;
 
 public class Handler {
 
-    private final String currentOperation;
+    private final Icons currentOperation;
     private final View view;
 
-    public Handler(String currentOperation, View view) {
+    public Handler(Icons currentOperation, View view) {
         this.currentOperation = currentOperation;
         this.view = view;
     }
@@ -31,7 +31,7 @@ public class Handler {
         view.buildDragAndDropScene();
     }
 
-    public String getCurrentOperation() {
+    public Icons getCurrentOperation() {
         return currentOperation;
     }
 }
