@@ -19,4 +19,9 @@ package it.leonardomontemurro.localpdf;
 
 public class Handler {
 
+    private final String currentOperation;
+
+    public Handler(String currentOperation) {
+        this.currentOperation = currentOperation;
+    }
 }

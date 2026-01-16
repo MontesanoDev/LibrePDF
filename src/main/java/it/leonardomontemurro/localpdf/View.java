@@ -83,11 +83,11 @@ public class View {
 
     public void buildButtons(GridPane gridPane){
         byte i = 0;
-        while(i < Icons.values().length){
+        for(Icons icon : Icons.values()){
             Button button = new Button();
             button.getStyleClass().add("homeButton");
             button.setWrapText(true);
-            button.setOnAction(_ -> buildDragAndDropScene());
+            button.setOnAction(_ -> buildAction(icon));
             button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
             int col = i % GRID_MAX_COLUMN;
             int row = i / GRID_MAX_COLUMN;
@@ -107,6 +107,11 @@ public class View {
             getButtonArrayList().get(i).setText(icon.getDescription());
             i++;
         }
+    }
+
+    private void buildAction(Icons icon){
+        new Handler(icon.getName());
+        buildDragAndDropScene();
     }
 
     private void buildDragAndDropScene() {
