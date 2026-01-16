@@ -87,7 +87,10 @@ public class View {
             Button button = new Button();
             button.getStyleClass().add("homeButton");
             button.setWrapText(true);
-            button.setOnAction(_ -> buildAction(icon));
+            button.setOnAction(_ -> {
+                Handler handler = new Handler(icon.getName(), this);
+                handler.buildAction();
+            });
             button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
             int col = i % GRID_MAX_COLUMN;
             int row = i / GRID_MAX_COLUMN;
@@ -109,12 +112,7 @@ public class View {
         }
     }
 
-    private void buildAction(Icons icon){
-        new Handler(icon.getName());
-        buildDragAndDropScene();
-    }
-
-    private void buildDragAndDropScene() {
+    public void buildDragAndDropScene() {
         setHomeVisible(false);
         dragAndDropPane.maxWidthProperty().bind(stackPane.widthProperty().multiply(0.35));
         dragAndDropPane.maxHeightProperty().bind(stackPane.heightProperty().multiply(0.55));
