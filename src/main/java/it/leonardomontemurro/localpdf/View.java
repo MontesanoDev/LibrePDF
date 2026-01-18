@@ -50,6 +50,8 @@ public class View {
     private final Label footer = new Label();
     private final Label top = new Label();
 
+    private Handler handler;
+
     private Scene scene;
 
     public void setGlobalTheme(){
@@ -76,7 +78,13 @@ public class View {
     }
 
     private void buildTop(){
-
+        top.setText(handler.getCurrentOperation().getName().toUpperCase());
+        top.getStyleClass().add("top-label");
+        top.setAlignment(Pos.CENTER);
+        top.setMaxWidth(Double.MAX_VALUE);
+        top.setTextAlignment(TextAlignment.CENTER);
+        BorderPane.setAlignment(top, Pos.CENTER);
+        borderPane.setTop(top);
     }
 
     private void buildFooter(){
@@ -93,7 +101,7 @@ public class View {
             button.getStyleClass().add("homeButton");
             button.setWrapText(true);
             button.setOnAction(_ -> {
-                Handler handler = new Handler(icon, this);
+                handler = new Handler(icon,this);
                 handler.buildAction();
             });
             button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -125,6 +133,7 @@ public class View {
         dragAndDropPane.getStyleClass().add("dragAndDropArea");
         stackPane.setAlignment(Pos.CENTER);
         stackPane.getChildren().add(dragAndDropPane);
+        buildTop();
         borderPane.setCenter(stackPane);
     }
 
