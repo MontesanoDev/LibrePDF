@@ -65,15 +65,21 @@ public class View {
         buildFooter();
         initializeAnchorPane();
         buildBackButton();
+        buildStackPane();
         initializeDragAndDropScene();
         setDragAndDropVisible(false);
+        root.getChildren().add(stackPane);
+        setScene(root);
+        getScene().getStylesheets().add("home.css");
+    }
 
+    private void buildStackPane(){
         stackPane.getChildren().addAll(gridPane, dragAndDropPane, footerInfo, top, backButton);
 
         StackPane.setAlignment(gridPane, Pos.CENTER);
         StackPane.setAlignment(dragAndDropPane, Pos.CENTER);
-
         StackPane.setAlignment(footerInfo, Pos.BOTTOM_CENTER);
+
         StackPane.setMargin(footerInfo, new Insets(0, 0, 20, 0));
 
         StackPane.setAlignment(top, Pos.TOP_CENTER);
@@ -81,10 +87,6 @@ public class View {
 
         StackPane.setAlignment(backButton, Pos.TOP_LEFT);
         StackPane.setMargin(backButton, new Insets(20, 0, 0, 20));
-
-        root.getChildren().add(stackPane);
-        setScene(root);
-        getScene().getStylesheets().add("home.css");
     }
 
     private void initializeAnchorPane(){
@@ -117,7 +119,7 @@ public class View {
 
     public void buildButtons(GridPane gridPane){
         byte i = 0;
-        for(Icons icon : Icons.values()){
+        for(PdfOperation icon : PdfOperation.values()){
             Button button = new Button();
             button.getStyleClass().add("homeButton");
             button.setWrapText(true);
@@ -148,7 +150,7 @@ public class View {
 
     private void buildIcons(){
         byte i = 0;
-        for(Icons icon : Icons.values()) {
+        for(PdfOperation icon : PdfOperation.values()) {
             Region region = new Region();
             region.getStyleClass().add(icon.getName());
             getButtonArrayList().get(i).setContentDisplay(ContentDisplay.TOP);
