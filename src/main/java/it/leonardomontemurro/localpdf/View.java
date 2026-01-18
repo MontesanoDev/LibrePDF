@@ -59,23 +59,27 @@ public class View {
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
     }
     public void initializeScene(){
-        gridPane.setHgap(GRID_GAP);
-        gridPane.setVgap(GRID_GAP);
-        gridPane.setAlignment(Pos.CENTER);
+        buildGridPane();
+        buildButtons(gridPane);
+        buildIcons();
+        buildFooter();
         AnchorPane.setTopAnchor(borderPane,0.0);
         AnchorPane.setBottomAnchor(borderPane,0.0);
         AnchorPane.setLeftAnchor(borderPane,0.0);
         AnchorPane.setRightAnchor(borderPane,0.0);
         borderPane.setCenter(gridPane);
 
-        buildButtons(gridPane);
-        buildIcons();
-        buildFooter();
         BorderPane.setAlignment(footerInfo, Pos.CENTER);
         borderPane.setBottom(footerInfo);
         root.getChildren().add(borderPane);
         setScene(root);
         getScene().getStylesheets().add("home.css");
+    }
+
+    private void buildGridPane(){
+        gridPane.setHgap(GRID_GAP);
+        gridPane.setVgap(GRID_GAP);
+        gridPane.setAlignment(Pos.CENTER);
     }
 
     private void buildTop(){
