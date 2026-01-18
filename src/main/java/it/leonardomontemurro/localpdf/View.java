@@ -61,7 +61,6 @@ public class View {
     public void initializeScene(){
         buildGridPane();
         buildButtons(gridPane);
-        buildIcons();
         buildFooter();
         initializeAnchorPane();
         buildBackButton();
@@ -123,6 +122,14 @@ public class View {
             Button button = new Button();
             button.getStyleClass().add("homeButton");
             button.setWrapText(true);
+
+            Region region = new Region();
+            region.getStyleClass().add(icon.getName());
+
+            button.setContentDisplay(ContentDisplay.TOP);
+            button.setGraphic(region);
+            button.setText(icon.getDescription());
+
             button.setOnAction(_ -> {
                 handler = new Handler(icon,this);
                 handler.buildAction();
@@ -131,7 +138,6 @@ public class View {
             int col = i % GRID_MAX_COLUMN;
             int row = i / GRID_MAX_COLUMN;
             gridPane.add(button,col,row);
-            addButtonToArrayList(button);
             i++;
         }
     }
@@ -146,18 +152,6 @@ public class View {
     private void backToHome(){
         setHomeVisible(true);
         setDragAndDropVisible(false);
-    }
-
-    private void buildIcons(){
-        byte i = 0;
-        for(PdfOperation icon : PdfOperation.values()) {
-            Region region = new Region();
-            region.getStyleClass().add(icon.getName());
-            getButtonArrayList().get(i).setContentDisplay(ContentDisplay.TOP);
-            getButtonArrayList().get(i).setGraphic(region);
-            getButtonArrayList().get(i).setText(icon.getDescription());
-            i++;
-        }
     }
 
     public void buildDragAndDropScene(){
@@ -206,10 +200,6 @@ public class View {
         return scene;
     }
 
-    public ArrayList<Button> getButtonArrayList() {
-        return buttonArrayList;
-    }
-
     public StackPane getStackPane() {
         return stackPane;
     }
@@ -218,7 +208,4 @@ public class View {
         return dragAndDropPane;
     }
 
-    public void addButtonToArrayList(Button button) {
-        getButtonArrayList().add(button);
-    }
 }
