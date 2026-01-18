@@ -31,7 +31,4 @@ public class App extends Application {
         primaryStage.centerOnScreen();
         primaryStage.show();
     }
-    public static void main(String[] args) {
-        launch();
-    }
 }
