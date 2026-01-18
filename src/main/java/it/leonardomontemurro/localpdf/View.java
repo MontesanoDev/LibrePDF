@@ -171,9 +171,9 @@ public class View {
             dragAndDropPane.getStyleClass().add("dragOver");
             entered.consume();
         });
-        stackPane.setOnDragExited(dragEvent -> {
+        stackPane.setOnDragExited(exited -> {
             dragAndDropPane.getStyleClass().remove("dragOver");
-            dragEvent.consume();
+            exited.consume();
         });
     }
 
