@@ -64,6 +64,9 @@ public class View {
         buildIcons();
         buildFooter();
         initializeAnchorPane();
+        buildBackButton();
+        initializeDragAndDropScene();
+        setDragAndDropVisible(false);
 
         stackPane.getChildren().addAll(gridPane, dragAndDropPane, footerInfo, top, backButton);
 
@@ -78,11 +81,6 @@ public class View {
 
         StackPane.setAlignment(backButton, Pos.TOP_LEFT);
         StackPane.setMargin(backButton, new Insets(20, 0, 0, 20));
-
-
-        dragAndDropPane.setVisible(false);
-        top.setVisible(false);
-        backButton.setVisible(false);
 
         root.getChildren().add(stackPane);
         setScene(root);
@@ -108,7 +106,6 @@ public class View {
         top.setAlignment(Pos.CENTER);
         top.setMaxWidth(Double.MAX_VALUE);
         top.setTextAlignment(TextAlignment.CENTER);
-        top.setVisible(true);
     }
 
     private void buildFooter(){
@@ -139,7 +136,13 @@ public class View {
 
     private void buildBackButton() {
         backButton.setText("← Back");
-        backButton.getStyleClass().add("back-button");//TODO
+        backButton.getStyleClass().add("back-button");
+        backButton.setOnAction(_-> backToHome());
+    }
+
+    private void backToHome(){
+        setHomeVisible(true);
+        setDragAndDropVisible(false);
     }
 
     private void buildIcons(){
@@ -154,14 +157,17 @@ public class View {
         }
     }
 
-    public void buildDragAndDropScene() {
+    public void buildDragAndDropScene(){
+        buildTop();
         setHomeVisible(false);
+        setDragAndDropVisible(true);
+    }
+
+    private void initializeDragAndDropScene() {
         dragAndDropPane.maxWidthProperty().bind(stackPane.widthProperty().multiply(0.35));
         dragAndDropPane.maxHeightProperty().bind(stackPane.heightProperty().multiply(0.55));
         dragAndDropPane.getChildren().add(setInfo());
         dragAndDropPane.getStyleClass().add("dragAndDropArea");
-        dragAndDropPane.setVisible(true);
-        buildTop();
     }
 
     private Label setInfo(){
@@ -181,6 +187,12 @@ public class View {
         gridPane.setVisible(bool);
         gridPane.setManaged(bool);
         gridPane.setDisable(!bool);
+    }
+
+    private void setDragAndDropVisible(Boolean bool){
+        dragAndDropPane.setVisible(bool);
+        top.setVisible(bool);
+        backButton.setVisible(bool);
     }
 
     private void setScene(AnchorPane root){
