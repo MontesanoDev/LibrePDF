@@ -28,9 +28,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 
-
-import java.util.ArrayList;
-
 public class View {
 
     private final static int HEIGHT_SIZE = 720;
@@ -40,7 +37,6 @@ public class View {
     private final static int BUTTON_WIDTH = 240;
     private final static int BUTTON_HEIGHT = 210;
 
-    private final ArrayList<Button> buttonArrayList = new ArrayList<>();
 
     private final AnchorPane root = new AnchorPane();
     private final StackPane stackPane = new StackPane();
