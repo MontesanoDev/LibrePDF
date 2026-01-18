@@ -72,6 +72,15 @@
     -fx-border-style: segments(10, 10) line-cap round;
 }
 
+.dragOver {
+    -fx-border-color: #BB86FC;
+    -fx-background-color: rgba(187, 134, 252, 0.1);
+    -fx-border-width: 2px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-border-style: segments(10, 10) line-cap round;
+}
+
 .dragAndDropInfo{
     -fx-padding: 30 10 10 10;
     -fx-font-size: 24px;

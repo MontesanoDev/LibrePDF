@@ -28,7 +28,7 @@ public class Handler {
     }
 
     public void buildAction(){
-        view.buildDragAndDropScene();
+        view.dragAndDrop();
     }
 
     public Icons getCurrentOperation() {
