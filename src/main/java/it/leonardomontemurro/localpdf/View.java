@@ -19,6 +19,7 @@ package it.leonardomontemurro.localpdf;
 
 import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -42,9 +43,8 @@ public class View {
     private final ArrayList<Button> buttonArrayList = new ArrayList<>();
 
     private final AnchorPane root = new AnchorPane();
-    private final BorderPane borderPane = new BorderPane();
-    private final GridPane gridPane = new GridPane();
     private final StackPane stackPane = new StackPane();
+    private final GridPane gridPane = new GridPane();
     private final Pane dragAndDropPane = new Pane();
     private final Label dragAndDropInfo = new Label();
     private final Label footerInfo = new Label();
@@ -64,24 +64,36 @@ public class View {
         buildIcons();
         buildFooter();
         initializeAnchorPane();
-        buildBorderPane();
 
-        root.getChildren().add(borderPane);
+        stackPane.getChildren().addAll(gridPane, dragAndDropPane, footerInfo, top, backButton);
+
+        StackPane.setAlignment(gridPane, Pos.CENTER);
+        StackPane.setAlignment(dragAndDropPane, Pos.CENTER);
+
+        StackPane.setAlignment(footerInfo, Pos.BOTTOM_CENTER);
+        StackPane.setMargin(footerInfo, new Insets(0, 0, 20, 0));
+
+        StackPane.setAlignment(top, Pos.TOP_CENTER);
+        StackPane.setMargin(top, new Insets(30, 0, 0, 0));
+
+        StackPane.setAlignment(backButton, Pos.TOP_LEFT);
+        StackPane.setMargin(backButton, new Insets(20, 0, 0, 20));
+
+
+        dragAndDropPane.setVisible(false);
+        top.setVisible(false);
+        backButton.setVisible(false);
+
+        root.getChildren().add(stackPane);
         setScene(root);
         getScene().getStylesheets().add("home.css");
     }
 
-    private void buildBorderPane(){
-        borderPane.setCenter(gridPane);
-        BorderPane.setAlignment(footerInfo, Pos.CENTER);
-        borderPane.setBottom(footerInfo);
-    }
-
     private void initializeAnchorPane(){
-        AnchorPane.setTopAnchor(borderPane,0.0);
-        AnchorPane.setBottomAnchor(borderPane,0.0);
-        AnchorPane.setLeftAnchor(borderPane,0.0);
-        AnchorPane.setRightAnchor(borderPane,0.0);
+        AnchorPane.setTopAnchor(stackPane,0.0);
+        AnchorPane.setBottomAnchor(stackPane,0.0);
+        AnchorPane.setLeftAnchor(stackPane,0.0);
+        AnchorPane.setRightAnchor(stackPane,0.0);
     }
 
     private void buildGridPane(){
@@ -96,8 +108,7 @@ public class View {
         top.setAlignment(Pos.CENTER);
         top.setMaxWidth(Double.MAX_VALUE);
         top.setTextAlignment(TextAlignment.CENTER);
-        BorderPane.setAlignment(top, Pos.CENTER);
-        borderPane.setTop(top);
+        top.setVisible(true);
     }
 
     private void buildFooter(){
@@ -149,10 +160,8 @@ public class View {
         dragAndDropPane.maxHeightProperty().bind(stackPane.heightProperty().multiply(0.55));
         dragAndDropPane.getChildren().add(setInfo());
         dragAndDropPane.getStyleClass().add("dragAndDropArea");
-        stackPane.setAlignment(Pos.CENTER);
-        stackPane.getChildren().add(dragAndDropPane);
+        dragAndDropPane.setVisible(true);
         buildTop();
-        borderPane.setCenter(stackPane);
     }
 
     private Label setInfo(){
