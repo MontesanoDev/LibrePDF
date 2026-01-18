@@ -19,7 +19,6 @@ package it.leonardomontemurro.localpdf;
 
 import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
-import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -135,7 +134,7 @@ public class View {
         }
     }
 
-    private void buildBackButton() {
+    public void buildBackButton() {
         backButton.setText("← Back");
         backButton.getStyleClass().add("backButton");
         backButton.getStyleClass().add("back-button");
@@ -159,22 +158,10 @@ public class View {
         }
     }
 
-    private void buildDragAndDropScene(){
+    public void buildDragAndDropScene(){
         buildTop();
         setHomeVisible(false);
         setDragAndDropVisible(true);
-    }
-
-    public void dragAndDrop(){
-        buildDragAndDropScene();
-        stackPane.setOnDragEntered(entered -> {
-            dragAndDropPane.getStyleClass().add("dragOver");
-            entered.consume();
-        });
-        stackPane.setOnDragExited(exited -> {
-            dragAndDropPane.getStyleClass().remove("dragOver");
-            exited.consume();
-        });
     }
 
     private void initializeDragAndDropScene() {
@@ -219,6 +206,14 @@ public class View {
 
     public ArrayList<Button> getButtonArrayList() {
         return buttonArrayList;
+    }
+
+    public StackPane getStackPane() {
+        return stackPane;
+    }
+
+    public Pane getDragAndDropPane() {
+        return dragAndDropPane;
     }
 
     public void addButtonToArrayList(Button button) {
