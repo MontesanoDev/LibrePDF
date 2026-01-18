@@ -47,8 +47,9 @@ public class View {
     private final StackPane stackPane = new StackPane();
     private final Pane dragAndDropPane = new Pane();
     private final Label dragAndDropInfo = new Label();
-    private final Label footer = new Label();
+    private final Label footerInfo = new Label();
     private final Label top = new Label();
+    private final Button backButton = new Button();
 
     private Handler handler;
 
@@ -70,8 +71,8 @@ public class View {
         buildButtons(gridPane);
         buildIcons();
         buildFooter();
-        BorderPane.setAlignment(footer, Pos.CENTER);
-        borderPane.setBottom(footer);
+        BorderPane.setAlignment(footerInfo, Pos.CENTER);
+        borderPane.setBottom(footerInfo);
         root.getChildren().add(borderPane);
         setScene(root);
         getScene().getStylesheets().add("home.css");
@@ -88,10 +89,10 @@ public class View {
     }
 
     private void buildFooter(){
-        footer.setText("Built with <3");
-        footer.setAlignment(Pos.CENTER);
-        footer.getStyleClass().add("footer");
-        footer.setTextAlignment(TextAlignment.CENTER);
+        footerInfo.setText("Built with <3");
+        footerInfo.setAlignment(Pos.CENTER);
+        footerInfo.getStyleClass().add("footer");
+        footerInfo.setTextAlignment(TextAlignment.CENTER);
     }
 
     public void buildButtons(GridPane gridPane){
@@ -111,6 +112,11 @@ public class View {
             addButtonToArrayList(button);
             i++;
         }
+    }
+
+    private void buildBackButton() {
+        backButton.setText("← Back");
+        backButton.getStyleClass().add("back-button");//TODO
     }
 
     private void buildIcons(){
