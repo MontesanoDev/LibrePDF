@@ -18,16 +18,24 @@
 package it.leonardomontemurro.localpdf;
 
 public class ViewController {
-
-    private final PdfOperation currentOperation;
     private final View view;
+    private PdfOperation currentOperation;
 
-    public ViewController(PdfOperation currentOperation, View view) {
-        this.currentOperation = currentOperation;
-        this.view = view;
+    public ViewController() {
+        this.view = new View();
+
+        this.view.setGlobalTheme();
+        this.view.initializeScene();
+
+        this.view.setOnOperationSelected(this::onOperationChanged);
     }
 
-    public PdfOperation getCurrentOperation() {
-        return currentOperation;
+    public View getView() {
+        return view;
+    }
+
+    private void onOperationChanged(PdfOperation operation) {
+        this.currentOperation = operation;
+
     }
 }
