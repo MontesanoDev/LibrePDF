@@ -19,10 +19,10 @@ package it.leonardomontemurro.localpdf;
 
 public class Handler {
 
-    private final Icons currentOperation;
+    private final PdfOperation currentOperation;
     private final View view;
 
-    public Handler(Icons currentOperation, View view) {
+    public Handler(PdfOperation currentOperation, View view) {
         this.currentOperation = currentOperation;
         this.view = view;
     }
@@ -34,39 +34,45 @@ public class Handler {
 
     private void dragAndDrop(){
         view.getStackPane().setOnDragEntered(entered -> {
-            view.getDragAndDropPane().getStyleClass().add("dragOver");
+            if(view.getDragAndDropPane().isVisible()) {
+                view.getDragAndDropPane().getStyleClass().add("dragOver");
+            }
             entered.consume();
         });
         view.getStackPane().setOnDragExited(exited -> {
-            view.getDragAndDropPane().getStyleClass().remove("dragOver");
+            if(view.getDragAndDropPane().isVisible()) {
+                view.getDragAndDropPane().getStyleClass().remove("dragOver");
+            }
             exited.consume();
         });
         view.getStackPane().setOnDragOver(event -> {
-            if (event.getDragboard().hasFiles()) {
+            if (event.getDragboard().hasFiles() && view.getDragAndDropPane().isVisible()) {
                 event.acceptTransferModes(javafx.scene.input.TransferMode.COPY_OR_MOVE);
             }
             event.consume();
         });
         view.getStackPane().setOnDragDropped(event -> {
-            var db = event.getDragboard();
-            boolean success = false;
+            if(view.getDragAndDropPane().isVisible()) {
+                var db = event.getDragboard();
+                boolean success = false;
 
-            if (db.hasFiles()) {
-                for (java.io.File file : db.getFiles()) {
-                    if (file.getName().toLowerCase().endsWith(".pdf")) {
-                        System.out.println("PDF Found: " + file.getAbsolutePath());
-                        success = true;
-                    } else {
-                        System.out.println("I can't find PDF:" + file.getAbsolutePath());
+                if (db.hasFiles()) {
+                    for (java.io.File file : db.getFiles()) {
+                        if (file.getName().toLowerCase().endsWith(".pdf")) {
+                            System.out.println("PDF Found: " + file.getAbsolutePath());
+                            success = true;
+                        } else {
+                            System.out.println("I can't find PDF:" + file.getAbsolutePath());
+                        }
                     }
                 }
+                event.setDropCompleted(success);
+                event.consume();
             }
-            event.setDropCompleted(success);
-            event.consume();
         });
     }
 
-    public Icons getCurrentOperation() {
+    public PdfOperation getCurrentOperation() {
         return currentOperation;
     }
 }
