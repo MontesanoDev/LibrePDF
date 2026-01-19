@@ -17,12 +17,12 @@
  */
 package it.leonardomontemurro.localpdf;
 
-public class Handler {
+public class ViewController {
 
     private final PdfOperation currentOperation;
     private final View view;
 
-    public Handler(PdfOperation currentOperation, View view) {
+    public ViewController(PdfOperation currentOperation, View view) {
         this.currentOperation = currentOperation;
         this.view = view;
     }

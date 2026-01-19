@@ -47,7 +47,7 @@ public class View {
     private final Label top = new Label();
     private final Button backButton = new Button();
 
-    private Handler handler;
+    private ViewController viewController;
 
     private Scene scene;
 
@@ -98,7 +98,7 @@ public class View {
     }
 
     private void buildTop(){
-        top.setText(handler.getCurrentOperation().getName().toUpperCase());
+        top.setText(viewController.getCurrentOperation().getName().toUpperCase());
         top.getStyleClass().add("top-label");
         top.setAlignment(Pos.CENTER);
         top.setMaxWidth(Double.MAX_VALUE);
@@ -127,8 +127,8 @@ public class View {
             button.setText(icon.getDescription());
 
             button.setOnAction(_ -> {
-                handler = new Handler(icon,this);
-                handler.buildAction();
+                viewController = new ViewController(icon,this);
+                viewController.buildAction();
             });
             button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
             int col = i % GRID_MAX_COLUMN;
