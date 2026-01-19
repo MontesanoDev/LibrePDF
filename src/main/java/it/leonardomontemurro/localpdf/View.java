@@ -28,6 +28,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 
+import java.util.function.Consumer;
+
 public class View {
 
     private final static int HEIGHT_SIZE = 720;
@@ -45,6 +47,8 @@ public class View {
     private final Label footerInfo = new Label();
     private final Label top = new Label();
     private final Button backButton = new Button();
+
+    private Consumer<PdfOperation> onOperationSelected;
 
     private Scene scene;
 
@@ -95,8 +99,8 @@ public class View {
         gridPane.setAlignment(Pos.CENTER);
     }
 
-    private void buildTop(){
-        //top.setText(viewController.getCurrentOperation().getName().toUpperCase());//TODO RIMPIAZZARE CON CONSUMER
+    private void buildTop(String title){
+        top.setText(title.toUpperCase());
         top.getStyleClass().add("top-label");
         top.setAlignment(Pos.CENTER);
         top.setMaxWidth(Double.MAX_VALUE);
@@ -125,7 +129,8 @@ public class View {
             button.setText(icon.getDescription());
 
             button.setOnAction(_ -> {
-                buildDragAndDropScene();
+                buildDragAndDropScene(icon.getName());
+                onOperationSelected.accept(icon);
             });
             button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
             int col = i % GRID_MAX_COLUMN;
@@ -147,8 +152,8 @@ public class View {
         setDragAndDropVisible(false);
     }
 
-    public void buildDragAndDropScene(){
-        buildTop();
+    public void buildDragAndDropScene(String title){
+        buildTop(title);
         setHomeVisible(false);
         setDragAndDropVisible(true);
     }
@@ -223,6 +228,10 @@ public class View {
         dragAndDropPane.setVisible(bool);
         top.setVisible(bool);
         backButton.setVisible(bool);
+    }
+
+    public void setOnOperationSelected(Consumer<PdfOperation> callback) {
+        this.onOperationSelected = callback;
     }
 
     private void setScene(AnchorPane root){
