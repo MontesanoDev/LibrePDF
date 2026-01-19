@@ -18,7 +18,7 @@
  *
  */
 
-package it.leonardomontemurro.localpdf;
+package it.leonardomontemurro.librepdf;
 
 public enum PdfOperation {
     MERGE("merge","Combine multiple PDF files into a single document."),

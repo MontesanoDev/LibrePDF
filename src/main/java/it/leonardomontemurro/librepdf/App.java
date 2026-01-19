@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package it.leonardomontemurro.localpdf;
+package it.leonardomontemurro.librepdf;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
