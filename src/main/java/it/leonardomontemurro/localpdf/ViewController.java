@@ -17,16 +17,25 @@
  */
 package it.leonardomontemurro.localpdf;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
+public class ViewController {
+    private final View view;
+    private PdfOperation currentOperation;
 
-public class App extends Application {
-    @Override
-    public void start(Stage primaryStage){
-        ViewController viewController = new ViewController();
-        primaryStage.setTitle("LibrePDF");
-        primaryStage.setScene(viewController.getView().getScene());
-        primaryStage.centerOnScreen();
-        primaryStage.show();
+    public ViewController() {
+        this.view = new View();
+
+        this.view.setGlobalTheme();
+        this.view.initializeScene();
+
+        this.view.setOnOperationSelected(this::onOperationChanged);
+    }
+
+    public View getView() {
+        return view;
+    }
+
+    private void onOperationChanged(PdfOperation operation) {
+        this.currentOperation = operation;
+
     }
 }

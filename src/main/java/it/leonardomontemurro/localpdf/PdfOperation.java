@@ -20,7 +20,7 @@
 
 package it.leonardomontemurro.localpdf;
 
-public enum Icons {
+public enum PdfOperation {
     MERGE("merge","Combine multiple PDF files into a single document."),
     SPLIT("split","Extract specific pages or divide a document into multiple independent files."),
     ROTATE("rotate","Change the orientation of your pages."),
@@ -33,7 +33,7 @@ public enum Icons {
     private final String name;
     private final String description;
 
-    Icons(String name, String description){
+    PdfOperation(String name, String description){
         this.name = name;
         this.description = description;
     }

@@ -28,8 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 
-
-import java.util.ArrayList;
+import java.util.function.Consumer;
 
 public class View {
 
@@ -40,8 +39,6 @@ public class View {
     private final static int BUTTON_WIDTH = 240;
     private final static int BUTTON_HEIGHT = 210;
 
-    private final ArrayList<Button> buttonArrayList = new ArrayList<>();
-
     private final AnchorPane root = new AnchorPane();
     private final StackPane stackPane = new StackPane();
     private final GridPane gridPane = new GridPane();
@@ -51,7 +48,7 @@ public class View {
     private final Label top = new Label();
     private final Button backButton = new Button();
 
-    private Handler handler;
+    private Consumer<PdfOperation> onOperationSelected;
 
     private Scene scene;
 
@@ -61,19 +58,25 @@ public class View {
     public void initializeScene(){
         buildGridPane();
         buildButtons(gridPane);
-        buildIcons();
         buildFooter();
         initializeAnchorPane();
         buildBackButton();
+        buildStackPane();
         initializeDragAndDropScene();
+        dragAndDrop();
         setDragAndDropVisible(false);
+        root.getChildren().add(stackPane);
+        setScene(root);
+        getScene().getStylesheets().add("home.css");
+    }
 
+    private void buildStackPane(){
         stackPane.getChildren().addAll(gridPane, dragAndDropPane, footerInfo, top, backButton);
 
         StackPane.setAlignment(gridPane, Pos.CENTER);
         StackPane.setAlignment(dragAndDropPane, Pos.CENTER);
-
         StackPane.setAlignment(footerInfo, Pos.BOTTOM_CENTER);
+
         StackPane.setMargin(footerInfo, new Insets(0, 0, 20, 0));
 
         StackPane.setAlignment(top, Pos.TOP_CENTER);
@@ -81,10 +84,6 @@ public class View {
 
         StackPane.setAlignment(backButton, Pos.TOP_LEFT);
         StackPane.setMargin(backButton, new Insets(20, 0, 0, 20));
-
-        root.getChildren().add(stackPane);
-        setScene(root);
-        getScene().getStylesheets().add("home.css");
     }
 
     private void initializeAnchorPane(){
@@ -100,8 +99,8 @@ public class View {
         gridPane.setAlignment(Pos.CENTER);
     }
 
-    private void buildTop(){
-        top.setText(handler.getCurrentOperation().getName().toUpperCase());
+    private void buildTop(String title){
+        top.setText(title.toUpperCase());
         top.getStyleClass().add("top-label");
         top.setAlignment(Pos.CENTER);
         top.setMaxWidth(Double.MAX_VALUE);
@@ -117,19 +116,26 @@ public class View {
 
     public void buildButtons(GridPane gridPane){
         byte i = 0;
-        for(Icons icon : Icons.values()){
+        for(PdfOperation icon : PdfOperation.values()){
             Button button = new Button();
             button.getStyleClass().add("homeButton");
             button.setWrapText(true);
+
+            Region region = new Region();
+            region.getStyleClass().add(icon.getName());
+
+            button.setContentDisplay(ContentDisplay.TOP);
+            button.setGraphic(region);
+            button.setText(icon.getDescription());
+
             button.setOnAction(_ -> {
-                handler = new Handler(icon,this);
-                handler.buildAction();
+                buildDragAndDropScene(icon.getName());
+                onOperationSelected.accept(icon);
             });
             button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
             int col = i % GRID_MAX_COLUMN;
             int row = i / GRID_MAX_COLUMN;
             gridPane.add(button,col,row);
-            addButtonToArrayList(button);
             i++;
         }
     }
@@ -146,20 +152,8 @@ public class View {
         setDragAndDropVisible(false);
     }
 
-    private void buildIcons(){
-        byte i = 0;
-        for(Icons icon : Icons.values()) {
-            Region region = new Region();
-            region.getStyleClass().add(icon.getName());
-            getButtonArrayList().get(i).setContentDisplay(ContentDisplay.TOP);
-            getButtonArrayList().get(i).setGraphic(region);
-            getButtonArrayList().get(i).setText(icon.getDescription());
-            i++;
-        }
-    }
-
-    public void buildDragAndDropScene(){
-        buildTop();
+    public void buildDragAndDropScene(String title){
+        buildTop(title);
         setHomeVisible(false);
         setDragAndDropVisible(true);
     }
@@ -169,6 +163,46 @@ public class View {
         dragAndDropPane.maxHeightProperty().bind(stackPane.heightProperty().multiply(0.55));
         dragAndDropPane.getChildren().add(setInfo());
         dragAndDropPane.getStyleClass().add("dragAndDropArea");
+    }
+
+    private void dragAndDrop() {
+        stackPane.setOnDragEntered(entered -> {
+            if(dragAndDropPane.isVisible()) {
+                dragAndDropPane.getStyleClass().add("dragOver");
+            }
+            entered.consume();
+        });
+        stackPane.setOnDragExited(exited -> {
+            if(dragAndDropPane.isVisible()) {
+                dragAndDropPane.getStyleClass().remove("dragOver");
+            }
+            exited.consume();
+        });
+        stackPane.setOnDragOver(event -> {
+            if (event.getDragboard().hasFiles() && dragAndDropPane.isVisible()) {
+                event.acceptTransferModes(javafx.scene.input.TransferMode.COPY_OR_MOVE);
+            }
+            event.consume();
+        });
+        stackPane.setOnDragDropped(event -> {
+            if(dragAndDropPane.isVisible()) {
+                var db = event.getDragboard();
+                boolean success = false;
+
+                if (db.hasFiles()) {
+                    for (java.io.File file : db.getFiles()) {
+                        if (file.getName().toLowerCase().endsWith(".pdf")) {
+                            System.out.println("PDF Found: " + file.getAbsolutePath());
+                            success = true;
+                        } else {
+                            System.out.println("I can't find PDF:" + file.getAbsolutePath());
+                        }
+                    }
+                }
+                event.setDropCompleted(success);
+                event.consume();
+            }
+        });
     }
 
     private Label setInfo(){
@@ -196,27 +230,15 @@ public class View {
         backButton.setVisible(bool);
     }
 
+    public void setOnOperationSelected(Consumer<PdfOperation> callback) {
+        this.onOperationSelected = callback;
+    }
+
     private void setScene(AnchorPane root){
         this.scene = new Scene(root, WIDTH_SIZE, HEIGHT_SIZE);
     }
 
     public Scene getScene(){
         return scene;
-    }
-
-    public ArrayList<Button> getButtonArrayList() {
-        return buttonArrayList;
-    }
-
-    public StackPane getStackPane() {
-        return stackPane;
-    }
-
-    public Pane getDragAndDropPane() {
-        return dragAndDropPane;
-    }
-
-    public void addButtonToArrayList(Button button) {
-        getButtonArrayList().add(button);
     }
 }
