@@ -23,11 +23,9 @@ import javafx.stage.Stage;
 public class App extends Application {
     @Override
     public void start(Stage primaryStage){
-        View view = new View();
-        view.setGlobalTheme();
-        view.initializeScene();
+        ViewController viewController = new ViewController();
         primaryStage.setTitle("LibrePDF");
-        primaryStage.setScene(view.getScene());
+        primaryStage.setScene(viewController.getView().getScene());
         primaryStage.centerOnScreen();
         primaryStage.show();
     }
