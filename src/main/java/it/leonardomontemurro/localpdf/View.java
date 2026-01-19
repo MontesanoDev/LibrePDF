@@ -37,7 +37,6 @@ public class View {
     private final static int BUTTON_WIDTH = 240;
     private final static int BUTTON_HEIGHT = 210;
 
-
     private final AnchorPane root = new AnchorPane();
     private final StackPane stackPane = new StackPane();
     private final GridPane gridPane = new GridPane();
@@ -46,8 +45,6 @@ public class View {
     private final Label footerInfo = new Label();
     private final Label top = new Label();
     private final Button backButton = new Button();
-
-    private ViewController viewController;
 
     private Scene scene;
 
@@ -62,6 +59,7 @@ public class View {
         buildBackButton();
         buildStackPane();
         initializeDragAndDropScene();
+        dragAndDrop();
         setDragAndDropVisible(false);
         root.getChildren().add(stackPane);
         setScene(root);
@@ -98,7 +96,7 @@ public class View {
     }
 
     private void buildTop(){
-        top.setText(viewController.getCurrentOperation().getName().toUpperCase());
+        //top.setText(viewController.getCurrentOperation().getName().toUpperCase());//TODO RIMPIAZZARE CON CONSUMER
         top.getStyleClass().add("top-label");
         top.setAlignment(Pos.CENTER);
         top.setMaxWidth(Double.MAX_VALUE);
@@ -127,8 +125,7 @@ public class View {
             button.setText(icon.getDescription());
 
             button.setOnAction(_ -> {
-                viewController = new ViewController(icon,this);
-                viewController.buildAction();
+                buildDragAndDropScene();
             });
             button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
             int col = i % GRID_MAX_COLUMN;
@@ -163,6 +160,46 @@ public class View {
         dragAndDropPane.getStyleClass().add("dragAndDropArea");
     }
 
+    private void dragAndDrop() {
+        stackPane.setOnDragEntered(entered -> {
+            if(dragAndDropPane.isVisible()) {
+                dragAndDropPane.getStyleClass().add("dragOver");
+            }
+            entered.consume();
+        });
+        stackPane.setOnDragExited(exited -> {
+            if(dragAndDropPane.isVisible()) {
+                dragAndDropPane.getStyleClass().remove("dragOver");
+            }
+            exited.consume();
+        });
+        stackPane.setOnDragOver(event -> {
+            if (event.getDragboard().hasFiles() && dragAndDropPane.isVisible()) {
+                event.acceptTransferModes(javafx.scene.input.TransferMode.COPY_OR_MOVE);
+            }
+            event.consume();
+        });
+        stackPane.setOnDragDropped(event -> {
+            if(dragAndDropPane.isVisible()) {
+                var db = event.getDragboard();
+                boolean success = false;
+
+                if (db.hasFiles()) {
+                    for (java.io.File file : db.getFiles()) {
+                        if (file.getName().toLowerCase().endsWith(".pdf")) {
+                            System.out.println("PDF Found: " + file.getAbsolutePath());
+                            success = true;
+                        } else {
+                            System.out.println("I can't find PDF:" + file.getAbsolutePath());
+                        }
+                    }
+                }
+                event.setDropCompleted(success);
+                event.consume();
+            }
+        });
+    }
+
     private Label setInfo(){
         dragAndDropInfo.setText("Drag and drop PDF files here!");
         dragAndDropInfo.getStyleClass().add("dragAndDropInfo");
@@ -195,13 +232,4 @@ public class View {
     public Scene getScene(){
         return scene;
     }
-
-    public StackPane getStackPane() {
-        return stackPane;
-    }
-
-    public Pane getDragAndDropPane() {
-        return dragAndDropPane;
-    }
-
 }

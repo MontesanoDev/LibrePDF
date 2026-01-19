@@ -27,51 +27,6 @@ public class ViewController {
         this.view = view;
     }
 
-    public void buildAction(){
-        view.buildDragAndDropScene();
-        dragAndDrop();
-    }
-
-    private void dragAndDrop(){
-        view.getStackPane().setOnDragEntered(entered -> {
-            if(view.getDragAndDropPane().isVisible()) {
-                view.getDragAndDropPane().getStyleClass().add("dragOver");
-            }
-            entered.consume();
-        });
-        view.getStackPane().setOnDragExited(exited -> {
-            if(view.getDragAndDropPane().isVisible()) {
-                view.getDragAndDropPane().getStyleClass().remove("dragOver");
-            }
-            exited.consume();
-        });
-        view.getStackPane().setOnDragOver(event -> {
-            if (event.getDragboard().hasFiles() && view.getDragAndDropPane().isVisible()) {
-                event.acceptTransferModes(javafx.scene.input.TransferMode.COPY_OR_MOVE);
-            }
-            event.consume();
-        });
-        view.getStackPane().setOnDragDropped(event -> {
-            if(view.getDragAndDropPane().isVisible()) {
-                var db = event.getDragboard();
-                boolean success = false;
-
-                if (db.hasFiles()) {
-                    for (java.io.File file : db.getFiles()) {
-                        if (file.getName().toLowerCase().endsWith(".pdf")) {
-                            System.out.println("PDF Found: " + file.getAbsolutePath());
-                            success = true;
-                        } else {
-                            System.out.println("I can't find PDF:" + file.getAbsolutePath());
-                        }
-                    }
-                }
-                event.setDropCompleted(success);
-                event.consume();
-            }
-        });
-    }
-
     public PdfOperation getCurrentOperation() {
         return currentOperation;
     }
