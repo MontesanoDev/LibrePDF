@@ -17,6 +17,7 @@
  */
 package it.leonardomontemurro.librepdf;
 
+import it.leonardomontemurro.librepdf.ui.ViewController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

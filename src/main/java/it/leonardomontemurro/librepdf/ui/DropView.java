@@ -1,0 +1,115 @@
+/*
+ *
+ *  * LibrePDF - A lightweight, native tool for manipulating PDF files.
+ *  * Copyright (C) 2026 Leonardo Montemurro
+ *  *
+ *  * This program is free software: you can redistribute it and/or modify
+ *  * it under the terms of the GNU General Public License as published by
+ *  * the Free Software Foundation, either version 3 of the License, or
+ *  * (at your option) any later version.
+ *  *
+ *  * This program is distributed in the hope that it will be useful,
+ *  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  * GNU General Public License for more details.
+ *  *
+ *  * You should have received a copy of the GNU General Public License
+ *  * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ */
+
+package it.leonardomontemurro.librepdf.ui;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.TextAlignment;
+
+public class DropView {
+
+    private final Label dragAndDropInfo = new Label();
+    private final Pane dragAndDropPane = new Pane();
+    private final Label top = new Label();
+    private final StackPane stackPane;
+
+    public DropView(StackPane viewStackPane) {
+        this.stackPane = viewStackPane;
+    }
+
+    public void initializeDragAndDropScene() {
+        dragAndDropPane.maxWidthProperty().bind(stackPane.widthProperty().multiply(0.35));
+        dragAndDropPane.maxHeightProperty().bind(stackPane.heightProperty().multiply(0.55));
+        dragAndDropPane.getChildren().add(setInfo());
+        dragAndDropPane.getStyleClass().add("dragAndDropArea");
+
+        top.getStyleClass().add("top-label");
+        top.setAlignment(Pos.CENTER);
+        top.setMaxWidth(Double.MAX_VALUE);
+        top.setTextAlignment(TextAlignment.CENTER);
+
+        StackPane.setAlignment(top, Pos.TOP_CENTER);
+        StackPane.setMargin(top, new javafx.geometry.Insets(30, 0, 0, 0));
+    }
+
+    public void setOperationTitle(String title) {
+        top.setText(title.toUpperCase());
+    }
+
+    public void dragAndDrop() {
+        stackPane.setOnDragEntered(entered -> {
+            if(dragAndDropPane.isVisible()) {
+                dragAndDropPane.getStyleClass().add("dragOver");
+            }
+            entered.consume();
+        });
+        stackPane.setOnDragExited(exited -> {
+            if(dragAndDropPane.isVisible()) {
+                dragAndDropPane.getStyleClass().remove("dragOver");
+            }
+            exited.consume();
+        });
+        stackPane.setOnDragOver(event -> {
+            if (event.getDragboard().hasFiles() && dragAndDropPane.isVisible()) {
+                event.acceptTransferModes(javafx.scene.input.TransferMode.COPY_OR_MOVE);
+            }
+            event.consume();
+        });
+        stackPane.setOnDragDropped(event -> {
+            if(dragAndDropPane.isVisible()) {
+                var db = event.getDragboard();
+                boolean success = false;
+                if (db.hasFiles()) {
+                    for (java.io.File file : db.getFiles()) {
+                        if (file.getName().toLowerCase().endsWith(".pdf")) {
+                            System.out.println("PDF Found: " + file.getAbsolutePath());
+                            success = true;
+                        }
+                    }
+                }
+                event.setDropCompleted(success);
+                event.consume();
+            }
+        });
+    }
+
+    private Label setInfo(){
+        dragAndDropInfo.setText("Drag and drop PDF files here!");
+        dragAndDropInfo.getStyleClass().add("dragAndDropInfo");
+        dragAndDropInfo.maxWidthProperty().bind(dragAndDropPane.widthProperty());
+        dragAndDropInfo.maxHeightProperty().bind(dragAndDropPane.heightProperty());
+        dragAndDropInfo.setAlignment(Pos.CENTER);
+        dragAndDropInfo.setTextAlignment(TextAlignment.CENTER);
+        dragAndDropInfo.setWrapText(true);
+        dragAndDropInfo.layoutXProperty().bind(dragAndDropPane.widthProperty().subtract(dragAndDropInfo.widthProperty()).divide(2));
+        dragAndDropInfo.layoutYProperty().bind(dragAndDropPane.heightProperty().subtract(dragAndDropInfo.heightProperty()).divide(3));
+        return dragAndDropInfo;
+    }
+
+    public Label getTop() {
+        return top;
+    }
+    public Pane getDragAndDropPane() {
+        return dragAndDropPane;
+    }
+}
