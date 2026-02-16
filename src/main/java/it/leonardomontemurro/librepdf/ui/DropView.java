@@ -21,6 +21,7 @@
 package it.leonardomontemurro.librepdf.ui;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -31,6 +32,7 @@ public class DropView {
     private final Label dragAndDropInfo = new Label();
     private final Pane dragAndDropPane = new Pane();
     private final Label top = new Label();
+    private final Button fileChooserButton = new Button();
     private final StackPane stackPane;
 
     public DropView(StackPane viewStackPane) {
@@ -48,6 +50,15 @@ public class DropView {
         top.setMaxWidth(Double.MAX_VALUE);
         top.setTextAlignment(TextAlignment.CENTER);
 
+        fileChooserButton.maxHeightProperty().bind(dragAndDropPane.heightProperty().divide(7));
+        fileChooserButton.maxWidthProperty().bind(dragAndDropPane.heightProperty().divide(3));
+        fileChooserButton.setText("Select PDF Files!");
+        fileChooserButton.setWrapText(true);
+        fileChooserButton.setTextAlignment(TextAlignment.CENTER);
+        fileChooserButton.getStyleClass().add("addFilesButton");
+
+        StackPane.setAlignment(fileChooserButton, Pos.CENTER);
+        fileChooserButton.translateYProperty().bind(dragAndDropPane.heightProperty().divide(4));
         StackPane.setAlignment(top, Pos.TOP_CENTER);
         StackPane.setMargin(top, new javafx.geometry.Insets(30, 0, 0, 0));
     }
@@ -96,14 +107,18 @@ public class DropView {
     private Label setInfo(){
         dragAndDropInfo.setText("Drag and drop PDF files here!");
         dragAndDropInfo.getStyleClass().add("dragAndDropInfo");
-        dragAndDropInfo.maxWidthProperty().bind(dragAndDropPane.widthProperty());
-        dragAndDropInfo.maxHeightProperty().bind(dragAndDropPane.heightProperty());
+        dragAndDropInfo.maxWidthProperty().bind(dragAndDropPane.widthProperty().divide(1));
+        dragAndDropInfo.maxHeightProperty().bind(dragAndDropPane.heightProperty().divide(2));
         dragAndDropInfo.setAlignment(Pos.CENTER);
         dragAndDropInfo.setTextAlignment(TextAlignment.CENTER);
         dragAndDropInfo.setWrapText(true);
         dragAndDropInfo.layoutXProperty().bind(dragAndDropPane.widthProperty().subtract(dragAndDropInfo.widthProperty()).divide(2));
         dragAndDropInfo.layoutYProperty().bind(dragAndDropPane.heightProperty().subtract(dragAndDropInfo.heightProperty()).divide(3));
         return dragAndDropInfo;
+    }
+
+    public Button getFileChooserButton() {
+        return fileChooserButton;
     }
 
     public Label getTop() {
