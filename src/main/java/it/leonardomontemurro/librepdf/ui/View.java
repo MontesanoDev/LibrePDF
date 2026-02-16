@@ -29,7 +29,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.text.TextAlignment;
 
 import java.util.function.Consumer;
 
@@ -58,7 +57,6 @@ public class View {
     public void initializeScene(){
         buildGridPane();
         buildButtons(gridPane);
-        buildFooter();
         initializeAnchorPane();
         buildBackButton();
         buildStackPane();
@@ -92,13 +90,6 @@ public class View {
         gridPane.setAlignment(Pos.CENTER);
     }
 
-    private void buildFooter(){
-        footerInfo.setText("Built with <3");
-        footerInfo.setAlignment(Pos.CENTER);
-        footerInfo.getStyleClass().add("footer");
-        footerInfo.setTextAlignment(TextAlignment.CENTER);
-    }
-
     public void buildButtons(GridPane gridPane){
         byte i = 0;
         for(PdfOperation icon : PdfOperation.values()){
@@ -122,7 +113,7 @@ public class View {
         }
     }
 
-    public void buildBackButton() { // Rimosso il parametro Runnable
+    public void buildBackButton() {
         backButton.setText("← Back");
         backButton.getStyleClass().add("backButton");
         backButton.getStyleClass().add("back-button");
