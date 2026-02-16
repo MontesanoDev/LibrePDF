@@ -37,6 +37,7 @@ public class ViewController {
 
         view.getStackPane().getChildren().add(dropView.getDragAndDropPane());
         view.getStackPane().getChildren().add(dropView.getTop());
+        view.getStackPane().getChildren().add(dropView.getFileChooserButton());
         view.getBackButton().toFront();
 
         this.view.setOnOperationSelected(this::onOperationChanged);
@@ -60,6 +61,7 @@ public class ViewController {
     private void setDragAndDropVisible(Boolean visible) {
         dropView.getDragAndDropPane().setVisible(visible);
         dropView.getTop().setVisible(visible);
+        dropView.getFileChooserButton().setVisible(visible);
         view.getBackButton().setVisible(visible);
     }
 
