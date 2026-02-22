@@ -40,26 +40,11 @@ public class DropView {
     }
 
     public void initializeDragAndDropScene() {
-        dragAndDropPane.maxWidthProperty().bind(stackPane.widthProperty().multiply(0.35));
-        dragAndDropPane.maxHeightProperty().bind(stackPane.heightProperty().multiply(0.55));
-        dragAndDropPane.getChildren().add(setInfo());
-        dragAndDropPane.getStyleClass().add("dragAndDropArea");
-
-        top.getStyleClass().add("top-label");
-        top.setAlignment(Pos.CENTER);
-        top.setMaxWidth(Double.MAX_VALUE);
-        top.setTextAlignment(TextAlignment.CENTER);
-
-        fileChooserButton.maxHeightProperty().bind(dragAndDropPane.heightProperty().divide(7));
-        fileChooserButton.maxWidthProperty().bind(dragAndDropPane.heightProperty().divide(3));
-        fileChooserButton.setText("Select PDF Files!");
-        fileChooserButton.setWrapText(true);
-        fileChooserButton.setPickOnBounds(false);
-        fileChooserButton.setTextAlignment(TextAlignment.CENTER);
-        fileChooserButton.getStyleClass().add("addFilesButton");
+        buildDragArea();
+        buildTop();
+        buildFileChooserButton();
 
         StackPane.setAlignment(fileChooserButton, Pos.CENTER);
-        fileChooserButton.translateYProperty().bind(dragAndDropPane.heightProperty().divide(4));
         StackPane.setAlignment(top, Pos.TOP_CENTER);
         StackPane.setMargin(top, new javafx.geometry.Insets(30, 0, 0, 0));
     }
@@ -103,6 +88,31 @@ public class DropView {
                 event.consume();
             }
         });
+    }
+
+    private void buildFileChooserButton() {
+        fileChooserButton.maxHeightProperty().bind(dragAndDropPane.heightProperty().divide(7));
+        fileChooserButton.maxWidthProperty().bind(dragAndDropPane.heightProperty().divide(3));
+        fileChooserButton.setText("Select PDF Files!");
+        fileChooserButton.setWrapText(true);
+        fileChooserButton.setPickOnBounds(false);
+        fileChooserButton.setTextAlignment(TextAlignment.CENTER);
+        fileChooserButton.getStyleClass().add("addFilesButton");
+        fileChooserButton.translateYProperty().bind(dragAndDropPane.heightProperty().divide(4));
+    }
+
+    private void buildDragArea() {
+        dragAndDropPane.maxWidthProperty().bind(stackPane.widthProperty().multiply(0.35));
+        dragAndDropPane.maxHeightProperty().bind(stackPane.heightProperty().multiply(0.55));
+        dragAndDropPane.getChildren().add(setInfo());
+        dragAndDropPane.getStyleClass().add("dragAndDropArea");
+    }
+
+    private void buildTop() {
+        top.getStyleClass().add("top-label");
+        top.setAlignment(Pos.CENTER);
+        top.setMaxWidth(Double.MAX_VALUE);
+        top.setTextAlignment(TextAlignment.CENTER);
     }
 
     private Label setInfo(){
