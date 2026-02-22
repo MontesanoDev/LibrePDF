@@ -54,6 +54,7 @@ public class DropView {
         fileChooserButton.maxWidthProperty().bind(dragAndDropPane.heightProperty().divide(3));
         fileChooserButton.setText("Select PDF Files!");
         fileChooserButton.setWrapText(true);
+        fileChooserButton.setPickOnBounds(false);
         fileChooserButton.setTextAlignment(TextAlignment.CENTER);
         fileChooserButton.getStyleClass().add("addFilesButton");
 
