@@ -21,14 +21,22 @@ package it.leonardomontemurro.librepdf.ui;
 
 import it.leonardomontemurro.librepdf.PdfOperation;
 
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import java.io.File;
+import java.util.List;
+
 public class ViewController {
     private final View view;
     private final DropView dropView;
+    private final FileChooser fileChooser = new FileChooser();
+    private final Stage stage;
 
-    public ViewController() {
+    public ViewController(Stage stage) {
         this.view = new View();
-        this.dropView = new DropView(view.getStackPane());
+        this.stage = stage;
 
+        this.dropView = new DropView(view.getStackPane());
         this.view.setGlobalTheme();
         this.view.initializeScene();
 
@@ -44,7 +52,27 @@ public class ViewController {
 
         this.view.getBackButton().setOnAction(_ -> backToHome());
 
+        this.dropView.getFileChooserButton().setOnAction(_ -> getFiles());
+
+        initializeFileChooser();
         backToHome();
+    }
+
+    private void getFiles () {
+        List<File> files = fileChooser.showOpenMultipleDialog(stage);
+        if(files != null){
+            for(File file : files){
+                System.out.println("Pdf trovato: " + file.getAbsolutePath());
+            }
+        }
+    }
+
+    private void initializeFileChooser() {
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setTitle("Select PDF files!");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("PDF","*.pdf")
+        );
     }
 
     private void onOperationChanged(PdfOperation operation) {
