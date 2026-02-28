@@ -96,7 +96,7 @@ public class ViewController {
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.setTitle("Select PDF files!");
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("PDF","*.pdf")
+            new FileChooser.ExtensionFilter("PDF","*.pdf")
         );
     }
 
