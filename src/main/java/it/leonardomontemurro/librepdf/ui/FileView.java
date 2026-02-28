@@ -21,11 +21,19 @@
 package it.leonardomontemurro.librepdf.ui;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
+
+import java.io.File;
 
 public class FileView {
-    private final TilePane tilePane = new TilePane();
+    private final FlowPane flowPane = new FlowPane();
+    private final ScrollPane scrollPane = new ScrollPane();
 
     public FileView() {
         initializeFileViewScene();
@@ -33,18 +41,53 @@ public class FileView {
 
     public void initializeFileViewScene() {
         buildFlowPane();
-        //TODO ScrollPane
+        buildScrollPane();
+    }
+
+    private void buildScrollPane() {
+        scrollPane.setContent(flowPane);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setPannable(true);
     }
 
     private void buildFlowPane() {
-        tilePane.setAlignment(Pos.CENTER);
-        tilePane.setPrefColumns(5);
-        tilePane.setMaxWidth(Region.USE_PREF_SIZE);
-        tilePane.setHgap(30);
-        tilePane.setVgap(30);
+        flowPane.setAlignment(Pos.CENTER);
+        flowPane.setHgap(30);
+        flowPane.setVgap(30);
     }
 
-    TilePane getTilePane() {
-        return tilePane;
+    void buildButton(File file, int count){
+        VBox card = new VBox(8);
+        card.setAlignment(Pos.CENTER);
+        card.getStyleClass().add("fileCard");
+        Region pdfIcon = new Region();
+        pdfIcon.getStyleClass().add("pdfIcon");
+        pdfIcon.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+
+        Label fileNameLabel = new Label(file.getName());
+        fileNameLabel.setWrapText(true);
+        fileNameLabel.setAlignment(Pos.CENTER);
+        fileNameLabel.setTextAlignment(TextAlignment.CENTER);
+        fileNameLabel.getStyleClass().add("fileNameLabel");
+
+        TextField textField = new TextField();
+        textField.setAlignment(Pos.CENTER);
+        textField.setText(String.valueOf(count));
+
+        textField.getStyleClass().add("orderInput");
+
+        card.getChildren().addAll(pdfIcon, fileNameLabel, textField);
+        flowPane.getChildren().add(card);
+    }
+    FlowPane getFlowPane() {
+        return flowPane;
+    }
+
+    ScrollPane getScrollPane() {
+        return scrollPane;
     }
 }
