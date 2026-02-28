@@ -22,7 +22,6 @@ package it.leonardomontemurro.librepdf.ui;
 import it.leonardomontemurro.librepdf.PdfOperation;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -71,23 +70,22 @@ public class ViewController {
         List<File> files = fileChooser.showOpenMultipleDialog(stage);
         if(files != null){
             pdfFiles.addAll(files);
-            buildTilePane();
+            buildFlowPane();
         }
     }
 
     private void initializeTilePane() {
-        view.getStackPane().getChildren().add(fileView.getTilePane());
-        StackPane.setAlignment(fileView.getTilePane(), Pos.CENTER);
-        fileView.getTilePane().setManaged(false);
+        view.getStackPane().getChildren().add(fileView.getScrollPane());
+        fileView.getScrollPane().setVisible(false);
+        StackPane.setAlignment(fileView.getScrollPane(), Pos.CENTER);
     }
 
-    private void buildTilePane() {
-        resetTilePane();
+    private void buildFlowPane() {
+        fileView.getScrollPane().setVisible(true);
+        int count = 1;
         for(File file : pdfFiles){
-            Button button = new Button();
-            button.setText(file.getName());
-            button.setWrapText(true);
-            fileView.getTilePane().getChildren().add(button);
+            fileView.buildButton(file, count);
+            count++;
         }
         clearScene();
     }
@@ -112,24 +110,18 @@ public class ViewController {
         view.getBackButton().setVisible(true);
     }
 
-    private void resetTilePane() {
-        fileView.getTilePane().setManaged(true);
-        fileView.getTilePane().setVisible(true);
-    }
-
     private void cleanTilePane() {
-        fileView.getTilePane().setManaged(false);
-        fileView.getTilePane().setVisible(false);
-        fileView.getTilePane().getChildren().clear();
+        fileView.getFlowPane().getChildren().clear();
         pdfFiles.clear();
     }
 
     private void backToHome() {
-        if(!fileView.getTilePane().isManaged()){
+        if(dropView.getDragAndDropPane().isVisible()){
             setDragAndDropVisible(false);
             setHomeVisible(true);
         } else {
             cleanTilePane();
+            fileView.getScrollPane().setVisible(false);
             setDragAndDropVisible(true);
         }
     }
