@@ -62,6 +62,7 @@ public class ViewController {
 
         this.dropView.getFileChooserButton().setOnAction(_ -> getFiles());
 
+        initializeTilePane();
         initializeFileChooser();
         backToHome();
     }
@@ -74,15 +75,20 @@ public class ViewController {
         }
     }
 
+    private void initializeTilePane() {
+        view.getStackPane().getChildren().add(fileView.getTilePane());
+        StackPane.setAlignment(fileView.getTilePane(), Pos.CENTER);
+        fileView.getTilePane().setManaged(false);
+    }
+
     private void buildTilePane() {
+        fileView.getTilePane().setManaged(true);
         for(File file : pdfFiles){
             Button button = new Button();
             button.setText(file.getName());
             button.setWrapText(true);
             fileView.getTilePane().getChildren().add(button);
         }
-        view.getStackPane().getChildren().add(fileView.getTilePane());
-        StackPane.setAlignment(fileView.getTilePane(), Pos.CENTER);
         clearScene();
     }
 
@@ -103,6 +109,7 @@ public class ViewController {
     private void clearScene() {
         setDragAndDropVisible(false);
         setHomeVisible(false);
+        view.getBackButton().setVisible(true);
     }
 
     private void backToHome() {
