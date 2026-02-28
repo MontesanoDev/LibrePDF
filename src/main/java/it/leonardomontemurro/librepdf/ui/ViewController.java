@@ -54,7 +54,6 @@ public class ViewController {
         view.getStackPane().getChildren().add(dropView.getDragAndDropPane());
         view.getStackPane().getChildren().add(dropView.getTop());
         view.getStackPane().getChildren().add(dropView.getFileChooserButton());
-        view.getBackButton().toFront();
 
         this.view.setOnOperationSelected(this::onOperationChanged);
 
@@ -63,6 +62,7 @@ public class ViewController {
         this.dropView.getFileChooserButton().setOnAction(_ -> getFiles());
 
         initializeTilePane();
+        view.getBackButton().toFront();
         initializeFileChooser();
         backToHome();
     }
