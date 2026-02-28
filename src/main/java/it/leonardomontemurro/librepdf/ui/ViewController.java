@@ -82,7 +82,7 @@ public class ViewController {
     }
 
     private void buildTilePane() {
-        fileView.getTilePane().setManaged(true);
+        resetTilePane();
         for(File file : pdfFiles){
             Button button = new Button();
             button.setText(file.getName());
@@ -112,9 +112,26 @@ public class ViewController {
         view.getBackButton().setVisible(true);
     }
 
+    private void resetTilePane() {
+        fileView.getTilePane().setManaged(true);
+        fileView.getTilePane().setVisible(true);
+    }
+
+    private void cleanTilePane() {
+        fileView.getTilePane().setManaged(false);
+        fileView.getTilePane().setVisible(false);
+        fileView.getTilePane().getChildren().clear();
+        pdfFiles.clear();
+    }
+
     private void backToHome() {
-        setDragAndDropVisible(false);
-        setHomeVisible(true);
+        if(!fileView.getTilePane().isManaged()){
+            setDragAndDropVisible(false);
+            setHomeVisible(true);
+        } else {
+            cleanTilePane();
+            setDragAndDropVisible(true);
+        }
     }
 
     private void setDragAndDropVisible(Boolean visible) {
