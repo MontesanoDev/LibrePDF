@@ -20,6 +20,7 @@
 
 package it.leonardomontemurro.librepdf.ui;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -50,6 +51,8 @@ public class FileView {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setPannable(true);
+
+        scrollPane.setPadding(new Insets(70,10,10,10));
     }
 
     private void buildFlowPane() {
