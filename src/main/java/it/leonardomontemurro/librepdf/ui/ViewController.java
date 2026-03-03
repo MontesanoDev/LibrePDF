@@ -21,6 +21,7 @@ package it.leonardomontemurro.librepdf.ui;
 
 import it.leonardomontemurro.librepdf.PdfOperation;
 
+import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -59,7 +60,7 @@ public class ViewController {
 
         this.dropView.getFileChooserButton().setOnAction(_ -> getFiles());
 
-        initializeTilePane();
+        initializeFileCardScene();
         view.getBackButton().toFront();
         initializeFileChooser();
         backToHome();
@@ -73,7 +74,7 @@ public class ViewController {
         }
     }
 
-    private void initializeTilePane() {
+    private void initializeFileCardScene() {
         view.getStackPane().getChildren().add(fileView.getScrollPane());
         fileView.getScrollPane().setVisible(false);
         StackPane.setAlignment(fileView.getScrollPane(), Pos.CENTER);
