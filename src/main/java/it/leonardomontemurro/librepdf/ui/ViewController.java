@@ -84,7 +84,7 @@ public class ViewController {
         fileView.getScrollPane().setVisible(true);
         int count = 1;
         for(File file : pdfFiles){
-            fileView.buildButton(file, count);
+            fileView.buildCard(file, count);
             count++;
         }
         clearScene();

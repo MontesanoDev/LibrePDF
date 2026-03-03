@@ -20,13 +20,12 @@
 
 package it.leonardomontemurro.librepdf.ui;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 
 import java.io.File;
@@ -60,7 +59,7 @@ public class FileView {
         flowPane.setVgap(30);
     }
 
-    void buildButton(File file, int count){
+    void buildCard(File file, int count){
         VBox card = new VBox(8);
         card.setAlignment(Pos.CENTER);
         card.getStyleClass().add("fileCard");
