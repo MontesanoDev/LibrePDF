@@ -21,7 +21,6 @@ package it.leonardomontemurro.librepdf.ui;
 
 import it.leonardomontemurro.librepdf.PdfOperation;
 
-import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
