@@ -22,6 +22,7 @@ package it.leonardomontemurro.librepdf.ui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -31,8 +32,11 @@ import javafx.scene.text.TextAlignment;
 import java.io.File;
 
 public class FileView {
+    private final BorderPane borderPane = new BorderPane();
     private final FlowPane flowPane = new FlowPane();
     private final ScrollPane scrollPane = new ScrollPane();
+    private final VBox sideRight = new VBox();
+    private final Button operationButton = new Button();
 
     public FileView() {
         initializeFileViewScene();
@@ -41,6 +45,22 @@ public class FileView {
     public void initializeFileViewScene() {
         buildFlowPane();
         buildScrollPane();
+        buildBorderPane();
+    }
+
+    private void buildBorderPane() {
+        borderPane.setCenter(scrollPane);
+        borderPane.setRight(sideRight);
+    }
+
+    void buildSideRight(javafx.beans.property.ReadOnlyDoubleProperty parentWidth) {
+        sideRight.setAlignment(Pos.CENTER);
+        sideRight.prefWidthProperty().bind(parentWidth.divide(4));
+        sideRight.minWidthProperty().bind(sideRight.prefWidthProperty());
+        sideRight.maxWidthProperty().bind(sideRight.prefWidthProperty());
+        operationButton.setText("CIAO");
+        sideRight.getChildren().add(operationButton);
+        sideRight.setPadding(new Insets(30,10,10,10));
     }
 
     private void buildScrollPane() {
@@ -84,11 +104,13 @@ public class FileView {
         card.getChildren().addAll(pdfIcon, fileNameLabel, textField);
         flowPane.getChildren().add(card);
     }
+
+    BorderPane getBorderPane() {
+        return borderPane;
+    }
+
     FlowPane getFlowPane() {
         return flowPane;
     }
 
-    ScrollPane getScrollPane() {
-        return scrollPane;
-    }
 }
