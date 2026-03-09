@@ -58,6 +58,7 @@ public class FileView {
         sideRight.prefWidthProperty().bind(parentWidth.divide(4));
         sideRight.minWidthProperty().bind(sideRight.prefWidthProperty());
         sideRight.maxWidthProperty().bind(sideRight.prefWidthProperty());
+        sideRight.getStyleClass().add("sideBar");
         operationButton.setText("CIAO");
         sideRight.getChildren().add(operationButton);
         sideRight.setPadding(new Insets(30,10,10,10));

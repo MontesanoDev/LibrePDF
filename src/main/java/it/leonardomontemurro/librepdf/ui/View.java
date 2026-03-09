@@ -19,6 +19,7 @@
  */
 package it.leonardomontemurro.librepdf.ui;
 
+import atlantafx.base.theme.Dracula;
 import atlantafx.base.theme.PrimerDark;
 import it.leonardomontemurro.librepdf.PdfOperation;
 import javafx.application.Application;
