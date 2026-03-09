@@ -37,6 +37,8 @@ public class FileView {
     private final ScrollPane scrollPane = new ScrollPane();
     private final VBox sideRight = new VBox();
     private final Button operationButton = new Button();
+    private final Label operationName = new Label();
+    private final Label descriptionName = new Label();
 
     public FileView() {
         initializeFileViewScene();
@@ -59,9 +61,16 @@ public class FileView {
         sideRight.minWidthProperty().bind(sideRight.prefWidthProperty());
         sideRight.maxWidthProperty().bind(sideRight.prefWidthProperty());
         sideRight.getStyleClass().add("sideBar");
-        operationButton.setText("CIAO");
-        sideRight.getChildren().add(operationButton);
-        sideRight.setPadding(new Insets(30,10,10,10));
+
+        operationName.getStyleClass().add("operationName");
+        descriptionName.setWrapText(true);
+
+        Region spacer = new Region();
+        VBox.setVgrow(spacer, Priority.ALWAYS);
+
+        sideRight.getChildren().addAll(operationName, descriptionName, spacer, operationButton);
+
+        sideRight.setPadding(new Insets(50, 10, 50, 10));
     }
 
     private void buildScrollPane() {
@@ -114,4 +123,9 @@ public class FileView {
         return flowPane;
     }
 
+    void setOperationName(String name, String description){
+        operationButton.setText(name.toUpperCase());
+        operationName.setText(name.toUpperCase());
+        descriptionName.setText(description);
+    }
 }

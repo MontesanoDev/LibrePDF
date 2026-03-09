@@ -102,6 +102,7 @@ public class ViewController {
 
     private void onOperationChanged(PdfOperation operation) {
         this.dropView.setOperationTitle(operation.getName());
+        fileView.setOperationName(operation.getName(), operation.getDescription());
         setHomeVisible(false);
         setDragAndDropVisible(true);
     }
