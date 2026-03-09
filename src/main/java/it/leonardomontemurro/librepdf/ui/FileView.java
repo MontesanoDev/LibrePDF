@@ -65,6 +65,8 @@ public class FileView {
         operationName.getStyleClass().add("operationName");
         descriptionName.setWrapText(true);
 
+        operationButton.getStyleClass().add("operationButton");
+
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
 
