@@ -115,3 +115,78 @@
     -fx-scale-x: 0.98;
     -fx-scale-y: 0.98;
 }
+
+.fileCard {
+    -fx-background-color: transparent;
+    -fx-border-color: #3b3d4d;
+    -fx-border-radius: 16px;
+    -fx-background-radius: 16px;
+    -fx-border-width: 1.5px;
+    -fx-padding: 15px;
+    -fx-cursor: hand;
+    -fx-pref-width: 180px;
+    -fx-max-width: 180px;
+}
+
+.fileCard:hover {
+    -fx-border-color: #bd93f9;
+    -fx-background-color: rgba(189, 147, 249, 0.1);
+}
+
+.fileCard:pressed {
+    -fx-border-color: #a37cf0;
+    -fx-background-color: rgba(189, 147, 249, 0.3);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+.pdfIcon {
+    -fx-background-color: WHITE;
+    -fx-shape: "M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z";
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+}
+
+.fileNameLabel {
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+
+.orderInput {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: white;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.sideBar {
+    -fx-background-color: #161B22;
+}
+
+.operationName {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-padding: 0 0 20 0;
+}
+
+.operationButton {
+    -fx-border-color: #BB86FC;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-background-color: rgba(187, 134, 252, 0.1);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);
+}
+
+.operationButton:hover {
+    -fx-background-color: rgba(187, 134, 252, 0.25);
+    -fx-border-color: #D7B4FF;
+    -fx-cursor: hand;
+}
+
+.operationButton:pressed {
+    -fx-background-color: rgba(187, 134, 252, 0.4);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
