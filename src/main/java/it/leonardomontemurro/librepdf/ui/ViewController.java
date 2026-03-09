@@ -75,9 +75,9 @@ public class ViewController {
     }
 
     private void initializeFileCardScene() {
-        view.getStackPane().getChildren().add(fileView.getScrollPane());
-        fileView.getScrollPane().setVisible(false);
-        StackPane.setAlignment(fileView.getScrollPane(), Pos.CENTER);
+        view.getStackPane().getChildren().add(fileView.getBorderPane());
+        fileView.getBorderPane().setVisible(false);
+        StackPane.setAlignment(fileView.getBorderPane(), Pos.CENTER);
     }
 
     private void buildFlowPane() {
