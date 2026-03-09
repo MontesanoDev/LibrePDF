@@ -164,3 +164,9 @@
 .sideBar {
     -fx-background-color: #161B22;
 }
+
+.operationName {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-padding: 0 0 20 0;
+}
