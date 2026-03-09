@@ -41,14 +41,16 @@ public class ViewController {
         this.view = new View();
         this.stage = stage;
 
-        this.dropView = new DropView(view.getStackPane());
         this.view.setGlobalTheme();
         this.view.initializeScene();
 
-        this.fileView = new FileView();
+        this.dropView = new DropView(view.getStackPane());
 
         this.dropView.initializeDragAndDropScene();
         this.dropView.dragAndDrop();
+
+        this.fileView = new FileView();
+        fileView.buildSideRight(view.getStackPane().widthProperty());
 
         view.getStackPane().getChildren().add(dropView.getDragAndDropPane());
         view.getStackPane().getChildren().add(dropView.getTop());
@@ -81,7 +83,7 @@ public class ViewController {
     }
 
     private void buildFlowPane() {
-        fileView.getScrollPane().setVisible(true);
+        fileView.getBorderPane().setVisible(true);
         int count = 1;
         for(File file : pdfFiles){
             fileView.buildCard(file, count);
@@ -121,7 +123,7 @@ public class ViewController {
             setHomeVisible(true);
         } else {
             cleanTilePane();
-            fileView.getScrollPane().setVisible(false);
+            fileView.getBorderPane().setVisible(false);
             setDragAndDropVisible(true);
         }
     }
