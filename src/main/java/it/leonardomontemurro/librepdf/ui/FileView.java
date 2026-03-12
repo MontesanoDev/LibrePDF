@@ -121,8 +121,8 @@ public class FileView {
         return borderPane;
     }
 
-    FlowPane getFlowPane() {
-        return flowPane;
+    void clearFlowPane() {
+        flowPane.getChildren().clear();
     }
 
     void setOperationName(String name, String description){
