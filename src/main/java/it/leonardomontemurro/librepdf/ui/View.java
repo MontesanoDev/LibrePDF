@@ -134,9 +134,6 @@ public class View {
         gridPane.setVisible(visible);
         gridPane.setDisable(!visible);
     }
-    protected GridPane getGridPane() {
-        return gridPane;
-    }
 
     protected Button getBackButton(){
         return backButton;
