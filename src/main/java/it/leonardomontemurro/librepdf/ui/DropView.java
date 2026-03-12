@@ -133,6 +133,13 @@ public class DropView {
         dragAndDropPane.setVisible(visible);
         top.setVisible(visible);
         fileChooserButton.setVisible(visible);
+        backButton.setVisible(visible);
+    }
+
+    private void buildBackButton() {
+        backButton.setText("← Back");
+        backButton.getStyleClass().add("backButton");
+        backButton.setVisible(false);
     }
 
     public Button getFileChooserButton() {
