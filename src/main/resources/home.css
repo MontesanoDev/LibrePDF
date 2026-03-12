@@ -190,3 +190,23 @@
     -fx-scale-x: 0.98;
     -fx-scale-y: 0.98;
 }
+
+.backButton {
+    -fx-border-color: #BB86FC;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-background-color: rgba(187, 134, 252, 0.1);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);
+}
+
+.backButton:hover {
+    -fx-background-color: rgba(187, 134, 252, 0.25);
+    -fx-border-color: #D7B4FF;
+    -fx-cursor: hand;
+}
+
+.backButton:pressed {
+    -fx-background-color: rgba(187, 134, 252, 0.4);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
