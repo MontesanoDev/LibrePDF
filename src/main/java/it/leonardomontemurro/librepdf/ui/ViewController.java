@@ -110,7 +110,7 @@ public class ViewController {
     }
 
     private void clearFile() {
-        fileView.getFlowPane().getChildren().clear();
+        fileView.clearFlowPane();
         pdfFiles.clear();
     }
 
