@@ -98,16 +98,15 @@ public class ViewController {
     }
 
     private void onOperationChanged(PdfOperation operation) {
-        this.dropView.setOperationTitle(operation.getName());
+        dropView.setOperationTitle(operation.getName());
         fileView.setOperationName(operation.getName(), operation.getDescription());
         view.setHomeVisible(false);
-        setDragAndDropVisible(true);
+        dropView.setDragAndDropVisible(true);
     }
 
     private void clearScene() {
-        setDragAndDropVisible(false);
+        dropView.setDragAndDropVisible(false);
         view.setHomeVisible(false);
-        view.getBackButton().setVisible(true);
     }
 
     private void cleanTilePane() {
