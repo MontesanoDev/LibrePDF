@@ -130,7 +130,10 @@ public class View {
     private void setScene(AnchorPane root){
         this.scene = new Scene(root, WIDTH_SIZE, HEIGHT_SIZE);
     }
-
+    void setHomeVisible(Boolean visible) {
+        gridPane.setVisible(visible);
+        gridPane.setDisable(!visible);
+    }
     protected GridPane getGridPane() {
         return gridPane;
     }
