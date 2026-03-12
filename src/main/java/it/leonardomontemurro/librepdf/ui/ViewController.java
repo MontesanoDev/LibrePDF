@@ -109,7 +109,7 @@ public class ViewController {
         view.setHomeVisible(false);
     }
 
-    private void cleanTilePane() {
+    private void clearFile() {
         fileView.getFlowPane().getChildren().clear();
         pdfFiles.clear();
     }
@@ -119,7 +119,7 @@ public class ViewController {
             dropView.setDragAndDropVisible(false);
             view.setHomeVisible(true);
         } else {
-            cleanTilePane();
+            clearFile();
             fileView.getBorderPane().setVisible(false);
             dropView.setDragAndDropVisible(true);
         }
