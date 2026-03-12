@@ -116,7 +116,6 @@ public class View {
     public void buildBackButton() {
         backButton.setText("← Back");
         backButton.getStyleClass().add("backButton");
-        backButton.getStyleClass().add("back-button");
         backButton.setVisible(false);
     }
 
