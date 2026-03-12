@@ -117,6 +117,10 @@ public class FileView {
         flowPane.getChildren().add(card);
     }
 
+    void setFileViewVisible(Boolean visible) {
+        borderPane.setVisible(visible);
+    }
+
     BorderPane getBorderPane() {
         return borderPane;
     }
