@@ -24,6 +24,7 @@ import it.leonardomontemurro.librepdf.PdfOperation;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -85,6 +86,10 @@ public class View {
         gridPane.setAlignment(Pos.CENTER);
     }
 
+    void addToStackPane(Node node) {
+        stackPane.getChildren().add(node);
+    }
+
     public void buildButtons(GridPane gridPane){
         byte i = 0;
         for(PdfOperation icon : PdfOperation.values()){
@@ -119,6 +124,7 @@ public class View {
     private void setScene(AnchorPane root){
         this.scene = new Scene(root, WIDTH_SIZE, HEIGHT_SIZE);
     }
+
     void setHomeVisible(Boolean visible) {
         gridPane.setVisible(visible);
         gridPane.setDisable(!visible);
