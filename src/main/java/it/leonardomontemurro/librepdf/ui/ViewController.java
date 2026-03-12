@@ -21,6 +21,7 @@ package it.leonardomontemurro.librepdf.ui;
 
 import it.leonardomontemurro.librepdf.PdfOperation;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
@@ -52,16 +53,13 @@ public class ViewController {
         this.fileView = new FileView();
         fileView.buildSideRight(view.getStackPane().widthProperty());
 
-        view.getStackPane().getChildren().add(dropView.getDragAndDropPane());
-        view.getStackPane().getChildren().add(dropView.getTop());
-        view.getStackPane().getChildren().add(dropView.getFileChooserButton());
-
         this.view.setOnOperationSelected(this::onOperationChanged);
 
         this.dropView.getFileChooserButton().setOnAction(_ -> getFiles());
 
         initializeFileCardScene();
         initializeFileChooser();
+        buildStackPane();
         backToHome();
     }
 
@@ -74,19 +72,30 @@ public class ViewController {
     }
 
     private void initializeFileCardScene() {
-        view.getStackPane().getChildren().add(fileView.getBorderPane());
-        fileView.getBorderPane().setVisible(false);
+        view.addToStackPane(fileView.getBorderPane());
+        fileView.setFileViewVisible(false);
         StackPane.setAlignment(fileView.getBorderPane(), Pos.CENTER);
     }
 
     private void buildFlowPane() {
-        fileView.getBorderPane().setVisible(true);
+        fileView.setFileViewVisible(true);
         int count = 1;
         for(File file : pdfFiles){
             fileView.buildCard(file, count);
             count++;
         }
         clearScene();
+    }
+
+    private void buildStackPane() {
+        view.addToStackPane(dropView.getDragAndDropPane());
+        view.addToStackPane(dropView.getTop());
+        view.addToStackPane(dropView.getFileChooserButton());
+        view.addToStackPane(dropView.getBackButton());
+
+        StackPane.setAlignment(dropView.getBackButton(), Pos.TOP_LEFT);
+        StackPane.setMargin(dropView.getBackButton(), new Insets(20, 0, 0, 20));
+        dropView.getBackButton().toFront();
     }
 
     private void initializeFileChooser() {
@@ -101,7 +110,7 @@ public class ViewController {
         dropView.setOperationTitle(operation.getName());
         fileView.setOperationName(operation.getName(), operation.getDescription());
         view.setHomeVisible(false);
-        dropView.setDragAndDropVisible(true);
+        dropView.setDropViewSceneVisible(true);
     }
 
     private void clearScene() {
@@ -116,12 +125,12 @@ public class ViewController {
 
     private void backToHome() {
         if(dropView.getDragAndDropPane().isVisible()){
-            dropView.setDragAndDropVisible(false);
+            dropView.setDropViewSceneVisible(false);
             view.setHomeVisible(true);
         } else {
             clearFile();
-            fileView.getBorderPane().setVisible(false);
-            dropView.setDragAndDropVisible(true);
+            fileView.setFileViewVisible(false);
+            dropView.setDropViewSceneVisible(true);
         }
     }
 
