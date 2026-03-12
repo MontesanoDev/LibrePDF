@@ -128,6 +128,12 @@ public class DropView {
         return dragAndDropInfo;
     }
 
+    void setDragAndDropVisible(Boolean visible) {
+        dragAndDropPane.setVisible(visible);
+        top.setVisible(visible);
+        fileChooserButton.setVisible(visible);
+    }
+
     public Button getFileChooserButton() {
         return fileChooserButton;
     }
