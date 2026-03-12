@@ -56,6 +56,7 @@ public class ViewController {
         this.view.setOnOperationSelected(this::onOperationChanged);
 
         this.dropView.getFileChooserButton().setOnAction(_ -> getFiles());
+        this.dropView.getBackButton().setOnAction(_ -> backToHome());
 
         initializeFileCardScene();
         initializeFileChooser();
