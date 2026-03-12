@@ -116,20 +116,13 @@ public class ViewController {
 
     private void backToHome() {
         if(dropView.getDragAndDropPane().isVisible()){
-            setDragAndDropVisible(false);
+            dropView.setDragAndDropVisible(false);
             view.setHomeVisible(true);
         } else {
             cleanTilePane();
             fileView.getBorderPane().setVisible(false);
-            setDragAndDropVisible(true);
+            dropView.setDragAndDropVisible(true);
         }
-    }
-
-    private void setDragAndDropVisible(Boolean visible) {
-        dropView.getDragAndDropPane().setVisible(visible);
-        dropView.getTop().setVisible(visible);
-        dropView.getFileChooserButton().setVisible(visible);
-        view.getBackButton().setVisible(visible);
     }
 
     public View getView() {
