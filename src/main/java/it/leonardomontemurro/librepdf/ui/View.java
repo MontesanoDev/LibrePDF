@@ -45,7 +45,6 @@ public class View {
     private final StackPane stackPane = new StackPane();
     private final GridPane gridPane = new GridPane();
     private final Label footerInfo = new Label();
-    private final Button backButton = new Button();
 
     private Consumer<PdfOperation> onOperationSelected;
 
@@ -58,7 +57,6 @@ public class View {
         buildGridPane();
         buildButtons(gridPane);
         initializeAnchorPane();
-        buildBackButton();
         buildStackPane();
         root.getChildren().add(stackPane);
         setScene(root);
@@ -66,15 +64,12 @@ public class View {
     }
 
     private void buildStackPane(){
-        stackPane.getChildren().addAll(gridPane, footerInfo, backButton);
+        stackPane.getChildren().addAll(gridPane, footerInfo);
 
         StackPane.setAlignment(gridPane, Pos.CENTER);
         StackPane.setAlignment(footerInfo, Pos.BOTTOM_CENTER);
 
         StackPane.setMargin(footerInfo, new Insets(0, 0, 20, 0));
-
-        StackPane.setAlignment(backButton, Pos.TOP_LEFT);
-        StackPane.setMargin(backButton, new Insets(20, 0, 0, 20));
     }
 
     private void initializeAnchorPane(){
@@ -113,12 +108,6 @@ public class View {
         }
     }
 
-    public void buildBackButton() {
-        backButton.setText("← Back");
-        backButton.getStyleClass().add("backButton");
-        backButton.setVisible(false);
-    }
-
     protected StackPane getStackPane() {
         return stackPane;
     }
@@ -133,10 +122,6 @@ public class View {
     void setHomeVisible(Boolean visible) {
         gridPane.setVisible(visible);
         gridPane.setDisable(!visible);
-    }
-
-    protected Button getBackButton(){
-        return backButton;
     }
 
     public Scene getScene(){
