@@ -34,6 +34,7 @@ public class DropView {
     private final Label top = new Label();
     private final Button fileChooserButton = new Button();
     private final StackPane stackPane;
+    private final Button backButton = new Button();
 
     public DropView(StackPane viewStackPane) {
         this.stackPane = viewStackPane;
