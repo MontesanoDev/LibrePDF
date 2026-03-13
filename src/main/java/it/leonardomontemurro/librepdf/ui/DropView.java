@@ -112,6 +112,7 @@ public class DropView {
         fileChooserButton.setTextAlignment(TextAlignment.CENTER);
         fileChooserButton.getStyleClass().add("addFilesButton");
         fileChooserButton.translateYProperty().bind(dragAndDropPane.heightProperty().divide(4));
+        fileChooserButton.setOnAction(_ -> onFileChooserAction.run());
     }
 
     private void buildDragArea() {
