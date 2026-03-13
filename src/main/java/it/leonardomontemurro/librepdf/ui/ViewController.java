@@ -55,6 +55,7 @@ public class ViewController {
 
         this.view.setOnOperationSelected(this::onOperationChanged);
         this.dropView.setOnFilesDropped(this::onFilesDropped);
+        this.dropView.setBackButtonAction(this::backToHome);
 
         this.dropView.getFileChooserButton().setOnAction(_ -> getFiles());
         this.dropView.getBackButton().setOnAction(_ -> backToHome());
