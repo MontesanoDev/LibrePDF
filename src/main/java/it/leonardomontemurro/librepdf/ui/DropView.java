@@ -168,6 +168,10 @@ public class DropView {
         this.onFilesDropped = callback;
     }
 
+    void setBackButtonToFront() {
+        backButton.toFront();
+    }
+
     public Button getFileChooserButton() {
         return fileChooserButton;
     }
