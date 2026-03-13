@@ -70,31 +70,33 @@ public class DropView {
             entered.consume();
         });
         stackPane.setOnDragExited(exited -> {
-            if(dragAndDropPane.isVisible()) {
+            if(!dragAndDropPane.isVisible()) {
                 dragAndDropPane.getStyleClass().remove("dragOver");
             }
             exited.consume();
         });
         stackPane.setOnDragOver(event -> {
             if (event.getDragboard().hasFiles() && dragAndDropPane.isVisible()) {
-                event.acceptTransferModes(javafx.scene.input.TransferMode.COPY_OR_MOVE);
+                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             }
             event.consume();
         });
         stackPane.setOnDragDropped(event -> {
             if(dragAndDropPane.isVisible()) {
                 var db = event.getDragboard();
+                List<File> pdfs = new ArrayList<>();
                 boolean success = false;
                 if (db.hasFiles()) {
-                    for (java.io.File file : db.getFiles()) {
+                    for (File file : db.getFiles()) {
                         if (file.getName().toLowerCase().endsWith(".pdf")) {
-                            System.out.println("PDF Found: " + file.getAbsolutePath());
+                            pdfs.add(file);
                             success = true;
                         }
                     }
                 }
                 event.setDropCompleted(success);
                 event.consume();
+                onFilesDropped.accept(pdfs);
             }
         });
     }
