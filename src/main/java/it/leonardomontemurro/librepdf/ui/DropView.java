@@ -164,6 +164,10 @@ public class DropView {
     void setBackButtonVisible(Boolean visible){
         backButton.setVisible(visible);
     }
+    
+    void setBackButtonAction(Runnable callback) {
+        this.onBackAction = callback;
+    }
 
     void setOnFilesDropped(Consumer<List<File>> callback) {
         this.onFilesDropped = callback;
