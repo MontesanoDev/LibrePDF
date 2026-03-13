@@ -150,6 +150,7 @@ public class DropView {
         backButton.setText("← Back");
         backButton.getStyleClass().add("backButton");
         backButton.setVisible(false);
+        backButton.setOnAction(_ -> onBackAction.run());
     }
 
     Button getBackButton() {
