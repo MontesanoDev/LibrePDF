@@ -43,6 +43,7 @@ public class DropView {
     private final StackPane stackPane;
     private final Button backButton = new Button();
     private Consumer<List<File>> onFilesDropped;
+    private Runnable onBackAction;
 
     public DropView(StackPane viewStackPane) {
         this.stackPane = viewStackPane;
