@@ -20,12 +20,19 @@
 
 package it.leonardomontemurro.librepdf.ui;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class DropView {
 
@@ -35,6 +42,7 @@ public class DropView {
     private final Button fileChooserButton = new Button();
     private final StackPane stackPane;
     private final Button backButton = new Button();
+    private Consumer<List<File>> onFilesDropped;
 
     public DropView(StackPane viewStackPane) {
         this.stackPane = viewStackPane;
