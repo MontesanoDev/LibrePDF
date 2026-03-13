@@ -164,6 +164,10 @@ public class DropView {
         backButton.setVisible(visible);
     }
 
+    void setOnFilesDropped(Consumer<List<File>> callback) {
+        this.onFilesDropped = callback;
+    }
+
     public Button getFileChooserButton() {
         return fileChooserButton;
     }
