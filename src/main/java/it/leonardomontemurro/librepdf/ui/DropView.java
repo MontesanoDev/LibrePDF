@@ -155,9 +155,9 @@ public class DropView {
         return backButton;
     }
 
-    void setDropViewSceneVisible(Boolean visibile) {
-        setBackButtonVisible(visibile);
-        setDragAndDropVisible(visibile);
+    void setDropViewSceneVisible(Boolean visible) {
+        setBackButtonVisible(visible);
+        setDragAndDropVisible(visible);
     }
 
     void setBackButtonVisible(Boolean visible){
