@@ -55,7 +55,7 @@ public class DropView {
         buildBackButton();
         StackPane.setAlignment(fileChooserButton, Pos.CENTER);
         StackPane.setAlignment(top, Pos.TOP_CENTER);
-        StackPane.setMargin(top, new javafx.geometry.Insets(30, 0, 0, 0));
+        StackPane.setMargin(top, new Insets(30, 0, 0, 0));
     }
 
     public void setOperationTitle(String title) {
