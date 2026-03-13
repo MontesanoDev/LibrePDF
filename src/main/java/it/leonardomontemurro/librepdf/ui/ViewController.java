@@ -97,7 +97,7 @@ public class ViewController {
 
         StackPane.setAlignment(dropView.getBackButton(), Pos.TOP_LEFT);
         StackPane.setMargin(dropView.getBackButton(), new Insets(20, 0, 0, 20));
-        dropView.getBackButton().toFront();
+        dropView.setBackButtonToFront();
     }
 
     private void initializeFileChooser() {
