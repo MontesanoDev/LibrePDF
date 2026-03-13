@@ -166,7 +166,11 @@ public class DropView {
     void setBackButtonVisible(Boolean visible){
         backButton.setVisible(visible);
     }
-    
+
+    void setOnFileChooserAction(Runnable callback) {
+        this.onFileChooserAction = callback;
+    }
+
     void setBackButtonAction(Runnable callback) {
         this.onBackAction = callback;
     }
