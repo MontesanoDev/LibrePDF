@@ -54,6 +54,7 @@ public class ViewController {
         fileView.buildSideRight(view.getStackPane().widthProperty());
 
         this.view.setOnOperationSelected(this::onOperationChanged);
+        this.dropView.setOnFilesDropped(this::onFilesDropped);
 
         this.dropView.getFileChooserButton().setOnAction(_ -> getFiles());
         this.dropView.getBackButton().setOnAction(_ -> backToHome());
@@ -105,6 +106,11 @@ public class ViewController {
         fileChooser.getExtensionFilters().add(
             new FileChooser.ExtensionFilter("PDF","*.pdf")
         );
+    }
+
+    private void onFilesDropped(List<File> files) {
+        pdfFiles.addAll(files);
+        buildFlowPane();
     }
 
     private void onOperationChanged(PdfOperation operation) {
