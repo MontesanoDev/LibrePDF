@@ -130,7 +130,7 @@ public class ViewController {
     }
 
     private void backToHome() {
-        if(dropView.getDragAndDropPane().isVisible()){
+        if(dropView.isDragAndDropPaneVisible()){
             dropView.setDropViewSceneVisible(false);
             view.setHomeVisible(true);
         } else {
