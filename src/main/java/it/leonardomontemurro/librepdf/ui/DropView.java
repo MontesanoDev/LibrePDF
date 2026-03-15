@@ -183,6 +183,10 @@ public class DropView {
         backButton.toFront();
     }
 
+    Boolean isDragAndDropPaneVisible() {
+        return dragAndDropPane.isVisible();
+    }
+
     public Button getFileChooserButton() {
         return fileChooserButton;
     }
