@@ -113,15 +113,15 @@ public class View {
         }
     }
 
-    protected StackPane getStackPane() {
+    StackPane getStackPane() {
         return stackPane;
     }
 
-    public void setOnOperationSelected(Consumer<PdfOperation> callback) {
+    void setOnOperationSelected(Consumer<PdfOperation> callback) {
         this.onOperationSelected = callback;
     }
 
-    private void setScene(AnchorPane root){
+    void setScene(AnchorPane root){
         this.scene = new Scene(root, WIDTH_SIZE, HEIGHT_SIZE);
     }
 
