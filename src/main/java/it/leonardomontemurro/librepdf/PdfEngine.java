@@ -24,6 +24,7 @@ import it.leonardomontemurro.librepdf.core.Merge;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class PdfEngine {
 
