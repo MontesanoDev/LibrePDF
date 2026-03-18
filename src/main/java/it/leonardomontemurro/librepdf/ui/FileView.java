@@ -30,7 +30,6 @@ import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 
 import java.io.File;
-import java.util.function.Consumer;
 
 public class FileView {
     private final BorderPane borderPane = new BorderPane();
