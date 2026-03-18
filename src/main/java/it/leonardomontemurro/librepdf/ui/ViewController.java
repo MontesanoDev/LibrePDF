@@ -19,6 +19,7 @@
  */
 package it.leonardomontemurro.librepdf.ui;
 
+import it.leonardomontemurro.librepdf.PdfEngine;
 import it.leonardomontemurro.librepdf.PdfOperation;
 
 import javafx.geometry.Insets;
@@ -36,7 +37,8 @@ public class ViewController {
     private final FileView fileView;
     private final FileChooser fileChooser = new FileChooser();
     private final Stage stage;
-    private final ArrayList<File> pdfFiles = new ArrayList<>();
+    private final List<File> pdfFiles = new ArrayList<>();
+    private PdfOperation currentOperation;
 
     public ViewController(Stage stage) {
         this.view = new View();
@@ -57,6 +59,7 @@ public class ViewController {
         this.dropView.setOnFilesDropped(this::onFilesDropped);
         this.dropView.setBackButtonAction(this::backToHome);
         this.dropView.setOnFileChooserAction(this::getFiles);
+        this.fileView.setOnOperationStared(this::onOperationStarted);
 
         initializeFileCardScene();
         initializeFileChooser();
@@ -112,11 +115,22 @@ public class ViewController {
         buildFlowPane();
     }
 
+    private void onOperationStarted() {
+        PdfEngine pdfEngine =new PdfEngine();
+        try {
+            pdfEngine.run(currentOperation, pdfFiles);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void onOperationChanged(PdfOperation operation) {
         dropView.setOperationTitle(operation.getName());
         fileView.setOperationName(operation.getName(), operation.getDescription());
         view.setHomeVisible(false);
         dropView.setDropViewSceneVisible(true);
+
+        currentOperation = operation;
     }
 
     private void clearScene() {
