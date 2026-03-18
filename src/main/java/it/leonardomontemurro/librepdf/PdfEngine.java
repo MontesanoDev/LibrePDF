@@ -22,6 +22,7 @@ package it.leonardomontemurro.librepdf;
 
 import it.leonardomontemurro.librepdf.core.Merge;
 import it.leonardomontemurro.librepdf.core.Protect;
+import it.leonardomontemurro.librepdf.core.Unprotect;
 
 import java.io.File;
 import java.util.List;
@@ -33,12 +34,19 @@ public class PdfEngine {
         switch (currentOperation) {
             case MERGE -> mergeFile(pdfs);
             case PROTECT -> protectFile(pdfs);
+            case UNLOCK -> unprotectFile(pdfs);
         }
     }
 
     public void protectFile(List<File> pdfs) {
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
             executor.submit(() -> new Protect(pdfs, "password").execute()); //TODO Add PasswordField to UI
+        }
+    }
+
+    public void unprotectFile(List<File> pdfs) {
+        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            executor.submit(() -> new Unprotect(pdfs, "password").execute()); //TODO Add PasswordField to UI
         }
     }
 
