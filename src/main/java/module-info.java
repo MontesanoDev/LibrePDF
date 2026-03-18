@@ -7,6 +7,7 @@ module it.leonardomontemurro.librepdf.localpdf {
     requires org.apache.pdfbox;
     requires org.apache.pdfbox.io;
     requires java.xml;
+    requires java.desktop;
 
     opens it.leonardomontemurro.librepdf to javafx.fxml;
     exports it.leonardomontemurro.librepdf;

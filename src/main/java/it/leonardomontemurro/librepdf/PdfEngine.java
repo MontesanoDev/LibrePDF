@@ -19,6 +19,7 @@
 package it.leonardomontemurro.librepdf;
 
 import it.leonardomontemurro.librepdf.core.Merge;
+import it.leonardomontemurro.librepdf.core.PdfToJpeg;
 import it.leonardomontemurro.librepdf.core.Protect;
 import it.leonardomontemurro.librepdf.core.Unprotect;
 
@@ -33,6 +34,13 @@ public class PdfEngine {
             case MERGE -> mergeFile(pdfs);
             case PROTECT -> protectFile(pdfs);
             case UNLOCK -> unprotectFile(pdfs);
+            case PDFTOJPEG -> convertToJpeg(pdfs);
+        }
+    }
+
+    public void convertToJpeg(List<File> pdfs) {
+        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            executor.submit(() -> new PdfToJpeg(pdfs,300).execute()); //TODO Add PasswordField to UI
         }
     }
 
