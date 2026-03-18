@@ -30,6 +30,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 
 import java.io.File;
+import java.util.function.Consumer;
 
 public class FileView {
     private final BorderPane borderPane = new BorderPane();
@@ -39,6 +40,7 @@ public class FileView {
     private final Button operationButton = new Button();
     private final Label operationName = new Label();
     private final Label descriptionName = new Label();
+    private Runnable onOperationStared;
 
     public FileView() {
         initializeFileViewScene();
@@ -66,6 +68,7 @@ public class FileView {
         descriptionName.setWrapText(true);
 
         operationButton.getStyleClass().add("operationButton");
+        operationButton.setOnAction(_ -> onOperationStared.run());
 
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
@@ -115,6 +118,10 @@ public class FileView {
 
         card.getChildren().addAll(pdfIcon, fileNameLabel, textField);
         flowPane.getChildren().add(card);
+    }
+
+    void setOnOperationStared(Runnable callback) {
+        this.onOperationStared = callback;
     }
 
     void setFileViewVisible(Boolean visible) {
