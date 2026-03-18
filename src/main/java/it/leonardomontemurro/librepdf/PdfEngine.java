@@ -34,7 +34,8 @@ public class PdfEngine {
     }
 
      public void mergeFile(List<File> pdfs) {
-        Merge merge = new Merge(pdfs);
-        merge.execute();
+         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+             executor.submit(() -> new Merge(pdfs).execute());
+         }
     }
 }
