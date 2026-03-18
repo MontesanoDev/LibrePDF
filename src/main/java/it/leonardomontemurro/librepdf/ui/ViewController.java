@@ -85,7 +85,8 @@ public class ViewController {
         fileView.setFileViewVisible(true);
         int count = 1;
         for(File file : pdfFiles){
-            fileView.buildCard(file, count);
+            var fileName = file.getName();
+            fileView.buildCard(fileName, count);
             count++;
         }
         clearScene();
