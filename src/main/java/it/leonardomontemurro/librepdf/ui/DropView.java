@@ -187,15 +187,15 @@ public class DropView {
         return dragAndDropPane.isVisible();
     }
 
-    public Button getFileChooserButton() {
+    Button getFileChooserButton() {
         return fileChooserButton;
     }
 
-    public Label getTop() {
+    Label getTop() {
         return top;
     }
 
-    public Pane getDragAndDropPane() {
+    Pane getDragAndDropPane() {
         return dragAndDropPane;
     }
 }
