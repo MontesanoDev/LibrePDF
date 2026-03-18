@@ -30,6 +30,7 @@ import java.util.List;
 public class PdfToJpeg {
     private final List<File> sources;
     private final int dpi;
+
     public PdfToJpeg(List<File> files, int dpi)  {
         this.sources = files;
         this.dpi = dpi;
@@ -45,7 +46,7 @@ public class PdfToJpeg {
 
                 for (int pageIndex = 0; pageIndex < document.getNumberOfPages(); pageIndex++) {
 
-                    BufferedImage image = pdfRenderer.renderImageWithDPI(pageIndex, 300);
+                    BufferedImage image = pdfRenderer.renderImageWithDPI(pageIndex, dpi);
 
                     File outputFile = new File(outputDir, "page_" + (pageIndex + 1) + ".jpg");
                     ImageIO.write(image, "jpg", outputFile);
