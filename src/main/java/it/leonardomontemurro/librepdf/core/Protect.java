@@ -46,7 +46,7 @@ public class Protect {
                 AccessPermission ap = new AccessPermission();
                 ap.setCanPrint(false);
                 ap.setCanExtractContent(false);
-                StandardProtectionPolicy spp = new StandardProtectionPolicy("12345", "12345", ap);
+                StandardProtectionPolicy spp = new StandardProtectionPolicy(password, password, ap);
                 spp.setEncryptionKeyLength(keyLength);
                 doc.protect(spp);
                 doc.save(pdf.getAbsolutePath().replace(".pdf", "_protected.pdf"));
