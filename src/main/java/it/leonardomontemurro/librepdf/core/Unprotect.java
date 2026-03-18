@@ -21,7 +21,6 @@ package it.leonardomontemurro.librepdf.core;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
