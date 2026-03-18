@@ -95,28 +95,8 @@ public class FileView {
         flowPane.setVgap(30);
     }
 
-    void buildCard(File file, int count){
-        VBox card = new VBox(8);
-        card.setAlignment(Pos.CENTER);
-        card.getStyleClass().add("fileCard");
-        Region pdfIcon = new Region();
-        pdfIcon.getStyleClass().add("pdfIcon");
-        pdfIcon.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
-
-        Label fileNameLabel = new Label(file.getName());
-        fileNameLabel.setWrapText(true);
-        fileNameLabel.setAlignment(Pos.CENTER);
-        fileNameLabel.setTextAlignment(TextAlignment.CENTER);
-        fileNameLabel.getStyleClass().add("fileNameLabel");
-
-        TextField textField = new TextField();
-        textField.setAlignment(Pos.CENTER);
-        textField.setText(String.valueOf(count));
-
-        textField.getStyleClass().add("orderInput");
-
-        card.getChildren().addAll(pdfIcon, fileNameLabel, textField);
-        flowPane.getChildren().add(card);
+    void buildCard(String fileName, int count){
+        flowPane.getChildren().add(new FileCard(fileName, count));
     }
 
     void setOnOperationStared(Runnable callback) {
