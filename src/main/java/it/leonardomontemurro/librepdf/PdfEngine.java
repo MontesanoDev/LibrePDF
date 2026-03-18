@@ -20,5 +20,21 @@
 
 package it.leonardomontemurro.librepdf;
 
+import it.leonardomontemurro.librepdf.core.Merge;
+
+import java.io.File;
+import java.util.List;
+
 public class PdfEngine {
+
+    public void run(PdfOperation currentOperation, List<File> pdfs) {
+        switch (currentOperation) {
+            case MERGE -> mergeFile(pdfs);
+        }
+    }
+
+     public void mergeFile(List<File> pdfs) {
+        Merge merge = new Merge(pdfs);
+        merge.execute();
+    }
 }
