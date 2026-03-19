@@ -8,6 +8,18 @@
     -fx-padding: 50 10 10 10;
 }
 
+.homeButton:hover {
+    -fx-background-color: rgba(187, 134, 252, 0.25);
+    -fx-border-color: #D7B4FF;
+    -fx-cursor: hand;
+}
+
+.homeButton:pressed {
+    -fx-background-color: rgba(187, 134, 252, 0.4);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
 .merge{
     -fx-shape: "m256-120-56-56 193-194q23-23 35-52t12-61v-204l-64 63-56-56 160-160 160 160-56 56-64-63v204q0 32 12 61t35 52l193 194-56 56-224-224-224 224Z";
     -fx-background-color: WHITE;

@@ -94,6 +94,7 @@ public class View {
             Button button = new Button();
             button.getStyleClass().add("homeButton");
             button.setWrapText(true);
+            button.setPickOnBounds(false);
 
             Region region = new Region();
             region.getStyleClass().add(icon.getName());
