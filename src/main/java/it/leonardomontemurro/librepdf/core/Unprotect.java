@@ -43,9 +43,9 @@ public class Unprotect {
 
                 if (doc.isEncrypted()) {
                     doc.setAllSecurityToBeRemoved(true);
+                    doc.save(pdf.getAbsolutePath().replace(".pdf", "unlocked.pdf"));
                 }
 
-                doc.save(pdf.getAbsolutePath().replace(".pdf", "unlocked.pdf"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
