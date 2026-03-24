@@ -51,11 +51,7 @@ public class FileView {
     }
 
     void buildSideRight(javafx.beans.property.ReadOnlyDoubleProperty parentWidth) {
-        sideRight.setAlignment(Pos.CENTER);
-        sideRight.prefWidthProperty().bind(parentWidth.divide(4));
-        sideRight.minWidthProperty().bind(sideRight.prefWidthProperty());
-        sideRight.maxWidthProperty().bind(sideRight.prefWidthProperty());
-        sideRight.getStyleClass().add("sideBar");
+        buildSideBar(parentWidth);
 
         operationName.getStyleClass().add("operationName");
         descriptionName.setWrapText(true);
@@ -69,6 +65,14 @@ public class FileView {
         sideRight.getChildren().addAll(operationName, descriptionName, spacer, operationButton);
 
         sideRight.setPadding(new Insets(50, 10, 50, 10));
+    }
+
+    private void buildSideBar(javafx.beans.property.ReadOnlyDoubleProperty parentWidth) {
+        sideRight.setAlignment(Pos.CENTER);
+        sideRight.prefWidthProperty().bind(parentWidth.divide(4));
+        sideRight.minWidthProperty().bind(sideRight.prefWidthProperty());
+        sideRight.maxWidthProperty().bind(sideRight.prefWidthProperty());
+        sideRight.getStyleClass().add("sideBar");
     }
 
     private void buildScrollPane() {
