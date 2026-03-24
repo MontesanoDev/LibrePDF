@@ -20,9 +20,8 @@ package it.leonardomontemurro.librepdf.ui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.Cursor;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class FileView {
@@ -33,6 +32,12 @@ public class FileView {
     private final Button operationButton = new Button();
     private final Label operationName = new Label();
     private final Label descriptionName = new Label();
+    private final VBox metadataFields = new VBox(8);
+    private final TextField author = new TextField();
+    private final TextField title = new TextField();
+    private final TextField keywords = new TextField();
+    private final CheckBox nuclearMetadata = new CheckBox();
+
     private Runnable onOperationStared;
 
     public FileView() {
