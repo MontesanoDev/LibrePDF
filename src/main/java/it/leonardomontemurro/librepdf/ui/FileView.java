@@ -68,9 +68,12 @@ public class FileView {
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
 
-        sideRight.getChildren().addAll(operationName, descriptionName, spacer, operationButton);
+        Region topSpacer = new Region();
+        VBox.setVgrow(topSpacer, Priority.ALWAYS);
 
-        sideRight.setPadding(new Insets(50, 10, 50, 10));
+        sideRight.getChildren().addAll(operationName, descriptionName, topSpacer, metadataFields, spacer, operationButton);
+
+        sideRight.setPadding(new Insets(50, 20, 50, 20));
     }
 
     private void buildSideBar(javafx.beans.property.ReadOnlyDoubleProperty parentWidth) {
@@ -78,6 +81,7 @@ public class FileView {
         sideRight.prefWidthProperty().bind(parentWidth.divide(4));
         sideRight.minWidthProperty().bind(sideRight.prefWidthProperty());
         sideRight.maxWidthProperty().bind(sideRight.prefWidthProperty());
+        sideRight.setPadding(new Insets(0,50,0,50));
         sideRight.getStyleClass().add("sideBar");
     }
 
