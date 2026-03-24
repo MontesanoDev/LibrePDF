@@ -81,6 +81,7 @@ public class ViewController {
 
     private void buildFlowPane() {
         fileView.setFileViewVisible(true);
+        checkOperation();
         int count = 1;
         for(File file : pdfFiles){
             var fileName = file.getName();
