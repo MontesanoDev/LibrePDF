@@ -155,6 +155,7 @@ public class ViewController {
             view.setHomeVisible(true);
         } else {
             clearFile();
+            fileView.setMetadataInfoVisible(false);
             fileView.setFileViewVisible(false);
             dropView.setDropViewSceneVisible(true);
         }
