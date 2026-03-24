@@ -60,6 +60,7 @@ public class FileView {
 
         operationName.getStyleClass().add("operationName");
         descriptionName.setWrapText(true);
+        buildMetadataInputFields();
 
         operationButton.getStyleClass().add("operationButton");
         operationButton.setOnAction(_ -> onOperationStared.run());
@@ -96,6 +97,49 @@ public class FileView {
         flowPane.setAlignment(Pos.CENTER);
         flowPane.setHgap(30);
         flowPane.setVgap(30);
+    }
+
+    private void buildMetadataInputFields() {
+        title.setAlignment(Pos.CENTER);
+        title.setPromptText("Title");
+        author.setAlignment(Pos.CENTER);
+        author.setPromptText("Author");
+        keywords.setAlignment(Pos.CENTER);
+        keywords.setPromptText("Keywords");
+
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(10, 20, 0, 0));
+        hbox.setAlignment(Pos.BASELINE_RIGHT);
+        hbox.setSpacing(10);
+
+        Label nuclearLabel = new Label("Clean All Metadata");
+        nuclearMetadata.setCursor(Cursor.HAND);
+        hbox.getChildren().addAll(nuclearLabel, nuclearMetadata);
+
+        metadataFields.setPadding(new Insets(0,20,0,20));
+        metadataFields.setSpacing(15);
+        metadataFields.getChildren().addAll(title,author,keywords,hbox);
+        metadataFields.setVisible(false);
+
+        addListenerInputFields();
+    }
+
+    private void addListenerInputFields() {
+        nuclearMetadata.selectedProperty().addListener((_, _, newValue) -> {
+            if (newValue) {
+                title.setDisable(true);
+                author.setDisable(true);
+                keywords.setDisable(true);
+            } else {
+                title.setDisable(false);
+                author.setDisable(false);
+                keywords.setDisable(false);
+            }
+        });
+    }
+
+    void setMetadataInfoVisible(Boolean visible) {
+        metadataFields.setVisible(visible);
     }
 
     void buildCard(String fileName, int count){
