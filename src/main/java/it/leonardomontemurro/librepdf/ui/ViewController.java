@@ -90,6 +90,12 @@ public class ViewController {
         clearScene();
     }
 
+    private void checkOperation() {
+        switch (currentOperation) {
+            case METADATA -> fileView.setMetadataInfoVisible(true);
+        }
+    }
+
     private void buildStackPane() {
         view.addToStackPane(dropView.getDragAndDropPane());
         view.addToStackPane(dropView.getTop());
