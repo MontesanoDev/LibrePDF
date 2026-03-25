@@ -50,6 +50,7 @@ public class PdfToJpeg {
 
                     File outputFile = new File(outputDir, "page_" + (pageIndex + 1) + ".jpg");
                     ImageIO.write(image, "jpg", outputFile);
+                    image.flush();
                 }
 
             } catch (Exception e) {
