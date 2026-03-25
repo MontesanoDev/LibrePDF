@@ -157,6 +157,10 @@ public class FileView {
             }
         });
     }
+    
+    void setPasswordFieldVisible(Boolean visible) {
+        passwordField.setVisible(visible);
+    }
 
     void setMetadataInfoVisible(Boolean visible) {
         metadataFields.setVisible(visible);
