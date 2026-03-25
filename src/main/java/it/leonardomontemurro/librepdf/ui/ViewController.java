@@ -94,6 +94,7 @@ public class ViewController {
     private void checkOperation() {
         switch (currentOperation) {
             case METADATA -> fileView.setMetadataInfoVisible(true);
+            case UNLOCK, PROTECT -> fileView.setPasswordFieldVisible(true);
         }
     }
 
