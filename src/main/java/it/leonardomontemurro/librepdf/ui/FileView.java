@@ -37,6 +37,9 @@ public class FileView {
     private final TextField title = new TextField();
     private final TextField keywords = new TextField();
     private final CheckBox nuclearMetadata = new CheckBox();
+    private final VBox passwordField = new VBox(15);
+    private final PasswordField password = new PasswordField();
+    private final PasswordField confirmPassword = new PasswordField();
 
     private Runnable onOperationStared;
 
