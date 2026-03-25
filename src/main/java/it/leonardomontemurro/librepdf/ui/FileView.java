@@ -37,6 +37,9 @@ public class FileView {
     private final TextField title = new TextField();
     private final TextField keywords = new TextField();
     private final CheckBox nuclearMetadata = new CheckBox();
+    private final VBox passwordField = new VBox(15);
+    private final PasswordField password = new PasswordField();
+    private final PasswordField confirmPassword = new PasswordField();
 
     private Runnable onOperationStared;
 
@@ -61,7 +64,7 @@ public class FileView {
         operationName.getStyleClass().add("operationName");
         descriptionName.setWrapText(true);
         buildMetadataInputFields();
-
+        buildPasswordInputFields();
         operationButton.getStyleClass().add("operationButton");
         operationButton.setOnAction(_ -> onOperationStared.run());
 
@@ -71,7 +74,8 @@ public class FileView {
         Region topSpacer = new Region();
         VBox.setVgrow(topSpacer, Priority.ALWAYS);
 
-        sideRight.getChildren().addAll(operationName, descriptionName, topSpacer, metadataFields, spacer, operationButton);
+        sideRight.getChildren().addAll(operationName, descriptionName, topSpacer, metadataFields,
+                passwordField, spacer, operationButton);
 
         sideRight.setPadding(new Insets(50, 20, 50, 20));
     }
@@ -103,6 +107,17 @@ public class FileView {
         flowPane.setVgap(30);
     }
 
+    private void buildPasswordInputFields() {
+        password.setPromptText("Insert Password");
+        password.setAlignment(Pos.CENTER);
+        confirmPassword.setPromptText("Confirm Password");
+        confirmPassword.setAlignment(Pos.CENTER);
+        passwordField.getChildren().addAll(password, confirmPassword);
+        passwordField.setPadding(new Insets(0,20,0,20));
+        passwordField.setVisible(false);
+        passwordField.managedProperty().bind(passwordField.visibleProperty());
+    }
+
     private void buildMetadataInputFields() {
         title.setAlignment(Pos.CENTER);
         title.setPromptText("Title");
@@ -124,6 +139,7 @@ public class FileView {
         metadataFields.setSpacing(15);
         metadataFields.getChildren().addAll(title,author,keywords,hbox);
         metadataFields.setVisible(false);
+        metadataFields.managedProperty().bind(metadataFields.visibleProperty());
 
         addListenerInputFields();
     }
@@ -140,6 +156,15 @@ public class FileView {
                 keywords.setDisable(false);
             }
         });
+    }
+
+    void hideInputFields() {
+        setPasswordFieldVisible(false);
+        setMetadataInfoVisible(false);
+    }
+
+    void setPasswordFieldVisible(Boolean visible) {
+        passwordField.setVisible(visible);
     }
 
     void setMetadataInfoVisible(Boolean visible) {
