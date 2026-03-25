@@ -64,7 +64,7 @@ public class FileView {
         operationName.getStyleClass().add("operationName");
         descriptionName.setWrapText(true);
         buildMetadataInputFields();
-
+        buildPasswordInputFields();
         operationButton.getStyleClass().add("operationButton");
         operationButton.setOnAction(_ -> onOperationStared.run());
 
