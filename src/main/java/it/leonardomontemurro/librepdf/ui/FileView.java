@@ -107,6 +107,17 @@ public class FileView {
         flowPane.setVgap(30);
     }
 
+    private void buildPasswordInputFields() {
+        password.setPromptText("Insert Password");
+        password.setAlignment(Pos.CENTER);
+        confirmPassword.setPromptText("Confirm Password");
+        confirmPassword.setAlignment(Pos.CENTER);
+        passwordField.getChildren().addAll(password, confirmPassword);
+        passwordField.setPadding(new Insets(0,20,0,20));
+        passwordField.setVisible(false);
+        passwordField.managedProperty().bind(passwordField.visibleProperty());
+    }
+
     private void buildMetadataInputFields() {
         title.setAlignment(Pos.CENTER);
         title.setPromptText("Title");
