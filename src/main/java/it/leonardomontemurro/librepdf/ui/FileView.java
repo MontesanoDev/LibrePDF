@@ -74,7 +74,8 @@ public class FileView {
         Region topSpacer = new Region();
         VBox.setVgrow(topSpacer, Priority.ALWAYS);
 
-        sideRight.getChildren().addAll(operationName, descriptionName, topSpacer, metadataFields, spacer, operationButton);
+        sideRight.getChildren().addAll(operationName, descriptionName, topSpacer, metadataFields,
+                passwordField, spacer, operationButton);
 
         sideRight.setPadding(new Insets(50, 20, 50, 20));
     }
