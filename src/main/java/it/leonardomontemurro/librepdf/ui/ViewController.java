@@ -81,6 +81,7 @@ public class ViewController {
 
     private void buildFlowPane() {
         fileView.setFileViewVisible(true);
+        checkOperation();
         int count = 1;
         for(File file : pdfFiles){
             var fileName = file.getName();
@@ -88,6 +89,12 @@ public class ViewController {
             count++;
         }
         clearScene();
+    }
+
+    private void checkOperation() {
+        switch (currentOperation) {
+            case METADATA -> fileView.setMetadataInfoVisible(true);
+        }
     }
 
     private void buildStackPane() {
@@ -148,6 +155,7 @@ public class ViewController {
             view.setHomeVisible(true);
         } else {
             clearFile();
+            fileView.setMetadataInfoVisible(false);
             fileView.setFileViewVisible(false);
             dropView.setDropViewSceneVisible(true);
         }

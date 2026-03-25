@@ -20,9 +20,8 @@ package it.leonardomontemurro.librepdf.ui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.Cursor;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class FileView {
@@ -33,6 +32,12 @@ public class FileView {
     private final Button operationButton = new Button();
     private final Label operationName = new Label();
     private final Label descriptionName = new Label();
+    private final VBox metadataFields = new VBox(8);
+    private final TextField author = new TextField();
+    private final TextField title = new TextField();
+    private final TextField keywords = new TextField();
+    private final CheckBox nuclearMetadata = new CheckBox();
+
     private Runnable onOperationStared;
 
     public FileView() {
@@ -55,6 +60,7 @@ public class FileView {
 
         operationName.getStyleClass().add("operationName");
         descriptionName.setWrapText(true);
+        buildMetadataInputFields();
 
         operationButton.getStyleClass().add("operationButton");
         operationButton.setOnAction(_ -> onOperationStared.run());
@@ -62,9 +68,12 @@ public class FileView {
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
 
-        sideRight.getChildren().addAll(operationName, descriptionName, spacer, operationButton);
+        Region topSpacer = new Region();
+        VBox.setVgrow(topSpacer, Priority.ALWAYS);
 
-        sideRight.setPadding(new Insets(50, 10, 50, 10));
+        sideRight.getChildren().addAll(operationName, descriptionName, topSpacer, metadataFields, spacer, operationButton);
+
+        sideRight.setPadding(new Insets(50, 20, 50, 20));
     }
 
     private void buildSideBar(javafx.beans.property.ReadOnlyDoubleProperty parentWidth) {
@@ -72,6 +81,7 @@ public class FileView {
         sideRight.prefWidthProperty().bind(parentWidth.divide(4));
         sideRight.minWidthProperty().bind(sideRight.prefWidthProperty());
         sideRight.maxWidthProperty().bind(sideRight.prefWidthProperty());
+        sideRight.setPadding(new Insets(0,50,0,50));
         sideRight.getStyleClass().add("sideBar");
     }
 
@@ -91,6 +101,49 @@ public class FileView {
         flowPane.setAlignment(Pos.CENTER);
         flowPane.setHgap(30);
         flowPane.setVgap(30);
+    }
+
+    private void buildMetadataInputFields() {
+        title.setAlignment(Pos.CENTER);
+        title.setPromptText("Title");
+        author.setAlignment(Pos.CENTER);
+        author.setPromptText("Author");
+        keywords.setAlignment(Pos.CENTER);
+        keywords.setPromptText("Keywords");
+
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(10, 20, 0, 0));
+        hbox.setAlignment(Pos.BASELINE_RIGHT);
+        hbox.setSpacing(10);
+
+        Label nuclearLabel = new Label("Clean All Metadata");
+        nuclearMetadata.setCursor(Cursor.HAND);
+        hbox.getChildren().addAll(nuclearLabel, nuclearMetadata);
+
+        metadataFields.setPadding(new Insets(0,20,0,20));
+        metadataFields.setSpacing(15);
+        metadataFields.getChildren().addAll(title,author,keywords,hbox);
+        metadataFields.setVisible(false);
+
+        addListenerInputFields();
+    }
+
+    private void addListenerInputFields() {
+        nuclearMetadata.selectedProperty().addListener((_, _, newValue) -> {
+            if (newValue) {
+                title.setDisable(true);
+                author.setDisable(true);
+                keywords.setDisable(true);
+            } else {
+                title.setDisable(false);
+                author.setDisable(false);
+                keywords.setDisable(false);
+            }
+        });
+    }
+
+    void setMetadataInfoVisible(Boolean visible) {
+        metadataFields.setVisible(visible);
     }
 
     void buildCard(String fileName, int count){
