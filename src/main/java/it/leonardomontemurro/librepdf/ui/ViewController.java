@@ -156,7 +156,7 @@ public class ViewController {
             view.setHomeVisible(true);
         } else {
             clearFile();
-            fileView.setMetadataInfoVisible(false);
+            fileView.hideInputFields();
             fileView.setFileViewVisible(false);
             dropView.setDropViewSceneVisible(true);
         }
