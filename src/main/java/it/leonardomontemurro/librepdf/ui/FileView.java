@@ -139,6 +139,7 @@ public class FileView {
         metadataFields.setSpacing(15);
         metadataFields.getChildren().addAll(title,author,keywords,hbox);
         metadataFields.setVisible(false);
+        metadataFields.managedProperty().bind(metadataFields.visibleProperty());
 
         addListenerInputFields();
     }
