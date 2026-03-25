@@ -157,7 +157,12 @@ public class FileView {
             }
         });
     }
-    
+
+    void hideInputFields() {
+        setPasswordFieldVisible(false);
+        setMetadataInfoVisible(false);
+    }
+
     void setPasswordFieldVisible(Boolean visible) {
         passwordField.setVisible(visible);
     }
