@@ -15,6 +15,9 @@
   <p><i>Yes, this is a Java desktop app. No, really.</i></p>
 </div>
 
+> [!WARNING]
+> **Disclaimer:** LibrePDF is provided "as is", without warranty of any kind. I’m a student working on this in my spare time, not a corporation with a legal team. While I do my best to make it stable and safe, I cannot be held responsible for any data loss, corrupted PDFs, or if the app decide to take a nap while processing your thesis. **Always keep a backup of your original files.**
+
 ## Why does it exist? 
 
 I’ve always used cloud-based sites to manage my PDFs out of laziness and for speed, but I’ve always found the PDF landscape to be a wasteland of clunky software, privacy-invasive solutions, or worse, malware. 
