@@ -95,7 +95,9 @@ public class DropView {
                 }
                 event.setDropCompleted(success);
                 event.consume();
-                onFilesDropped.accept(pdfs);
+                if(success){
+                    onFilesDropped.accept(pdfs);
+                }
             }
         });
     }
