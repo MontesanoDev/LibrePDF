@@ -16,7 +16,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.leonardomontemurro.librepdf;
+package it.leonardomontemurro.librepdf.util;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

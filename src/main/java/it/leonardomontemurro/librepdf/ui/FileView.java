@@ -18,6 +18,7 @@
 
 package it.leonardomontemurro.librepdf.ui;
 
+import it.leonardomontemurro.librepdf.util.I18N;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -66,7 +67,7 @@ public class FileView {
         buildMetadataInputFields();
         buildPasswordInputFields();
         operationButton.getStyleClass().add("operationButton");
-        operationButton.setText("execute");
+        operationButton.setText(I18N.get("ui.execute"));
         operationButton.setOnAction(_ -> onOperationStared.run());
 
         Region spacer = new Region();
@@ -109,9 +110,9 @@ public class FileView {
     }
 
     private void buildPasswordInputFields() {
-        password.setPromptText("Insert Password");
+        password.setPromptText(I18N.get("ui.password.prompt"));
         password.setAlignment(Pos.CENTER);
-        confirmPassword.setPromptText("Confirm Password");
+        confirmPassword.setPromptText(I18N.get("ui.password.confirm"));
         confirmPassword.setAlignment(Pos.CENTER);
         passwordField.getChildren().addAll(password, confirmPassword);
         passwordField.setPadding(new Insets(0,20,0,20));
@@ -121,18 +122,18 @@ public class FileView {
 
     private void buildMetadataInputFields() {
         title.setAlignment(Pos.CENTER);
-        title.setPromptText("Title");
+        title.setPromptText(I18N.get("ui.metadata.title"));
         author.setAlignment(Pos.CENTER);
-        author.setPromptText("Author");
+        author.setPromptText(I18N.get("ui.metadata.author"));
         keywords.setAlignment(Pos.CENTER);
-        keywords.setPromptText("Keywords");
+        keywords.setPromptText(I18N.get("ui.metadata.keywords"));
 
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(10, 20, 0, 0));
         hbox.setAlignment(Pos.BASELINE_RIGHT);
         hbox.setSpacing(10);
 
-        Label nuclearLabel = new Label("Clean All Metadata");
+        Label nuclearLabel = new Label(I18N.get("ui.metadata.clean_all"));
         nuclearMetadata.setCursor(Cursor.HAND);
         hbox.getChildren().addAll(nuclearLabel, nuclearMetadata);
 

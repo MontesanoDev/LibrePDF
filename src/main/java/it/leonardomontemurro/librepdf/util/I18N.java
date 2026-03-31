@@ -16,31 +16,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.leonardomontemurro.librepdf;
+package it.leonardomontemurro.librepdf.util;
 
-import it.leonardomontemurro.librepdf.util.I18N;
+import java.util.ResourceBundle;
+import java.text.MessageFormat;
 
-public enum PdfOperation {
-    MERGE("op.merge"),
-    SPLIT("op.split"),
-    ROTATE("op.rotate"),
-    SWAP("op.swap"),
-    METADATA("op.metadata"),
-    PDFTOJPEG("op.pdftojpeg"),
-    PROTECT("op.protect"),
-    UNLOCK("op.unlock");
+public class I18N {
 
-    private final String key;
+    private static final ResourceBundle bundle = ResourceBundle.getBundle("i18n.messages");
 
-    PdfOperation(String key) {
-        this.key = key;
+    public static String get(String key) {
+        return bundle.getString(key);
     }
 
-    public String getName() {
-        return I18N.get(key + ".name");
-    }
-
-    public String getDescription() {
-        return I18N.get(key + ".desc");
+    public static String get(String key, Object... args) {
+        return MessageFormat.format(bundle.getString(key), args);
     }
 }

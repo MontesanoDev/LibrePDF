@@ -18,6 +18,7 @@
 
 package it.leonardomontemurro.librepdf.ui;
 
+import it.leonardomontemurro.librepdf.util.I18N;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -104,7 +105,7 @@ public class DropView {
     private void buildFileChooserButton() {
         fileChooserButton.minHeightProperty().bind(dragAndDropPane.heightProperty().divide(7));
         fileChooserButton.maxWidthProperty().bind(dragAndDropPane.heightProperty().divide(3));
-        fileChooserButton.setText("Select PDF Files!");
+        fileChooserButton.setText(I18N.get("ui.drop.select"));
         fileChooserButton.setPickOnBounds(false);
         fileChooserButton.setTextAlignment(TextAlignment.CENTER);
         fileChooserButton.getStyleClass().add("addFilesButton");
@@ -127,7 +128,7 @@ public class DropView {
     }
 
     private Label setInfo(){
-        dragAndDropInfo.setText("Drag and drop PDF files here!");
+        dragAndDropInfo.setText(I18N.get("ui.drop.info"));
         dragAndDropInfo.getStyleClass().add("dragAndDropInfo");
         dragAndDropInfo.maxWidthProperty().bind(dragAndDropPane.widthProperty().divide(1));
         dragAndDropInfo.maxHeightProperty().bind(dragAndDropPane.heightProperty().divide(2));
@@ -146,7 +147,7 @@ public class DropView {
     }
 
     private void buildBackButton() {
-        backButton.setText("← Back");
+        backButton.setText(I18N.get("ui.back"));
         backButton.getStyleClass().add("backButton");
         backButton.setVisible(false);
         backButton.setOnAction(_ -> onBackAction.run());

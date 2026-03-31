@@ -15,4 +15,6 @@ module it.leonardomontemurro.librepdf.localpdf {
     opens it.leonardomontemurro.librepdf.ui to javafx.fxml;
     exports it.leonardomontemurro.librepdf.core;
     opens it.leonardomontemurro.librepdf.core to javafx.fxml;
+    exports it.leonardomontemurro.librepdf.util;
+    opens it.leonardomontemurro.librepdf.util to javafx.fxml;
 }
