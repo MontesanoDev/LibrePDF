@@ -18,30 +18,29 @@
 
 package it.leonardomontemurro.librepdf;
 
+import it.leonardomontemurro.librepdf.util.I18N;
+
 public enum PdfOperation {
-    MERGE("merge","Combine multiple PDF files into a single document."),
-    SPLIT("split","Extract specific pages or divide a document into multiple independent files."),
-    ROTATE("rotate","Change the orientation of your pages."),
-    SWAP("swap","Reorder pages order."),
-    METADATA("metadata","Clean or randomize metadata."),
-    PDFTOJPEG("pdftojpeg","Convert your pdf to JPEG."),
-    PROTECT("protect","Secure your documents with strong encryption."),
-    UNLOCK("unlock", "Remove password from pdf.");
+    MERGE("op.merge"),
+    SPLIT("op.split"),
+    ROTATE("op.rotate"),
+    SWAP("op.swap"),
+    METADATA("op.metadata"),
+    PDFTOJPEG("op.pdftojpeg"),
+    PROTECT("op.protect"),
+    UNLOCK("op.unlock");
 
-    private final String name;
-    private final String description;
+    private final String key;
 
-    PdfOperation(String name, String description){
-        this.name = name;
-        this.description = description;
+    PdfOperation(String key) {
+        this.key = key;
     }
 
     public String getName() {
-        return name;
+        return I18N.get(key + ".name");
     }
 
-    public String getDescription(){
-        return description;
+    public String getDescription() {
+        return I18N.get(key + ".desc");
     }
-
 }
