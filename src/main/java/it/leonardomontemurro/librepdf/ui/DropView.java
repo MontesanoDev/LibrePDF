@@ -71,9 +71,7 @@ public class DropView {
             entered.consume();
         });
         stackPane.setOnDragExited(exited -> {
-            if(!dragAndDropPane.isVisible()) {
-                dragAndDropPane.getStyleClass().remove("dragOver");
-            }
+            dragAndDropPane.getStyleClass().remove("dragOver");
             exited.consume();
         });
         stackPane.setOnDragOver(event -> {
