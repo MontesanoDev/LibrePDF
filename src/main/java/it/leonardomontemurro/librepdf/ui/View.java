@@ -97,7 +97,7 @@ public class View {
             button.setPickOnBounds(false);
 
             Region region = new Region();
-            region.getStyleClass().add(icon.getName());
+            region.getStyleClass().add(icon.name().toLowerCase());
 
             button.setContentDisplay(ContentDisplay.TOP);
             button.setGraphic(region);
