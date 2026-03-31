@@ -66,6 +66,7 @@ public class FileView {
         buildMetadataInputFields();
         buildPasswordInputFields();
         operationButton.getStyleClass().add("operationButton");
+        operationButton.setText("execute");
         operationButton.setOnAction(_ -> onOperationStared.run());
 
         Region spacer = new Region();
@@ -192,7 +193,6 @@ public class FileView {
     }
 
     void setOperationName(String name, String description){
-        operationButton.setText(name.toUpperCase());
         operationName.setText(name.toUpperCase());
         descriptionName.setText(description);
     }
