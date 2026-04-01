@@ -107,7 +107,7 @@ public class DropView {
 
     private void buildFileChooserButton() {
         fileChooserButton.minHeightProperty().bind(dragAndDropPane.heightProperty().divide(7));
-        fileChooserButton.maxWidthProperty().bind(dragAndDropPane.heightProperty().divide(3));
+        fileChooserButton.maxWidthProperty().bind(dragAndDropPane.heightProperty().divide(2.5));
         fileChooserButton.setText(I18N.get("ui.drop.select"));
         fileChooserButton.setPickOnBounds(false);
         fileChooserButton.setTextAlignment(TextAlignment.CENTER);
