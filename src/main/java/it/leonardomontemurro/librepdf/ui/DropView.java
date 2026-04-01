@@ -18,6 +18,7 @@
 
 package it.leonardomontemurro.librepdf.ui;
 
+import it.leonardomontemurro.librepdf.util.AlertService;
 import it.leonardomontemurro.librepdf.util.I18N;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -97,6 +98,8 @@ public class DropView {
                 event.consume();
                 if(success){
                     onFilesDropped.accept(pdfs);
+                } else {
+                    AlertService.error(I18N.get("pdf.error"));
                 }
             }
         });
