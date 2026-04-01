@@ -43,6 +43,6 @@ public class AlertService {
         alert.setHeaderText(null);
         alert.setContentText(content);
 
-        alert.showAndWait();
+        alert.show();
     }
 }
