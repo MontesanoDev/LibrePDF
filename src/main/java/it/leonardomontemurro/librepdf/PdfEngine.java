@@ -25,7 +25,6 @@ import it.leonardomontemurro.librepdf.core.Unprotect;
 
 import java.io.File;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 public class PdfEngine {
 
@@ -40,33 +39,23 @@ public class PdfEngine {
 
     public void convertToJpeg(List<File> pdfs) {
         Thread.startVirtualThread(() -> {
-            try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
-                executor.submit(() -> new PdfToJpeg(pdfs, 300).execute()); //TODO Add PasswordField to UI
-            }
+            new PdfToJpeg(pdfs, 300).execute(); //TODO Add PasswordField to UI
         });
     }
 
     public void protectFile(List<File> pdfs) {
         Thread.startVirtualThread(() -> {
-            try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
-                executor.submit(() -> new Protect(pdfs, "password").execute()); //TODO Add PasswordField to UI
-            }
+            new Protect(pdfs, "password").execute(); //TODO Add PasswordField to UI
         });
     }
 
     public void unprotectFile(List<File> pdfs) {
         Thread.startVirtualThread(() -> {
-            try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
-                executor.submit(() -> new Unprotect(pdfs, "password").execute()); //TODO Add PasswordField to UI
-            }
+            new Unprotect(pdfs, "password").execute(); //TODO Add PasswordField to UI
         });
     }
 
      public void mergeFile(List<File> pdfs) {
-         Thread.startVirtualThread(() -> {
-             try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
-                 executor.submit(() -> new Merge(pdfs).execute());
-             }
-         });
+         Thread.startVirtualThread(() -> new Merge(pdfs).execute());
     }
 }
