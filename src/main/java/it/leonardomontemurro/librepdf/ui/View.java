@@ -24,8 +24,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
@@ -37,8 +35,6 @@ public class View {
     private final static int WIDTH_SIZE = 1280;
     private final static int GRID_GAP = 20;
     private final static byte GRID_MAX_COLUMN = 4;
-    private final static int BUTTON_WIDTH = 240;
-    private final static int BUTTON_HEIGHT = 210;
 
     private final AnchorPane root = new AnchorPane();
     private final StackPane stackPane = new StackPane();
@@ -91,22 +87,10 @@ public class View {
     public void buildButtons(GridPane gridPane){
         byte i = 0;
         for(PdfOperation icon : PdfOperation.values()){
-            Button button = new Button();
-            button.getStyleClass().add("homeButton");
-            button.setWrapText(true);
-            button.setPickOnBounds(false);
-
-            Region region = new Region();
-            region.getStyleClass().add(icon.name().toLowerCase());
-
-            button.setContentDisplay(ContentDisplay.TOP);
-            button.setGraphic(region);
-            button.setText(icon.getDescription());
-
-            button.setOnAction(_ -> onOperationSelected.accept(icon));
-            button.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
             int col = i % GRID_MAX_COLUMN;
             int row = i / GRID_MAX_COLUMN;
+            HomeButton button = new HomeButton(icon);
+            button.setOnAction(_ -> onOperationSelected.accept(icon));
             gridPane.add(button,col,row);
             i++;
         }
