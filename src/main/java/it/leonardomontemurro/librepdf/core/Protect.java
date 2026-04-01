@@ -40,7 +40,7 @@ public class Protect {
         int keyLength = 256;
 
         for (File pdf : sources) {
-            try (PDDocument doc = Loader.loadPDF(new File (String.valueOf(pdf)))) {
+            try (PDDocument doc = Loader.loadPDF(pdf)) {
                 AccessPermission ap = new AccessPermission();
                 ap.setCanPrint(false);
                 ap.setCanExtractContent(false);
