@@ -34,7 +34,7 @@ public class AlertService {
     }
 
     public static void error(String message) {
-        executeAlert(AlertType.ERROR, "ERORR", message);
+        executeAlert(AlertType.ERROR, "ERROR", message);
     }
 
     private static void executeAlert(AlertType type, String title, String content) {
