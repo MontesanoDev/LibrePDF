@@ -37,18 +37,30 @@ public class Merge {
     public void execute() {
         try {
             PDFMergerUtility merger = new PDFMergerUtility();
-
             for (File pdf : sources) {
                 merger.addSource(pdf);
             }
 
             String outputDirectory = sources.getFirst().getParent();
-            merger.setDestinationFileName(outputDirectory + File.separator + "merged-pdf.pdf");
+            String finalPath = getUniqueFilePath(outputDirectory);
+            merger.setDestinationFileName(finalPath);
 
             merger.mergeDocuments(IOUtils.createMemoryOnlyStreamCache(), CompressParameters.NO_COMPRESSION);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String getUniqueFilePath(String directory) {
+        File file = new File(directory, "merged-pdf" + ".pdf");
+        int counter = 1;
+
+        while (file.exists()) {
+            file = new File(directory, "merged-pdf" + " (" + counter + ").pdf");
+            counter++;
+        }
+
+        return file.getAbsolutePath();
     }
 }
