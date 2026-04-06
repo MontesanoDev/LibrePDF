@@ -28,6 +28,12 @@ import java.util.List;
 
 public class PdfEngine {
 
+    private final String password;
+
+    public PdfEngine(String password) {
+        this.password = password;
+    }
+
     public void run(PdfOperation currentOperation, List<File> pdfs) {
         switch (currentOperation) {
             case MERGE -> mergeFile(pdfs);
