@@ -148,6 +148,7 @@ public class ViewController {
     private void clearFile() {
         fileView.clearFlowPane();
         pdfFiles.clear();
+        fileView.clearPassword();
     }
 
     private void backToHome() {
