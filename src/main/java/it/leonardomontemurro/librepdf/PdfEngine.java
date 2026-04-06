@@ -62,9 +62,13 @@ public class PdfEngine {
     }
 
     public void unprotectFile(List<File> pdfs) {
-        Thread.startVirtualThread(() -> {
-            new Unprotect(pdfs, "password").execute(); //TODO Add PasswordField to UI
-        });
+        if(!isPasswordBlank()) {
+            Thread.startVirtualThread(() -> {
+                new Unprotect(pdfs, password).execute();
+            });
+        } else {
+            AlertService.warning(I18N.get("alert.blank.password"));
+        }
     }
 
      public void mergeFile(List<File> pdfs) {
