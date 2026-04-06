@@ -52,9 +52,13 @@ public class PdfEngine {
     }
 
     public void protectFile(List<File> pdfs) {
-        Thread.startVirtualThread(() -> {
-            new Protect(pdfs, "password").execute(); //TODO Add PasswordField to UI
-        });
+        if(!isPasswordBlank()) {
+            Thread.startVirtualThread(() -> {
+                new Protect(pdfs, password).execute();
+            });
+        } else {
+            AlertService.warning(I18N.get("alert.blank.password"));
+        }
     }
 
     public void unprotectFile(List<File> pdfs) {
