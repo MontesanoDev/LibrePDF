@@ -177,6 +177,32 @@ public class FileView {
         flowPane.getChildren().add(new FileCard(fileName, count));
     }
 
+    //I don't understand why I can't bind the operation button only
+    // when the password field is visible, without affecting all the
+    // other operations o.O
+    private void handleBlankPassword() {
+        operationButton.disableProperty().bind(
+        Bindings.createBooleanBinding(() -> {
+
+            String p1 = password.getText();
+            String p2 = confirmPassword.getText();
+
+            return !p1.equals(p2);
+        },
+            password.textProperty(),
+            confirmPassword.textProperty()
+        ));
+    }
+
+    void clearPassword() {
+        password.setText("");
+        confirmPassword.setText("");
+    }
+
+    public String getPassword() {
+        return password.getText();
+    }
+
     void setOnOperationStared(Runnable callback) {
         this.onOperationStared = callback;
     }
