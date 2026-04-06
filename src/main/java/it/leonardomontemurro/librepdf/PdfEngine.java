@@ -74,4 +74,8 @@ public class PdfEngine {
      public void mergeFile(List<File> pdfs) {
          Thread.startVirtualThread(() -> new Merge(pdfs).execute());
     }
+
+    private Boolean isPasswordBlank() {
+        return password.isBlank();
+    }
 }
