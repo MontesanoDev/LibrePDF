@@ -19,6 +19,7 @@
 package it.leonardomontemurro.librepdf.ui;
 
 import it.leonardomontemurro.librepdf.util.I18N;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -52,6 +53,7 @@ public class FileView {
         buildFlowPane();
         buildScrollPane();
         buildBorderPane();
+        handleBlankPassword();
     }
 
     private void buildBorderPane() {
@@ -175,6 +177,32 @@ public class FileView {
 
     void buildCard(String fileName, int count){
         flowPane.getChildren().add(new FileCard(fileName, count));
+    }
+
+    //I don't understand why I can't bind the operation button only
+    // when the password field is visible, without affecting all the
+    // other operations o.O
+    private void handleBlankPassword() {
+        operationButton.disableProperty().bind(
+        Bindings.createBooleanBinding(() -> {
+
+            String p1 = password.getText();
+            String p2 = confirmPassword.getText();
+
+            return !p1.equals(p2);
+        },
+            password.textProperty(),
+            confirmPassword.textProperty()
+        ));
+    }
+
+    void clearPassword() {
+        password.setText("");
+        confirmPassword.setText("");
+    }
+
+    public String getPassword() {
+        return password.getText();
     }
 
     void setOnOperationStared(Runnable callback) {

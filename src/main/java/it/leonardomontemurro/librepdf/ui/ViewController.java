@@ -123,7 +123,7 @@ public class ViewController {
     }
 
     private void onOperationStarted() {
-        PdfEngine pdfEngine =new PdfEngine();
+        PdfEngine pdfEngine = new PdfEngine(fileView.getPassword());
         try {
             pdfEngine.run(currentOperation, pdfFiles);
         } catch (Exception e) {
@@ -148,6 +148,7 @@ public class ViewController {
     private void clearFile() {
         fileView.clearFlowPane();
         pdfFiles.clear();
+        fileView.clearPassword();
     }
 
     private void backToHome() {

@@ -22,11 +22,19 @@ import it.leonardomontemurro.librepdf.core.Merge;
 import it.leonardomontemurro.librepdf.core.PdfToJpeg;
 import it.leonardomontemurro.librepdf.core.Protect;
 import it.leonardomontemurro.librepdf.core.Unprotect;
+import it.leonardomontemurro.librepdf.util.AlertService;
+import it.leonardomontemurro.librepdf.util.I18N;
 
 import java.io.File;
 import java.util.List;
 
 public class PdfEngine {
+
+    private final String password;
+
+    public PdfEngine(String password) {
+        this.password = password;
+    }
 
     public void run(PdfOperation currentOperation, List<File> pdfs) {
         switch (currentOperation) {
@@ -39,23 +47,35 @@ public class PdfEngine {
 
     public void convertToJpeg(List<File> pdfs) {
         Thread.startVirtualThread(() -> {
-            new PdfToJpeg(pdfs, 300).execute(); //TODO Add PasswordField to UI
+            new PdfToJpeg(pdfs, 300).execute();
         });
     }
 
     public void protectFile(List<File> pdfs) {
-        Thread.startVirtualThread(() -> {
-            new Protect(pdfs, "password").execute(); //TODO Add PasswordField to UI
-        });
+        if(!isPasswordBlank()) {
+            Thread.startVirtualThread(() -> {
+                new Protect(pdfs, password).execute();
+            });
+        } else {
+            AlertService.warning(I18N.get("alert.blank.password"));
+        }
     }
 
     public void unprotectFile(List<File> pdfs) {
-        Thread.startVirtualThread(() -> {
-            new Unprotect(pdfs, "password").execute(); //TODO Add PasswordField to UI
-        });
+        if(!isPasswordBlank()) {
+            Thread.startVirtualThread(() -> {
+                new Unprotect(pdfs, password).execute();
+            });
+        } else {
+            AlertService.warning(I18N.get("alert.blank.password"));
+        }
     }
 
      public void mergeFile(List<File> pdfs) {
          Thread.startVirtualThread(() -> new Merge(pdfs).execute());
+    }
+
+    private Boolean isPasswordBlank() {
+        return password.isBlank();
     }
 }
