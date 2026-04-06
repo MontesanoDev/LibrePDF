@@ -30,11 +30,11 @@ public class AlertService {
     }
 
     public static void warning(String message) {
-        executeAlert(AlertType.WARNING, "Warning", message);
+        executeAlert(AlertType.WARNING, I18N.get("alert.title.warning"), message);
     }
 
     public static void error(String message) {
-        executeAlert(AlertType.ERROR, "ERROR", message);
+        executeAlert(AlertType.ERROR, I18N.get("alert.title.error"), message);
     }
 
     private static void executeAlert(AlertType type, String title, String content) {
