@@ -52,6 +52,7 @@ public class FileView {
         buildFlowPane();
         buildScrollPane();
         buildBorderPane();
+        handleBlankPassword();
     }
 
     private void buildBorderPane() {
