@@ -47,7 +47,7 @@ public class PdfEngine {
 
     public void convertToJpeg(List<File> pdfs) {
         Thread.startVirtualThread(() -> {
-            new PdfToJpeg(pdfs, 300).execute(); //TODO Add PasswordField to UI
+            new PdfToJpeg(pdfs, 300).execute();
         });
     }
 
