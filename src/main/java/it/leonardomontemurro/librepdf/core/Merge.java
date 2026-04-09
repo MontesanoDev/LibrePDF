@@ -18,6 +18,7 @@
 
 package it.leonardomontemurro.librepdf.core;
 
+import it.leonardomontemurro.librepdf.util.FileService;
 import org.apache.pdfbox.io.IOUtils;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.pdfwriter.compress.CompressParameters;
@@ -42,7 +43,7 @@ public class Merge {
             }
 
             String outputDirectory = sources.getFirst().getParent();
-            String finalPath = getUniqueFilePath(outputDirectory);
+            String finalPath = FileService.getUniqueFilePath(outputDirectory);
             merger.setDestinationFileName(finalPath);
 
             merger.mergeDocuments(IOUtils.createMemoryOnlyStreamCache(), CompressParameters.NO_COMPRESSION);
@@ -52,15 +53,4 @@ public class Merge {
         }
     }
 
-    private String getUniqueFilePath(String directory) {
-        File file = new File(directory, "merged-pdf" + ".pdf");
-        int counter = 1;
-
-        while (file.exists()) {
-            file = new File(directory, "merged-pdf" + " (" + counter + ").pdf");
-            counter++;
-        }
-
-        return file.getAbsolutePath();
-    }
 }
