@@ -18,6 +18,7 @@
 
 package it.leonardomontemurro.librepdf.core;
 
+import it.leonardomontemurro.librepdf.util.FileService;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
@@ -43,7 +44,8 @@ public class Unprotect {
 
                 if (doc.isEncrypted()) {
                     doc.setAllSecurityToBeRemoved(true);
-                    doc.save(pdf.getAbsolutePath().replace(".pdf", "unlocked.pdf"));
+                    String outputDirectory = sources.getFirst().getParent();
+                    doc.save(FileService.getUniqueFilePath(outputDirectory, "protected"));
                 }
 
             } catch (IOException e) {

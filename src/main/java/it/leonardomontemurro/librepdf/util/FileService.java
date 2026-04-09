@@ -22,12 +22,12 @@ import java.io.File;
 
 public class FileService {
 
-    public static String getUniqueFilePath(String directory) {
-        File file = new File(directory, "merged-pdf" + ".pdf");
+    public static String getUniqueFilePath(String directory, String prefix) {
+        File file = new File(directory, prefix + ".pdf");
         int counter = 1;
 
         while (file.exists()) {
-            file = new File(directory, "merged-pdf" + " (" + counter + ").pdf");
+            file = new File(directory, prefix + " (" + counter + ").pdf");
             counter++;
         }
 
