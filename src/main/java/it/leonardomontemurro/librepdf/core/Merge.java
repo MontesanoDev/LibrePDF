@@ -43,7 +43,7 @@ public class Merge {
             }
 
             String outputDirectory = sources.getFirst().getParent();
-            String finalPath = FileService.getUniqueFilePath(outputDirectory);
+            String finalPath = FileService.getUniqueFilePath(outputDirectory, "merged");
             merger.setDestinationFileName(finalPath);
 
             merger.mergeDocuments(IOUtils.createMemoryOnlyStreamCache(), CompressParameters.NO_COMPRESSION);
