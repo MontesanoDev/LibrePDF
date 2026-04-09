@@ -45,7 +45,7 @@ public class Unprotect {
                 if (doc.isEncrypted()) {
                     doc.setAllSecurityToBeRemoved(true);
                     String outputDirectory = sources.getFirst().getParent();
-                    doc.save(FileService.getUniqueFilePath(outputDirectory, "protected"));
+                    doc.save(FileService.getUniqueFilePath(outputDirectory, "unlocked"));
                 }
 
             } catch (IOException e) {
