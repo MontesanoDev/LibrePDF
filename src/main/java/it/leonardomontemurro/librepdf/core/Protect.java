@@ -47,7 +47,8 @@ public class Protect {
                 StandardProtectionPolicy spp = new StandardProtectionPolicy(password, password, ap);
                 spp.setEncryptionKeyLength(keyLength);
                 doc.protect(spp);
-                doc.save(pdf.getAbsolutePath().replace(".pdf", "_protected.pdf"));
+                String outputDirectory = sources.getFirst().getParent();
+                doc.save(FileService.getUniqueFilePath(outputDirectory, "protected"));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
