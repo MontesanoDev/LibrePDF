@@ -39,6 +39,8 @@ Everything runs **100% locally on your machine**. No internet connection require
 * **Protect:** Secure your documents with strong encryption and passwords.
 * **Unlock:** Remove passwords from PDFs (if you have the original password, of course).
 
+Passwords are always masked and cannot be copied to clipboard. This is not a missing feature — it's a deliberate choice. If you're encrypting sensitive documents, you probably don't want your password visible on screen.
+
 ---
 
 ## Under the Hood
