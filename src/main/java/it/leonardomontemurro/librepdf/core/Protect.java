@@ -18,6 +18,7 @@
 
 package it.leonardomontemurro.librepdf.core;
 
+import it.leonardomontemurro.librepdf.util.FileService;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
