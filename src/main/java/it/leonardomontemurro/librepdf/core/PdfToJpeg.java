@@ -18,6 +18,9 @@
 
 package it.leonardomontemurro.librepdf.core;
 
+import it.leonardomontemurro.librepdf.util.AlertService;
+import it.leonardomontemurro.librepdf.util.FileService;
+import it.leonardomontemurro.librepdf.util.I18N;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -38,8 +41,8 @@ public class PdfToJpeg {
 
     public void execute() {
         for (File pdf : sources) {
-
-            File outputDir = getFile(pdf);
+            String cleanName = pdf.getName().replace(".pdf", "");
+            File outputDir = FileService.createDir(pdf, cleanName, "_images");
 
             try (PDDocument document = Loader.loadPDF(pdf)) {
                 PDFRenderer pdfRenderer = new PDFRenderer(document);
@@ -54,21 +57,8 @@ public class PdfToJpeg {
                 }
 
             } catch (Exception e) {
-                throw new RuntimeException("Errore durante l'estrazione delle immagini dal file: " + pdf.getName(), e);
+                throw new RuntimeException(I18N.get("alert.convert.jpg.error") + pdf.getName(), e);
             }
         }
-    }
-
-    private static File getFile(File pdf) {
-        String cleanName = pdf.getName().replace(".pdf", "");
-        File outputDir = new File(pdf.getParent(), cleanName + "_images");
-
-        if (!outputDir.exists()) {
-            boolean created = outputDir.mkdirs();
-            if (!created) {
-                throw new RuntimeException("Impossibile creare la cartella: " + outputDir.getAbsolutePath());
-            }
-        }
-        return outputDir;
     }
 }
