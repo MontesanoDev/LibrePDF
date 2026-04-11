@@ -24,8 +24,10 @@ public class ProtectTest {
         File pdf = createPdf("test.pdf");
         new Protect(List.of(pdf), "secret").execute();
 
-        boolean found = Files.list(tempDir)
-                .anyMatch(p -> p.getFileName().toString().startsWith("protected") && p.toString().endsWith(".pdf"));
+        boolean found;
+        try (var stream = Files.list(tempDir)) {
+            found = stream.anyMatch(p -> p.getFileName().toString().startsWith("protected") && p.toString().endsWith(".pdf"));
+        }
         assertTrue(found, "protected.pdf file must be created");
     }
 
@@ -34,9 +36,11 @@ public class ProtectTest {
         File pdf = createPdf("test.pdf");
         new Protect(List.of(pdf), "secret").execute();
 
-        File output = Files.list(tempDir)
-                .filter(p -> p.getFileName().toString().startsWith("protected"))
-                .findFirst().orElseThrow().toFile();
+        File output;
+        try (var stream = Files.list(tempDir)) {
+            output = stream.filter(p -> p.getFileName().toString().startsWith("protected"))
+                    .findFirst().orElseThrow().toFile();
+        }
 
         try (PDDocument doc = Loader.loadPDF(output, "secret")) {
             assertTrue(doc.isEncrypted(), "Output file must be encrypted");
@@ -49,9 +53,11 @@ public class ProtectTest {
         File pdf2 = createPdf("b.pdf");
         new Protect(List.of(pdf1, pdf2), "pass").execute();
 
-        long count = Files.list(tempDir)
-                .filter(p -> p.getFileName().toString().startsWith("protected") && p.toString().endsWith(".pdf"))
-                .count();
+        long count;
+        try (var stream = Files.list(tempDir)) {
+            count = stream.filter(p -> p.getFileName().toString().startsWith("protected") && p.toString().endsWith(".pdf"))
+                    .count();
+        }
         assertEquals(2, count, "2 protected files must be created");
     }
 
@@ -62,8 +68,10 @@ public class ProtectTest {
         new Protect(List.of(pdf1), "pass").execute();
         new Protect(List.of(pdf2), "pass").execute();
 
-        boolean hasIncrement = Files.list(tempDir)
-                .anyMatch(p -> p.getFileName().toString().equals("protected (1).pdf"));
+        boolean hasIncrement;
+        try (var stream = Files.list(tempDir)) {
+            hasIncrement = stream.anyMatch(p -> p.getFileName().toString().equals("protected (1).pdf"));
+        }
         assertTrue(hasIncrement, "Second file must not overwrite the first one");
     }
 

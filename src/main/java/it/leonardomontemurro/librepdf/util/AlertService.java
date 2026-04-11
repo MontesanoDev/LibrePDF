@@ -18,6 +18,7 @@
 
 package it.leonardomontemurro.librepdf.util;
 
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -38,11 +39,18 @@ public class AlertService {
     }
 
     private static void executeAlert(AlertType type, String title, String content) {
+        if (Platform.isFxApplicationThread()) {
+            showAlert(type, title, content);
+        } else {
+            Platform.runLater(() -> showAlert(type, title, content));
+        }
+    }
+    
+    private static void showAlert(AlertType type, String title, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(APP_TITLE + " - " + title);
         alert.setHeaderText(null);
         alert.setContentText(content);
-
         alert.show();
     }
 }

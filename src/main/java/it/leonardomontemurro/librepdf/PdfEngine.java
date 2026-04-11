@@ -47,14 +47,22 @@ public class PdfEngine {
 
     public void convertToJpeg(List<File> pdfs) {
         Thread.startVirtualThread(() -> {
-            new PdfToJpeg(pdfs, 300).execute();
+            try {
+                new PdfToJpeg(pdfs, 300).execute();
+            } catch (Exception e) {
+                AlertService.error(I18N.get("alert.convert.jpg.error") + ": " + e.getMessage());
+            }
         });
     }
 
     public void protectFile(List<File> pdfs) {
         if(!isPasswordBlank()) {
             Thread.startVirtualThread(() -> {
-                new Protect(pdfs, password).execute();
+                try {
+                    new Protect(pdfs, password).execute();
+                } catch (Exception e) {
+                    AlertService.error(I18N.get("alert.protect.error") + ": " + e.getMessage());
+                }
             });
         } else {
             AlertService.warning(I18N.get("alert.blank.password"));
@@ -64,7 +72,11 @@ public class PdfEngine {
     public void unprotectFile(List<File> pdfs) {
         if(!isPasswordBlank()) {
             Thread.startVirtualThread(() -> {
-                new Unprotect(pdfs, password).execute();
+                try {
+                    new Unprotect(pdfs, password).execute();
+                } catch (Exception e) {
+                    AlertService.error(I18N.get("alert.unprotect.error") + ": " + e.getMessage());
+                }
             });
         } else {
             AlertService.warning(I18N.get("alert.blank.password"));
@@ -72,7 +84,13 @@ public class PdfEngine {
     }
 
      public void mergeFile(List<File> pdfs) {
-         Thread.startVirtualThread(() -> new Merge(pdfs).execute());
+         Thread.startVirtualThread(() -> {
+            try {
+                new Merge(pdfs).execute();
+            } catch (Exception e) {
+                AlertService.error(I18N.get("alert.merge.error") + ": " + e.getMessage());
+            }
+         });
     }
 
     private Boolean isPasswordBlank() {

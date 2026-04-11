@@ -65,9 +65,10 @@ public class PdfToJpegTest {
     }
 
     private long countJpegs(Path dir) throws IOException {
-        return Files.list(dir)
-                .filter(p -> p.getFileName().toString().endsWith(".jpg"))
-                .count();
+        try (var stream = Files.list(dir)) {
+            return stream.filter(p -> p.getFileName().toString().endsWith(".jpg"))
+                    .count();
+        }
     }
 
     private File createPdf(String name, int pages) throws IOException {

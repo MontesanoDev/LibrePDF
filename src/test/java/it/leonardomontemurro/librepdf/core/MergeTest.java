@@ -25,8 +25,10 @@ public class MergeTest {
 
         assertDoesNotThrow(() -> new Merge(List.of(pdf1, pdf2)).execute());
 
-        boolean found = Files.list(tempDir)
-                .anyMatch(p -> p.getFileName().toString().startsWith("merged") && p.toString().endsWith(".pdf"));
+        boolean found;
+        try (var stream = Files.list(tempDir)) {
+            found = stream.anyMatch(p -> p.getFileName().toString().startsWith("merged") && p.toString().endsWith(".pdf"));
+        }
         assertTrue(found, "merged.pdf file must be created");
     }
 
@@ -43,9 +45,11 @@ public class MergeTest {
 
         new Merge(List.of(pdf1, pdf2)).execute();
 
-        File merged = Files.list(tempDir)
-                .filter(p -> p.getFileName().toString().startsWith("merged"))
-                .findFirst().orElseThrow().toFile();
+        File merged;
+        try (var stream = Files.list(tempDir)) {
+            merged = stream.filter(p -> p.getFileName().toString().startsWith("merged"))
+                    .findFirst().orElseThrow().toFile();
+        }
 
         try (PDDocument doc = org.apache.pdfbox.Loader.loadPDF(merged)) {
             assertEquals(5, doc.getNumberOfPages(), "Merged file must have 2+3=5 pages");
@@ -70,8 +74,10 @@ public class MergeTest {
         new Merge(List.of(pdf1, pdf2)).execute();
         new Merge(List.of(pdf1, pdf2)).execute();
 
-        boolean hasIncrement = Files.list(tempDir)
-                .anyMatch(p -> p.getFileName().toString().equals("merged (1).pdf"));
+        boolean hasIncrement;
+        try (var stream = Files.list(tempDir)) {
+            hasIncrement = stream.anyMatch(p -> p.getFileName().toString().equals("merged (1).pdf"));
+        }
         assertTrue(hasIncrement, "Second merge must not overwrite the first one");
     }
 

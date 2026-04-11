@@ -26,8 +26,10 @@ public class UnprotectTest {
         File enc = createEncryptedPdf("enc.pdf", "secret");
         new Unprotect(List.of(enc), "secret").execute();
 
-        boolean found = Files.list(tempDir)
-                .anyMatch(p -> p.getFileName().toString().startsWith("unlocked") && p.toString().endsWith(".pdf"));
+        boolean found;
+        try (var stream = Files.list(tempDir)) {
+            found = stream.anyMatch(p -> p.getFileName().toString().startsWith("unlocked") && p.toString().endsWith(".pdf"));
+        }
         assertTrue(found, "unlocked.pdf file must be created");
     }
 
@@ -36,9 +38,11 @@ public class UnprotectTest {
         File enc = createEncryptedPdf("enc.pdf", "secret");
         new Unprotect(List.of(enc), "secret").execute();
 
-        File output = Files.list(tempDir)
-                .filter(p -> p.getFileName().toString().startsWith("unlocked"))
-                .findFirst().orElseThrow().toFile();
+        File output;
+        try (var stream = Files.list(tempDir)) {
+            output = stream.filter(p -> p.getFileName().toString().startsWith("unlocked"))
+                    .findFirst().orElseThrow().toFile();
+        }
 
         try (PDDocument doc = Loader.loadPDF(output)) {
             assertFalse(doc.isEncrypted(), "Output file must not be encrypted");
@@ -50,8 +54,10 @@ public class UnprotectTest {
         File plain = createPlainPdf("plain.pdf");
         new Unprotect(List.of(plain), "").execute();
 
-        boolean found = Files.list(tempDir)
-                .anyMatch(p -> p.getFileName().toString().startsWith("unlocked"));
+        boolean found;
+        try (var stream = Files.list(tempDir)) {
+            found = stream.anyMatch(p -> p.getFileName().toString().startsWith("unlocked"));
+        }
         assertFalse(found, "Should not create output if PDF is not encrypted");
     }
 
@@ -69,8 +75,10 @@ public class UnprotectTest {
         new Unprotect(List.of(enc1), "pass").execute();
         new Unprotect(List.of(enc2), "pass").execute();
 
-        boolean hasIncrement = Files.list(tempDir)
-                .anyMatch(p -> p.getFileName().toString().equals("unlocked (1).pdf"));
+        boolean hasIncrement;
+        try (var stream = Files.list(tempDir)) {
+            hasIncrement = stream.anyMatch(p -> p.getFileName().toString().equals("unlocked (1).pdf"));
+        }
         assertTrue(hasIncrement, "Second file must not overwrite the first one");
     }
 
