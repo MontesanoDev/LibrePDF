@@ -33,4 +33,23 @@ public class FileService {
 
         return file.getAbsolutePath();
     }
+
+    public static File createDir(File pdf, String cleanName, String prefix) {
+        String parent = pdf.getParent();
+        File outputDir = new File(parent, cleanName + prefix);
+
+        int counter = 1;
+        while (outputDir.exists()) {
+            outputDir = new File(parent, cleanName + "(" + counter + ")" + prefix);
+            counter++;
+        }
+
+        boolean created = outputDir.mkdirs();
+        if (!created) {
+            AlertService.error(I18N.get("alert.create.directory.error"));
+            throw new RuntimeException(I18N.get("alert.create.directory.error") + outputDir.getAbsolutePath());
+        }
+
+        return outputDir;
+    }
 }
