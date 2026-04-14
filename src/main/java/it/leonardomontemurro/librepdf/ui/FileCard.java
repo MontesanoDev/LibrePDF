@@ -21,11 +21,15 @@ package it.leonardomontemurro.librepdf.ui;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
+import javafx.util.converter.IntegerStringConverter;
 
 public class FileCard extends VBox{
+
+    private final TextField textField = new TextField();
 
     public FileCard(String fileName, int count) {
 
@@ -43,10 +47,24 @@ public class FileCard extends VBox{
         fileNameLabel.setTextAlignment(TextAlignment.CENTER);
         fileNameLabel.getStyleClass().add("fileNameLabel");
 
-        TextField textField = new TextField(String.valueOf(count));
-        textField.setAlignment(Pos.CENTER);
-        textField.getStyleClass().add("orderInput");
-
+        this.textField.setAlignment(Pos.CENTER);
+        this.textField.getStyleClass().add("orderInput");
+        bindIntegersToTextField(count);
         this.getChildren().addAll(pdfIcon, fileNameLabel, textField);
+    }
+
+    private void bindIntegersToTextField(int count) {
+        TextFormatter<Integer> integerFormatter = new TextFormatter<>(
+            new IntegerStringConverter(),
+            count,
+    change -> {
+                String newText = change.getControlNewText();
+                if (newText.matches("-?\\d*")) {
+                    return change;
+                }
+                return null;
+            }
+        );
+        this.textField.setTextFormatter(integerFormatter);
     }
 }
