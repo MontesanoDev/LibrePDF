@@ -27,7 +27,7 @@ public class AlertService {
     private static final String APP_TITLE = "LibrePDF";
 
     public static void info(String message) {
-        executeAlert(AlertType.INFORMATION, "Information", message);
+        executeAlert(AlertType.INFORMATION, I18N.get("alert.title.info"), message);
     }
 
     public static void warning(String message) {
