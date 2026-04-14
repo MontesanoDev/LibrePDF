@@ -137,7 +137,9 @@ public class ViewController {
 
     private void onOperationStarted() {
         PdfEngine pdfEngine = new PdfEngine(fileView.getPassword());
-
+        if(currentOperation == MERGE){
+            orderFiles();
+        }
         try {
             pdfEngine.run(currentOperation, pdfFiles);
         } catch (Exception e) {
@@ -145,8 +147,34 @@ public class ViewController {
         }
     }
 
+    private void orderFiles() {
+        pdfFilesMap.clear();
+        populateHashMap();
 
+        List<File> orderedFiles = new ArrayList<>();
+        for(TextField textField : textFields){
+            int index = Integer.parseInt(textField.getText()) - 1; //HashMap starts from 0
+            File f = pdfFilesMap.get(index);
 
+            if (f != null) {
+                orderedFiles.add(f);
+            } else {
+                System.err.println("Attenzione: indice " + (index + 1) + " non trovato!");
+            }
+        }
+
+        if(!orderedFiles.equals(pdfFiles) && orderedFiles.size() == pdfFiles.size()) {
+            pdfFiles.clear();
+            pdfFiles.addAll(orderedFiles);
+        }
+    }
+    private void populateHashMap() {
+        int i = 0;
+        for(File pdf : pdfFiles){
+            pdfFilesMap.put(i,pdf);
+            i++;
+        }
+    }
 
     private void onOperationChanged(PdfOperation operation) {
         dropView.setOperationTitle(operation.getName());
