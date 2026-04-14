@@ -22,7 +22,7 @@ public class ProtectTest {
     @Test
     void testProtectCreatesOutputFile() throws IOException {
         File pdf = createPdf("test.pdf");
-        new Protect(List.of(pdf), "secret").execute();
+        new Protect(List.of(pdf), "secret".toCharArray()).execute();
 
         boolean found;
         try (var stream = Files.list(tempDir)) {
@@ -34,7 +34,7 @@ public class ProtectTest {
     @Test
     void testProtectOutputIsEncrypted() throws IOException {
         File pdf = createPdf("test.pdf");
-        new Protect(List.of(pdf), "secret").execute();
+        new Protect(List.of(pdf), "secret".toCharArray()).execute();
 
         File output;
         try (var stream = Files.list(tempDir)) {
@@ -51,7 +51,7 @@ public class ProtectTest {
     void testProtectMultiplePdfs() throws IOException {
         File pdf1 = createPdf("a.pdf");
         File pdf2 = createPdf("b.pdf");
-        new Protect(List.of(pdf1, pdf2), "pass").execute();
+        new Protect(List.of(pdf1, pdf2), "pass".toCharArray()).execute();
 
         long count;
         try (var stream = Files.list(tempDir)) {
@@ -65,8 +65,8 @@ public class ProtectTest {
     void testProtectAvoidOverwrite() throws IOException {
         File pdf1 = createPdf("x.pdf");
         File pdf2 = createPdf("y.pdf");
-        new Protect(List.of(pdf1), "pass").execute();
-        new Protect(List.of(pdf2), "pass").execute();
+        new Protect(List.of(pdf1), "pass".toCharArray()).execute();
+        new Protect(List.of(pdf2), "pass".toCharArray()).execute();
 
         boolean hasIncrement;
         try (var stream = Files.list(tempDir)) {
@@ -79,7 +79,7 @@ public class ProtectTest {
     void testProtectNonPdfThrows() throws IOException {
         File txt = new File(tempDir.toFile(), "fake.txt");
         Files.write(txt.toPath(), "not a pdf".getBytes());
-        assertThrows(RuntimeException.class, () -> new Protect(List.of(txt), "pass").execute());
+        assertThrows(RuntimeException.class, () -> new Protect(List.of(txt), "pass".toCharArray()).execute());
     }
 
     private File createPdf(String name) throws IOException {

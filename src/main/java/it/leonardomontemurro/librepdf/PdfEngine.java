@@ -26,13 +26,14 @@ import it.leonardomontemurro.librepdf.util.AlertService;
 import it.leonardomontemurro.librepdf.util.I18N;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 public class PdfEngine {
 
-    private final String password;
+    private final char[] password;
 
-    public PdfEngine(String password) {
+    public PdfEngine(char[] password) {
         this.password = password;
     }
 
@@ -56,12 +57,14 @@ public class PdfEngine {
     }
 
     public void protectFile(List<File> pdfs) {
-        if(!isPasswordBlank()) {
+        if (!isPasswordBlank()) {
             Thread.startVirtualThread(() -> {
                 try {
                     new Protect(pdfs, password).execute();
                 } catch (Exception e) {
                     AlertService.error(I18N.get("alert.protect.error") + ": " + e.getMessage());
+                } finally {
+                    Arrays.fill(password, '\0');
                 }
             });
         } else {
@@ -70,12 +73,14 @@ public class PdfEngine {
     }
 
     public void unprotectFile(List<File> pdfs) {
-        if(!isPasswordBlank()) {
+        if (!isPasswordBlank()) {
             Thread.startVirtualThread(() -> {
                 try {
                     new Unprotect(pdfs, password).execute();
                 } catch (Exception e) {
                     AlertService.error(I18N.get("alert.unprotect.error") + ": " + e.getMessage());
+                } finally {
+                    Arrays.fill(password, '\0');
                 }
             });
         } else {
@@ -93,7 +98,10 @@ public class PdfEngine {
          });
     }
 
-    private Boolean isPasswordBlank() {
-        return password.isBlank();
+    private boolean isPasswordBlank() {
+        for (char c : password) {
+            if (!Character.isWhitespace(c)) return false;
+        }
+        return true;
     }
 }

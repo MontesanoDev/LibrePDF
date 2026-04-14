@@ -24,7 +24,7 @@ public class UnprotectTest {
     @Test
     void testUnprotectCreatesOutputFile() throws IOException {
         File enc = createEncryptedPdf("enc.pdf", "secret");
-        new Unprotect(List.of(enc), "secret").execute();
+        new Unprotect(List.of(enc), "secret".toCharArray()).execute();
 
         boolean found;
         try (var stream = Files.list(tempDir)) {
@@ -36,7 +36,7 @@ public class UnprotectTest {
     @Test
     void testUnprotectOutputIsNotEncrypted() throws IOException {
         File enc = createEncryptedPdf("enc.pdf", "secret");
-        new Unprotect(List.of(enc), "secret").execute();
+        new Unprotect(List.of(enc), "secret".toCharArray()).execute();
 
         File output;
         try (var stream = Files.list(tempDir)) {
@@ -52,7 +52,7 @@ public class UnprotectTest {
     @Test
     void testUnprotectNonEncryptedDoesNothing() throws IOException {
         File plain = createPlainPdf("plain.pdf");
-        new Unprotect(List.of(plain), "").execute();
+        new Unprotect(List.of(plain), "".toCharArray()).execute();
 
         boolean found;
         try (var stream = Files.list(tempDir)) {
@@ -65,15 +65,15 @@ public class UnprotectTest {
     void testUnprotectWrongPasswordThrows() throws IOException {
         File enc = createEncryptedPdf("enc.pdf", "correct");
         assertThrows(RuntimeException.class,
-                () -> new Unprotect(List.of(enc), "wrong").execute());
+                () -> new Unprotect(List.of(enc), "wrong".toCharArray()).execute());
     }
 
     @Test
     void testUnprotectAvoidOverwrite() throws IOException {
         File enc1 = createEncryptedPdf("a.pdf", "pass");
         File enc2 = createEncryptedPdf("b.pdf", "pass");
-        new Unprotect(List.of(enc1), "pass").execute();
-        new Unprotect(List.of(enc2), "pass").execute();
+        new Unprotect(List.of(enc1), "pass".toCharArray()).execute();
+        new Unprotect(List.of(enc2), "pass".toCharArray()).execute();
 
         boolean hasIncrement;
         try (var stream = Files.list(tempDir)) {
@@ -87,7 +87,7 @@ public class UnprotectTest {
         File txt = new File(tempDir.toFile(), "fake.txt");
         Files.write(txt.toPath(), "not a pdf".getBytes());
         assertThrows(RuntimeException.class,
-                () -> new Unprotect(List.of(txt), "pass").execute());
+                () -> new Unprotect(List.of(txt), "pass".toCharArray()).execute());
     }
 
     private File createPlainPdf(String name) throws IOException {

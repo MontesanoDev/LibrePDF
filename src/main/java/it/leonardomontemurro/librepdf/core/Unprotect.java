@@ -29,18 +29,19 @@ import java.util.List;
 public class Unprotect {
 
     private final List<File> sources;
-    private final String password;
+    private final char[] password;
 
-    public Unprotect(List<File> files, String password)  {
+    public Unprotect(List<File> files, char[] password)  {
         this.sources = files;
         this.password = password;
     }
 
     public void execute() {
+        String pwd = new String(password);
 
         for (File pdf : sources) {
 
-            try(PDDocument doc = Loader.loadPDF(pdf,password)){
+            try(PDDocument doc = Loader.loadPDF(pdf, pwd)){
 
                 if (doc.isEncrypted()) {
                     doc.setAllSecurityToBeRemoved(true);
