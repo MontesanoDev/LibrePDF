@@ -204,8 +204,8 @@ public class FileView {
         confirmPassword.setText("");
     }
 
-    public String getPassword() {
-        return password.getText();
+    public char[] getPassword() {
+        return password.getText().toCharArray();
     }
 
     void setOnOperationStared(Runnable callback) {

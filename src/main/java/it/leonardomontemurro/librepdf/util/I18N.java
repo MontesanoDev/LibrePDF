@@ -18,18 +18,27 @@
 
 package it.leonardomontemurro.librepdf.util;
 
-import java.util.ResourceBundle;
 import java.text.MessageFormat;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 public class I18N {
 
     private static final ResourceBundle bundle = ResourceBundle.getBundle("i18n.messages");
 
     public static String get(String key) {
-        return bundle.getString(key);
+        try {
+            return bundle.getString(key);
+        } catch (MissingResourceException e) {
+            return key;
+        }
     }
 
     public static String get(String key, Object... args) {
-        return MessageFormat.format(bundle.getString(key), args);
+        try {
+            return MessageFormat.format(bundle.getString(key), args);
+        } catch (MissingResourceException e) {
+            return key;
+        }
     }
 }

@@ -59,7 +59,7 @@ public class FileCard extends VBox{
             count,
     change -> {
                 String newText = change.getControlNewText();
-                if (newText.matches("-?\\d*")) {
+                if (newText.matches("\\d*")) {
                     return change;
                 }
                 return null;

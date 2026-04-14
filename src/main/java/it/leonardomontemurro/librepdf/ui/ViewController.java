@@ -19,6 +19,8 @@ package it.leonardomontemurro.librepdf.ui;
 
 import it.leonardomontemurro.librepdf.PdfEngine;
 import it.leonardomontemurro.librepdf.PdfOperation;
+import it.leonardomontemurro.librepdf.util.AlertService;
+import it.leonardomontemurro.librepdf.util.I18N;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,8 +31,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static it.leonardomontemurro.librepdf.PdfOperation.MERGE;
 
@@ -41,7 +44,6 @@ public class ViewController {
     private final FileChooser fileChooser = new FileChooser();
     private final Stage stage;
     private final List<File> pdfFiles = new ArrayList<>();
-    private final LinkedHashMap<Integer, File> pdfFilesMap = new LinkedHashMap<>();
     private final List<TextField> textFields = new ArrayList<>();
 
     private PdfOperation currentOperation;
@@ -136,10 +138,10 @@ public class ViewController {
     }
 
     private void onOperationStarted() {
-        PdfEngine pdfEngine = new PdfEngine(fileView.getPassword());
-        if(currentOperation == MERGE){
-            orderFiles();
+        if (currentOperation == MERGE && !orderFiles()) {
+            return;
         }
+        PdfEngine pdfEngine = new PdfEngine(fileView.getPassword());
         try {
             pdfEngine.run(currentOperation, pdfFiles);
         } catch (Exception e) {
@@ -147,33 +149,38 @@ public class ViewController {
         }
     }
 
-    private void orderFiles() {
-        pdfFilesMap.clear();
-        populateHashMap();
+    private boolean orderFiles() {
+        int size = pdfFiles.size();
+        Set<Integer> seen = new HashSet<>();
 
-        List<File> orderedFiles = new ArrayList<>();
-        for(TextField textField : textFields){
-            int index = Integer.parseInt(textField.getText()) - 1; //HashMap starts from 0
-            File f = pdfFilesMap.get(index);
-
-            if (f != null) {
-                orderedFiles.add(f);
-            } else {
-                System.err.println("Attenzione: indice " + (index + 1) + " non trovato!");
+        for (TextField textField : textFields) {
+            int val;
+            try {
+                val = Integer.parseInt(textField.getText());
+            } catch (NumberFormatException e) {
+                AlertService.warning(I18N.get("alert.order.empty"));
+                return false;
+            }
+            if (val < 1 || val > size) {
+                AlertService.warning(I18N.get("alert.order.outofrange"));
+                return false;
+            }
+            if (!seen.add(val)) {
+                AlertService.warning(I18N.get("alert.order.duplicate"));
+                return false;
             }
         }
 
-        if(!orderedFiles.equals(pdfFiles) && orderedFiles.size() == pdfFiles.size()) {
+        List<File> orderedFiles = new ArrayList<>();
+        for (TextField textField : textFields) {
+            orderedFiles.add(pdfFiles.get(Integer.parseInt(textField.getText()) - 1));
+        }
+
+        if (!orderedFiles.equals(pdfFiles)) {
             pdfFiles.clear();
             pdfFiles.addAll(orderedFiles);
         }
-    }
-    private void populateHashMap() {
-        int i = 0;
-        for(File pdf : pdfFiles){
-            pdfFilesMap.put(i,pdf);
-            i++;
-        }
+        return true;
     }
 
     private void onOperationChanged(PdfOperation operation) {
@@ -193,6 +200,7 @@ public class ViewController {
     private void clearFile() {
         fileView.clearFlowPane();
         pdfFiles.clear();
+        textFields.clear();
         fileView.clearPassword();
     }
 

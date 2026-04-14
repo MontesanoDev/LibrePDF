@@ -30,22 +30,23 @@ import java.util.List;
 public class Protect {
 
     private final List<File> sources;
-    private final String password;
+    private final char[] password;
 
-    public Protect(List<File> files, String password)  {
+    public Protect(List<File> files, char[] password)  {
         this.sources = files;
         this.password = password;
     }
 
     public void execute() {
         int keyLength = 256;
+        String pwd = new String(password);
 
         for (File pdf : sources) {
             try (PDDocument doc = Loader.loadPDF(pdf)) {
                 AccessPermission ap = new AccessPermission();
                 ap.setCanPrint(false);
                 ap.setCanExtractContent(false);
-                StandardProtectionPolicy spp = new StandardProtectionPolicy(password, password, ap);
+                StandardProtectionPolicy spp = new StandardProtectionPolicy(pwd, pwd, ap);
                 spp.setEncryptionKeyLength(keyLength);
                 doc.protect(spp);
                 String outputDirectory = sources.getFirst().getParent();
