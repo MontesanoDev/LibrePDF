@@ -175,8 +175,11 @@ public class FileView {
         metadataFields.setVisible(visible);
     }
 
-    void buildCard(String fileName, int count){
-        flowPane.getChildren().add(new FileCard(fileName, count));
+    TextField buildCard(String fileName, int count){
+        FileCard fileCard = new FileCard(fileName, count);
+        flowPane.getChildren().add(fileCard);
+
+        return fileCard.getTextFields();
     }
 
     //I don't understand why I can't bind the operation button only
