@@ -52,7 +52,7 @@ public class FileCard extends VBox{
         bindIntegersToTextField(count);
         this.getChildren().addAll(pdfIcon, fileNameLabel, textField);
     }
-
+    //Thank you javathinking for this code <3
     private void bindIntegersToTextField(int count) {
         TextFormatter<Integer> integerFormatter = new TextFormatter<>(
             new IntegerStringConverter(),
