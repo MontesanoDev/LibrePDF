@@ -22,12 +22,17 @@ import it.leonardomontemurro.librepdf.PdfOperation;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+
+import static it.leonardomontemurro.librepdf.PdfOperation.MERGE;
 
 public class ViewController {
     private final View view;
@@ -36,6 +41,9 @@ public class ViewController {
     private final FileChooser fileChooser = new FileChooser();
     private final Stage stage;
     private final List<File> pdfFiles = new ArrayList<>();
+    private final LinkedHashMap<Integer, File> pdfFilesMap = new LinkedHashMap<>();
+    private final List<TextField> textFields = new ArrayList<>();
+
     private PdfOperation currentOperation;
 
     public ViewController(Stage stage) {
@@ -85,7 +93,12 @@ public class ViewController {
         int count = 1;
         for(File file : pdfFiles){
             var fileName = file.getName();
-            fileView.buildCard(fileName, count);
+            TextField textField = fileView.buildCard(fileName, count);
+            textFields.add(textField);
+            if(!(currentOperation == MERGE)) {
+                textField.setEditable(false);
+                textField.setCursor(Cursor.HAND);
+            }
             count++;
         }
         clearScene();
@@ -124,10 +137,42 @@ public class ViewController {
 
     private void onOperationStarted() {
         PdfEngine pdfEngine = new PdfEngine(fileView.getPassword());
+        if(currentOperation == MERGE){
+            orderFiles();
+        }
         try {
             pdfEngine.run(currentOperation, pdfFiles);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void orderFiles() {
+        pdfFilesMap.clear();
+        populateHashMap();
+
+        List<File> orderedFiles = new ArrayList<>();
+        for(TextField textField : textFields){
+            int index = Integer.parseInt(textField.getText()) - 1; //HashMap starts from 0
+            File f = pdfFilesMap.get(index);
+
+            if (f != null) {
+                orderedFiles.add(f);
+            } else {
+                System.err.println("Attenzione: indice " + (index + 1) + " non trovato!");
+            }
+        }
+
+        if(!orderedFiles.equals(pdfFiles) && orderedFiles.size() == pdfFiles.size()) {
+            pdfFiles.clear();
+            pdfFiles.addAll(orderedFiles);
+        }
+    }
+    private void populateHashMap() {
+        int i = 0;
+        for(File pdf : pdfFiles){
+            pdfFilesMap.put(i,pdf);
+            i++;
         }
     }
 
