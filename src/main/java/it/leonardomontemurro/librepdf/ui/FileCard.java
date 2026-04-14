@@ -67,4 +67,8 @@ public class FileCard extends VBox{
         );
         this.textField.setTextFormatter(integerFormatter);
     }
+
+    TextField getTextFields() {
+        return textField;
+    }
 }
