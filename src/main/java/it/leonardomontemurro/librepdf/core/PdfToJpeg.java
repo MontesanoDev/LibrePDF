@@ -41,7 +41,7 @@ public class PdfToJpeg {
 
     public void execute() {
         for (File pdf : sources) {
-            String cleanName = pdf.getName().replace(".pdf", "");
+            String cleanName = pdf.getName().replaceFirst("(?i)\\.pdf$", "");
             File outputDir = FileService.createDir(pdf, cleanName, "_images");
 
             try (PDDocument document = Loader.loadPDF(pdf)) {
