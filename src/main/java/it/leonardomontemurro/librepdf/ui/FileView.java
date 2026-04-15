@@ -116,6 +116,7 @@ public class FileView {
         password.setAlignment(Pos.CENTER);
         confirmPassword.setPromptText(I18N.get("ui.password.confirm"));
         confirmPassword.setAlignment(Pos.CENTER);
+        confirmPassword.managedProperty().bind(confirmPassword.visibleProperty());
         passwordField.getChildren().addAll(password, confirmPassword);
         passwordField.setPadding(new Insets(0,20,0,20));
         passwordField.setVisible(false);
@@ -171,6 +172,10 @@ public class FileView {
         passwordField.setVisible(visible);
     }
 
+    void setUnlockFieldVisible(Boolean visible){
+        confirmPassword.setVisible(visible);
+    }
+
     void setMetadataInfoVisible(Boolean visible) {
         metadataFields.setVisible(visible);
     }
@@ -192,10 +197,16 @@ public class FileView {
             String p1 = password.getText();
             String p2 = confirmPassword.getText();
 
+            if (!confirmPassword.isVisible() && passwordField.isVisible()) {
+                return p1.isBlank();
+            }
+
             return !p1.equals(p2);
         },
             password.textProperty(),
-            confirmPassword.textProperty()
+            confirmPassword.textProperty(),
+            confirmPassword.visibleProperty(),
+            passwordField.visibleProperty()
         ));
     }
 
