@@ -26,6 +26,8 @@ import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
+import java.io.File;
+
 public class FileView {
     private final BorderPane borderPane = new BorderPane();
     private final FlowPane flowPane = new FlowPane();
