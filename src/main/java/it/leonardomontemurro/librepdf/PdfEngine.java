@@ -19,6 +19,7 @@
 package it.leonardomontemurro.librepdf;
 
 import it.leonardomontemurro.librepdf.core.Merge;
+import it.leonardomontemurro.librepdf.core.Metadata;
 import it.leonardomontemurro.librepdf.core.PdfToJpeg;
 import it.leonardomontemurro.librepdf.core.Protect;
 import it.leonardomontemurro.librepdf.core.Unprotect;
@@ -89,6 +90,16 @@ public class PdfEngine {
         } else {
             AlertService.warning(I18N.get("alert.blank.password"));
         }
+    }
+
+    public void editMetadata(List<File> pdfs, String title, String author, String keywords, boolean nuclear) {
+        Thread.startVirtualThread(() -> {
+            try {
+                new Metadata(pdfs, title, author, keywords, nuclear).execute();
+            } catch (Exception e) {
+                AlertService.error(I18N.get("alert.metadata.error") + ": " + e.getMessage());
+            }
+        });
     }
 
      public void mergeFile(List<File> pdfs) {
