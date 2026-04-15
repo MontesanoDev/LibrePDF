@@ -133,7 +133,7 @@ public class DropView {
     private Label setInfo(){
         dragAndDropInfo.setText(I18N.get("ui.drop.info"));
         dragAndDropInfo.getStyleClass().add("dragAndDropInfo");
-        dragAndDropInfo.maxWidthProperty().bind(dragAndDropPane.widthProperty().divide(1));
+        dragAndDropInfo.maxWidthProperty().bind(dragAndDropPane.widthProperty());
         dragAndDropInfo.maxHeightProperty().bind(dragAndDropPane.heightProperty().divide(2));
         dragAndDropInfo.setAlignment(Pos.CENTER);
         dragAndDropInfo.setTextAlignment(TextAlignment.CENTER);
