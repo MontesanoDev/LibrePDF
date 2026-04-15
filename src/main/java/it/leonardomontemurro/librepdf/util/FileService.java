@@ -18,7 +18,9 @@
 
 package it.leonardomontemurro.librepdf.util;
 
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 public class FileService {
 
@@ -51,5 +53,16 @@ public class FileService {
         }
 
         return outputDir;
+    }
+
+    public static void openDefaultPdfViewer(String path) {
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File pdfDocument = new File(path);
+                Desktop.getDesktop().open(pdfDocument);
+            } catch (IOException e) {
+                AlertService.error(I18N.get("alert.open.pdf.error="));
+            }
+        }
     }
 }
