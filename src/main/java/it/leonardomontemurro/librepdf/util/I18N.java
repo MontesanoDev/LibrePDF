@@ -27,18 +27,10 @@ public class I18N {
     private static final ResourceBundle bundle = ResourceBundle.getBundle("i18n.messages");
 
     public static String get(String key) {
-        try {
-            return bundle.getString(key);
-        } catch (MissingResourceException e) {
-            return key;
-        }
+        return bundle.getString(key);
     }
 
     public static String get(String key, Object... args) {
-        try {
-            return MessageFormat.format(bundle.getString(key), args);
-        } catch (MissingResourceException e) {
-            return key;
-        }
+        return MessageFormat.format(bundle.getString(key), args);
     }
 }
