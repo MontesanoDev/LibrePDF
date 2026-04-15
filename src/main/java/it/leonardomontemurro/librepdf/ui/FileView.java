@@ -180,8 +180,8 @@ public class FileView {
         metadataFields.setVisible(visible);
     }
 
-    TextField buildCard(String fileName, int count){
-        FileCard fileCard = new FileCard(fileName, count);
+    TextField buildCard(File file, int count){
+        FileCard fileCard = new FileCard(file, count);
         flowPane.getChildren().add(fileCard);
 
         return fileCard.getTextFields();
