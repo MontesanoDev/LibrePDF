@@ -76,7 +76,10 @@ public class PdfEngine {
         if (!isPasswordBlank()) {
             Thread.startVirtualThread(() -> {
                 try {
-                    new Unprotect(pdfs, password).execute();
+                    boolean anyDecrypted = new Unprotect(pdfs, password).execute();
+                    if (!anyDecrypted) {
+                        AlertService.warning(I18N.get("alert.not.encrypted.pdf"));
+                    }
                 } catch (Exception e) {
                     AlertService.error(I18N.get("alert.unprotect.error") + ": " + e.getMessage());
                 } finally {

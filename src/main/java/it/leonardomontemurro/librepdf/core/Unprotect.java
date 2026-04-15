@@ -18,9 +18,7 @@
 
 package it.leonardomontemurro.librepdf.core;
 
-import it.leonardomontemurro.librepdf.util.AlertService;
 import it.leonardomontemurro.librepdf.util.FileService;
-import it.leonardomontemurro.librepdf.util.I18N;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
@@ -38,28 +36,24 @@ public class Unprotect {
         this.password = password;
     }
 
-    public void execute() {
+    public boolean execute() {
         String pwd = new String(password);
-        boolean areFilesEncrypted = false;
+        boolean anyEncrypted = false;
         for (File pdf : sources) {
 
             try(PDDocument doc = Loader.loadPDF(pdf, pwd)){
 
                 if (doc.isEncrypted()) {
-                    areFilesEncrypted = true;
+                    anyEncrypted = true;
                     doc.setAllSecurityToBeRemoved(true);
                     String outputDirectory = sources.getFirst().getParent();
                     doc.save(FileService.getUniqueFilePath(outputDirectory, "unlocked"));
-                } else {
-                    areFilesEncrypted = false;
                 }
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        if(!areFilesEncrypted){
-            AlertService.warning(I18N.get("alert.not.encrypted.pdf"));
-        }
+        return anyEncrypted;
     }
 }
