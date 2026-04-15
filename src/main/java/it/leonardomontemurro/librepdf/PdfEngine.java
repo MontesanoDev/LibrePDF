@@ -58,7 +58,7 @@ public class PdfEngine {
     }
 
     public void protectFile(List<File> pdfs) {
-        if (!isPasswordBlank()) {
+        if (isPasswordBlank()) {
             Thread.startVirtualThread(() -> {
                 try {
                     new Protect(pdfs, password).execute();
@@ -74,7 +74,7 @@ public class PdfEngine {
     }
 
     public void unprotectFile(List<File> pdfs) {
-        if (!isPasswordBlank()) {
+        if (isPasswordBlank()) {
             Thread.startVirtualThread(() -> {
                 try {
                     boolean anyDecrypted = new Unprotect(pdfs, password).execute();
@@ -103,19 +103,23 @@ public class PdfEngine {
     }
 
      public void mergeFile(List<File> pdfs) {
-         Thread.startVirtualThread(() -> {
-            try {
-                new Merge(pdfs).execute();
-            } catch (Exception e) {
-                AlertService.error(I18N.get("alert.merge.error") + ": " + e.getMessage());
-            }
-         });
+        if(pdfs.size() > 1) {
+            Thread.startVirtualThread(() -> {
+               try {
+                   new Merge(pdfs).execute();
+               } catch (Exception e) {
+                   AlertService.error(I18N.get("alert.merge.error") + ": " + e.getMessage());
+               }
+            });
+        } else {
+            AlertService.warning(I18N.get("alert.single.file.merge.error"));
+        }
     }
 
     private boolean isPasswordBlank() {
         for (char c : password) {
-            if (!Character.isWhitespace(c)) return false;
+            if (!Character.isWhitespace(c)) return true;
         }
-        return true;
+        return false;
     }
 }
