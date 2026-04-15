@@ -149,7 +149,15 @@ public class ViewController {
             return;
         }
         PdfEngine pdfEngine = new PdfEngine(fileView.getPassword());
-        pdfEngine.run(currentOperation, pdfFiles);
+        if (currentOperation == PdfOperation.METADATA) {
+            pdfEngine.editMetadata(pdfFiles,
+                    fileView.getMetadataTitle(),
+                    fileView.getMetadataAuthor(),
+                    fileView.getMetadataKeywords(),
+                    fileView.isNuclearMetadata());
+        } else {
+            pdfEngine.run(currentOperation, pdfFiles);
+        }
     }
 
     private boolean orderFiles() {
