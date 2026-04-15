@@ -219,6 +219,11 @@ public class FileView {
         return password.getText().toCharArray();
     }
 
+    String getMetadataTitle() { return title.getText(); }
+    String getMetadataAuthor() { return author.getText(); }
+    String getMetadataKeywords() { return keywords.getText(); }
+    boolean isNuclearMetadata() { return nuclearMetadata.isSelected(); }
+
     void setOnOperationStared(Runnable callback) {
         this.onOperationStared = callback;
     }
