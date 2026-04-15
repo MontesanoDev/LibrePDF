@@ -149,11 +149,7 @@ public class ViewController {
             return;
         }
         PdfEngine pdfEngine = new PdfEngine(fileView.getPassword());
-        try {
-            pdfEngine.run(currentOperation, pdfFiles);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        pdfEngine.run(currentOperation, pdfFiles);
     }
 
     private boolean orderFiles() {
