@@ -133,7 +133,7 @@ public class ViewController {
 
     private void initializeFileChooser() {
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        fileChooser.setTitle("Select PDF files!");
+        fileChooser.setTitle(I18N.get("select.files"));
         fileChooser.getExtensionFilters().add(
             new FileChooser.ExtensionFilter("PDF","*.pdf")
         );
