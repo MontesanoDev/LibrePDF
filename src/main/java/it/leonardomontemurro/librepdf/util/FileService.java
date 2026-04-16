@@ -18,11 +18,15 @@
 
 package it.leonardomontemurro.librepdf.util;
 
+import javafx.stage.FileChooser;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
 public class FileService {
+
+    private final FileChooser fileChooser = new FileChooser();
 
     public static String getUniqueFilePath(String directory, String prefix) {
         File file = new File(directory, prefix + ".pdf");
@@ -64,5 +68,17 @@ public class FileService {
                 AlertService.error(I18N.get("alert.open.pdf.error="));
             }
         }
+    }
+
+    public void initializeFileChooser() {
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setTitle(I18N.get("select.files"));
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("PDF","*.pdf")
+        );
+    }
+
+    public FileChooser getFileChooser() {
+        return fileChooser;
     }
 }
