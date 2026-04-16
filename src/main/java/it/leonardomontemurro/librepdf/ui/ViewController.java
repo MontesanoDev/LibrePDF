@@ -19,9 +19,7 @@ package it.leonardomontemurro.librepdf.ui;
 
 import it.leonardomontemurro.librepdf.PdfEngine;
 import it.leonardomontemurro.librepdf.PdfOperation;
-import it.leonardomontemurro.librepdf.util.AlertService;
 import it.leonardomontemurro.librepdf.util.FileService;
-import it.leonardomontemurro.librepdf.util.I18N;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -31,9 +29,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 import static it.leonardomontemurro.librepdf.PdfOperation.MERGE;
 
@@ -137,7 +134,7 @@ public class ViewController {
     }
 
     private void onOperationStarted() {
-        if (currentOperation == MERGE && !orderFiles()) {
+        if (currentOperation == MERGE && !fileService.orderFiles(pdfFiles, textFields)) {
             return;
         }
         PdfEngine pdfEngine = new PdfEngine(fileView.getPassword());
@@ -150,40 +147,6 @@ public class ViewController {
         } else {
             pdfEngine.run(currentOperation, pdfFiles);
         }
-    }
-
-    private boolean orderFiles() {
-        int size = pdfFiles.size();
-        Set<Integer> seen = new HashSet<>();
-
-        for (TextField textField : textFields) {
-            int val;
-            try {
-                val = Integer.parseInt(textField.getText());
-            } catch (NumberFormatException e) {
-                AlertService.warning(I18N.get("alert.order.empty"));
-                return false;
-            }
-            if (val < 1 || val > size) {
-                AlertService.warning(I18N.get("alert.order.outofrange"));
-                return false;
-            }
-            if (!seen.add(val)) {
-                AlertService.warning(I18N.get("alert.order.duplicate"));
-                return false;
-            }
-        }
-
-        List<File> orderedFiles = new ArrayList<>();
-        for (TextField textField : textFields) {
-            orderedFiles.add(pdfFiles.get(Integer.parseInt(textField.getText()) - 1));
-        }
-
-        if (!orderedFiles.equals(pdfFiles)) {
-            pdfFiles.clear();
-            pdfFiles.addAll(orderedFiles);
-        }
-        return true;
     }
 
     private void onOperationChanged(PdfOperation operation) {
