@@ -18,6 +18,9 @@
 
 package it.leonardomontemurro.librepdf.ui;
 
+import it.leonardomontemurro.librepdf.PdfEngine;
+import it.leonardomontemurro.librepdf.util.FileService;
+import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -25,14 +28,17 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 import javafx.util.converter.IntegerStringConverter;
+
+import java.io.File;
 
 public class FileCard extends VBox{
 
     private final TextField textField = new TextField();
+    private final File file;
 
-    public FileCard(String fileName, int count) {
-
+    public FileCard(File file, int count) {
         this.setSpacing(8);
         this.setAlignment(Pos.CENTER);
         this.getStyleClass().add("fileCard");
@@ -41,7 +47,9 @@ public class FileCard extends VBox{
         pdfIcon.getStyleClass().add("pdfIcon");
         pdfIcon.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
-        Label fileNameLabel = new Label(fileName);
+        this.file = file;
+
+        Label fileNameLabel = new Label(file.getName());
         fileNameLabel.setWrapText(true);
         fileNameLabel.setAlignment(Pos.CENTER);
         fileNameLabel.setTextAlignment(TextAlignment.CENTER);
@@ -50,6 +58,7 @@ public class FileCard extends VBox{
         this.textField.setAlignment(Pos.CENTER);
         this.textField.getStyleClass().add("orderInput");
         bindIntegersToTextField(count);
+        doubleClickOpenPdf();
         this.getChildren().addAll(pdfIcon, fileNameLabel, textField);
     }
     //Thank you javathinking for this code <3
@@ -70,5 +79,20 @@ public class FileCard extends VBox{
 
     TextField getTextFields() {
         return textField;
+    }
+
+    private void doubleClickOpenPdf() {
+        PauseTransition singleClickDelay = new PauseTransition(Duration.millis(200));
+        this.setOnMouseClicked(event -> {
+            int clickCount = event.getClickCount();
+
+            if (clickCount == 1) {
+                singleClickDelay.play();
+
+            } else if (clickCount == 2) {
+                singleClickDelay.stop();
+                FileService.openDefaultPdfViewer(file.getAbsolutePath());
+            }
+        });
     }
 }

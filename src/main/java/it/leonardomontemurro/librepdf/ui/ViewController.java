@@ -94,8 +94,7 @@ public class ViewController {
         checkOperation();
         int count = 1;
         for(File file : pdfFiles){
-            var fileName = file.getName();
-            TextField textField = fileView.buildCard(fileName, count);
+            TextField textField = fileView.buildCard(file, count);
             textFields.add(textField);
             if(!(currentOperation == MERGE)) {
                 textField.setEditable(false);
