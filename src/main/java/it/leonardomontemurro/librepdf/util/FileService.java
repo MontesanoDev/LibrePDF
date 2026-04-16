@@ -18,11 +18,16 @@
 
 package it.leonardomontemurro.librepdf.util;
 
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class FileService {
 
@@ -80,5 +85,39 @@ public class FileService {
 
     public FileChooser getFileChooser() {
         return fileChooser;
+    }
+
+    public boolean orderFiles(List<File> pdfFiles, List<TextField> textFields) {
+        int size = pdfFiles.size();
+        Set<Integer> seen = new HashSet<>();
+
+        for (javafx.scene.control.TextField textField : textFields) {
+            int val;
+            try {
+                val = Integer.parseInt(textField.getText());
+            } catch (NumberFormatException e) {
+                AlertService.warning(I18N.get("alert.order.empty"));
+                return false;
+            }
+            if (val < 1 || val > size) {
+                AlertService.warning(I18N.get("alert.order.outofrange"));
+                return false;
+            }
+            if (!seen.add(val)) {
+                AlertService.warning(I18N.get("alert.order.duplicate"));
+                return false;
+            }
+        }
+
+        List<File> orderedFiles = new ArrayList<>();
+        for (TextField textField : textFields) {
+            orderedFiles.add(pdfFiles.get(Integer.parseInt(textField.getText()) - 1));
+        }
+
+        if (!orderedFiles.equals(pdfFiles)) {
+            pdfFiles.clear();
+            pdfFiles.addAll(orderedFiles);
+        }
+        return true;
     }
 }
