@@ -20,6 +20,7 @@ package it.leonardomontemurro.librepdf.ui;
 import it.leonardomontemurro.librepdf.PdfEngine;
 import it.leonardomontemurro.librepdf.PdfOperation;
 import it.leonardomontemurro.librepdf.util.AlertService;
+import it.leonardomontemurro.librepdf.util.FileService;
 import it.leonardomontemurro.librepdf.util.I18N;
 
 import javafx.geometry.Insets;
@@ -27,7 +28,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
@@ -41,8 +41,8 @@ public class ViewController {
     private final View view;
     private final DropView dropView;
     private final FileView fileView;
-    private final FileChooser fileChooser = new FileChooser();
     private final Stage stage;
+    private final FileService fileService;
     private final List<File> pdfFiles = new ArrayList<>();
     private final List<TextField> textFields = new ArrayList<>();
 
@@ -70,13 +70,14 @@ public class ViewController {
         this.fileView.setOnOperationStared(this::onOperationStarted);
 
         initializeFileCardScene();
-        initializeFileChooser();
+        this.fileService = new FileService();
+        this.fileService.initializeFileChooser();
         buildStackPane();
         backToHome();
     }
 
     private void getFiles () {
-        List<File> files = fileChooser.showOpenMultipleDialog(stage);
+        List<File> files = fileService.getFileChooser().showOpenMultipleDialog(stage);
         if(files != null){
             pdfFiles.addAll(files);
             buildFlowPane();
@@ -128,14 +129,6 @@ public class ViewController {
         StackPane.setAlignment(dropView.getBackButton(), Pos.TOP_LEFT);
         StackPane.setMargin(dropView.getBackButton(), new Insets(20, 0, 0, 20));
         dropView.setBackButtonToFront();
-    }
-
-    private void initializeFileChooser() {
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        fileChooser.setTitle(I18N.get("select.files"));
-        fileChooser.getExtensionFilters().add(
-            new FileChooser.ExtensionFilter("PDF","*.pdf")
-        );
     }
 
     private void onFilesDropped(List<File> files) {
