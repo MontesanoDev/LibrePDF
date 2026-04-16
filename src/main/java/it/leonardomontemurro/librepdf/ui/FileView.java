@@ -189,9 +189,6 @@ public class FileView {
         return fileCard.getTextFields();
     }
 
-    //I don't understand why I can't bind the operation button only
-    // when the password field is visible, without affecting all the
-    // other operations o.O
     private void handleBlankPassword() {
         operationButton.disableProperty().bind(
         Bindings.createBooleanBinding(() -> {
@@ -203,7 +200,11 @@ public class FileView {
                 return p1.isBlank();
             }
 
-            return !p1.equals(p2);
+            if(passwordField.isVisible()){
+                return !p1.equals(p2) || p1.isBlank() || p2.isBlank();
+            }
+
+            return false;
         },
             password.textProperty(),
             confirmPassword.textProperty(),
