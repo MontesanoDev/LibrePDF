@@ -162,6 +162,7 @@ public class FileView {
         converterBox.getChildren().add(qualitySlider);
         converterBox.setAlignment(Pos.CENTER);
         converterOptions.setAlignment(Pos.CENTER);
+        converterOptions.managedProperty().bind(converterOptions.visibleProperty());
         converterOptions.getChildren().addAll(label,converterBox);
         converterOptions.setVisible(false);
     }
