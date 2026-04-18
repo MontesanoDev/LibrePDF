@@ -44,6 +44,9 @@ public class FileView {
     private final VBox passwordField = new VBox(15);
     private final PasswordField password = new PasswordField();
     private final PasswordField confirmPassword = new PasswordField();
+    private final HBox converterBox = new HBox();
+    private final VBox converterOptions = new VBox(15);
+    private final QualitySlider qualitySlider = new QualitySlider();
 
     private Runnable onOperationStared;
 
@@ -70,6 +73,8 @@ public class FileView {
         descriptionName.setWrapText(true);
         buildMetadataInputFields();
         buildPasswordInputFields();
+        buildConverterOptions();
+
         operationButton.getStyleClass().add("operationButton");
         operationButton.setText(I18N.get("ui.execute"));
         operationButton.setOnAction(_ -> onOperationStared.run());
@@ -81,7 +86,7 @@ public class FileView {
         VBox.setVgrow(topSpacer, Priority.ALWAYS);
 
         sideRight.getChildren().addAll(operationName, descriptionName, topSpacer, metadataFields,
-                passwordField, spacer, operationButton);
+                passwordField, converterOptions, spacer, operationButton);
 
         sideRight.setPadding(new Insets(50, 20, 50, 20));
     }
@@ -151,6 +156,16 @@ public class FileView {
         addListenerInputFields();
     }
 
+    private void buildConverterOptions() {
+        Label label = new Label(I18N.get("slider.info"));
+        label.getStyleClass().add("qualityLabelInfo");
+        converterBox.getChildren().add(qualitySlider);
+        converterBox.setAlignment(Pos.CENTER);
+        converterOptions.setAlignment(Pos.CENTER);
+        converterOptions.getChildren().addAll(label,converterBox);
+        converterOptions.setVisible(false);
+    }
+
     private void addListenerInputFields() {
         nuclearMetadata.selectedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
@@ -168,6 +183,7 @@ public class FileView {
     void hideInputFields() {
         setPasswordFieldVisible(false);
         setMetadataInfoVisible(false);
+        setConverterOptionsVisibile(false);
     }
 
     void setPasswordFieldVisible(Boolean visible) {
@@ -237,6 +253,14 @@ public class FileView {
 
     BorderPane getBorderPane() {
         return borderPane;
+    }
+
+    void setConverterOptionsVisibile(Boolean visible) {
+        converterOptions.setVisible(visible);
+    }
+
+    int getDpi() {
+        return qualitySlider.getSelectedDPI();
     }
 
     void clearFlowPane() {
