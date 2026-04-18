@@ -32,33 +32,18 @@ import java.util.List;
 
 public class PdfEngine {
 
-    private final char[] password;
-
-    public PdfEngine(char[] password) {
-        this.password = password;
-    }
-
-    public void run(PdfOperation currentOperation, List<File> pdfs) {
-        switch (currentOperation) {
-            case MERGE -> mergeFile(pdfs);
-            case PROTECT -> protectFile(pdfs);
-            case UNLOCK -> unprotectFile(pdfs);
-            case PDFTOJPEG -> convertToJpeg(pdfs);
-        }
-    }
-
-    public void convertToJpeg(List<File> pdfs) {
+    public void convertToJpeg(List<File> pdfs, int dpi) {
         Thread.startVirtualThread(() -> {
             try {
-                new PdfToJpeg(pdfs, 300).execute();
+                new PdfToJpeg(pdfs, dpi).execute();
             } catch (Exception e) {
                 AlertService.error(I18N.get("alert.convert.jpg.error") + ": " + e.getMessage());
             }
         });
     }
 
-    public void protectFile(List<File> pdfs) {
-        if (isPasswordBlank()) {
+    public void protectFile(List<File> pdfs, char[] password) {
+        if (isValidPassword(password)) {
             Thread.startVirtualThread(() -> {
                 try {
                     new Protect(pdfs, password).execute();
@@ -73,8 +58,8 @@ public class PdfEngine {
         }
     }
 
-    public void unprotectFile(List<File> pdfs) {
-        if (isPasswordBlank()) {
+    public void unprotectFile(List<File> pdfs, char[] password) {
+        if (isValidPassword(password)) {
             Thread.startVirtualThread(() -> {
                 try {
                     boolean anyDecrypted = new Unprotect(pdfs, password).execute();
@@ -102,21 +87,23 @@ public class PdfEngine {
         });
     }
 
-     public void mergeFile(List<File> pdfs) {
+    public void mergeFile(List<File> pdfs) {
         if(pdfs.size() > 1) {
             Thread.startVirtualThread(() -> {
-               try {
-                   new Merge(pdfs).execute();
-               } catch (Exception e) {
-                   AlertService.error(I18N.get("alert.merge.error") + ": " + e.getMessage());
-               }
+                try {
+                    new Merge(pdfs).execute();
+                } catch (Exception e) {
+                    AlertService.error(I18N.get("alert.merge.error") + ": " + e.getMessage());
+                }
             });
         } else {
             AlertService.warning(I18N.get("alert.single.file.merge.error"));
         }
     }
 
-    private boolean isPasswordBlank() {
+    private boolean isValidPassword(char[] password) {
+        if (password == null) return false;
+
         for (char c : password) {
             if (!Character.isWhitespace(c)) return true;
         }

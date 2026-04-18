@@ -222,3 +222,15 @@
     -fx-scale-x: 0.98;
     -fx-scale-y: 0.98;
 }
+
+.slider {
+    -fx-tick-label-font-size: 16px;
+    -fx-tick-label-gap: 10px;
+    -fx-fill: #b0b0b0;
+    -fx-font-weight: bold;
+}
+
+.qualityLabelInfo {
+    -fx-font-size: 15px;
+    -fx-text-fill: #bd93f9;
+}
