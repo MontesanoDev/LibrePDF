@@ -114,6 +114,7 @@ public class ViewController {
                 fileView.setPasswordFieldVisible(true);
                 fileView.setUnlockFieldVisible(false);
             }
+            case PDFTOJPEG -> fileView.setConverterOptionsVisibile(true);
         }
     }
 
@@ -134,18 +135,25 @@ public class ViewController {
     }
 
     private void onOperationStarted() {
-        if (currentOperation == MERGE && !fileService.orderFiles(pdfFiles, textFields)) {
-            return;
+        if (currentOperation == PdfOperation.MERGE) {
+            if (!fileService.orderFiles(pdfFiles, textFields)) {
+                return;
+            }
         }
-        PdfEngine pdfEngine = new PdfEngine(fileView.getPassword());
-        if (currentOperation == PdfOperation.METADATA) {
-            pdfEngine.editMetadata(pdfFiles,
+        PdfEngine pdfEngine = new PdfEngine();
+
+        switch (currentOperation) {
+            case METADATA -> pdfEngine.editMetadata(
+                    pdfFiles,
                     fileView.getMetadataTitle(),
                     fileView.getMetadataAuthor(),
                     fileView.getMetadataKeywords(),
-                    fileView.isNuclearMetadata());
-        } else {
-            pdfEngine.run(currentOperation, pdfFiles);
+                    fileView.isNuclearMetadata()
+            );
+            case PROTECT -> pdfEngine.protectFile(pdfFiles, fileView.getPassword());
+            case UNLOCK -> pdfEngine.unprotectFile(pdfFiles, fileView.getPassword());
+            case PDFTOJPEG -> pdfEngine.convertToJpeg(pdfFiles, fileView.getDpi());
+            case MERGE -> pdfEngine.mergeFile(pdfFiles);
         }
     }
 
