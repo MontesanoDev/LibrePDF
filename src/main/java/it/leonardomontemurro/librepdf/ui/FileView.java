@@ -47,6 +47,8 @@ public class FileView {
     private final HBox converterBox = new HBox();
     private final VBox converterOptions = new VBox(15);
     private final VBox splitOptions = new VBox(15);
+    private final CheckBox splitAllPages = new CheckBox();
+    private final HBox splitCheckBox = new HBox(15);
     private final QualitySlider qualitySlider = new QualitySlider();
 
     private Runnable onOperationStared;
@@ -136,7 +138,17 @@ public class FileView {
         Label splitInfo = new Label(I18N.get("split.global.info"));
         splitInfo.getStyleClass().add("LabelInfo");
         splitInfo.setAlignment(Pos.CENTER);
-        splitOptions.getChildren().addAll(splitInfo, new SplitField());
+
+        Label splitAllLabel = new Label("Estrai tutte le pagine");
+
+        splitCheckBox.getChildren().addAll(splitAllLabel, splitAllPages);
+        splitCheckBox.setAlignment(Pos.CENTER_RIGHT);
+        splitCheckBox.setPadding(new Insets(0,10,0,0));
+
+        SplitField splitField = new SplitField();
+        splitField.disableProperty().bind(splitAllPages.selectedProperty());
+
+        splitOptions.getChildren().addAll(splitInfo, splitField, splitCheckBox);
         splitOptions.setPadding(new Insets(0,20,0,20));
         splitOptions.setAlignment(Pos.CENTER);
     }
