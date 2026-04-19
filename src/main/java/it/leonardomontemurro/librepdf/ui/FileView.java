@@ -169,7 +169,7 @@ public class FileView {
 
     private void buildConverterOptions() {
         Label label = new Label(I18N.get("slider.info"));
-        label.getStyleClass().add("qualityLabelInfo");
+        label.getStyleClass().add("LabelInfo");
         converterBox.getChildren().add(qualitySlider);
         converterBox.setAlignment(Pos.CENTER);
         converterOptions.setAlignment(Pos.CENTER);
