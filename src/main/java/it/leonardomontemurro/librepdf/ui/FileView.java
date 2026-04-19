@@ -130,6 +130,15 @@ public class FileView {
         passwordField.managedProperty().bind(passwordField.visibleProperty());
     }
 
+    private void buildSplitRange() {
+        Label splitInfo = new Label(I18N.get("split.global.info"));
+        splitInfo.getStyleClass().add("LabelInfo");
+        splitInfo.setAlignment(Pos.CENTER);
+        splitOptions.getChildren().addAll(splitInfo, new SplitField());
+        splitOptions.setPadding(new Insets(0,20,0,20));
+        splitOptions.setAlignment(Pos.CENTER);
+    }
+
     private void buildMetadataInputFields() {
         title.setAlignment(Pos.CENTER);
         title.setPromptText(I18N.get("ui.metadata.title"));
