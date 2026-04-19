@@ -75,6 +75,7 @@ public class FileView {
         buildMetadataInputFields();
         buildPasswordInputFields();
         buildConverterOptions();
+        buildSplitRange();
 
         operationButton.getStyleClass().add("operationButton");
         operationButton.setText(I18N.get("ui.execute"));
