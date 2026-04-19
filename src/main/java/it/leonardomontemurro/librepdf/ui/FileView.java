@@ -46,6 +46,7 @@ public class FileView {
     private final PasswordField confirmPassword = new PasswordField();
     private final HBox converterBox = new HBox();
     private final VBox converterOptions = new VBox(15);
+    private final VBox splitOptions = new VBox(15);
     private final QualitySlider qualitySlider = new QualitySlider();
 
     private Runnable onOperationStared;
