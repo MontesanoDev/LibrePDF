@@ -258,6 +258,14 @@ public class FileView {
         confirmPassword.setText("");
     }
 
+    List<int[]> getSplitRange() {
+        return splitField.getRanges();
+    }
+
+    boolean isSplitAllPagesSelected() {
+        return splitAllPages.isSelected();
+    }
+
     public char[] getPassword() {
         return password.getText().toCharArray();
     }
