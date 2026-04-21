@@ -25,8 +25,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.TextAlignment;
 
 import java.io.File;
+import java.util.List;
 
 public class FileView {
     private final BorderPane borderPane = new BorderPane();
@@ -50,6 +52,7 @@ public class FileView {
     private final CheckBox splitAllPages = new CheckBox();
     private final HBox splitCheckBox = new HBox(15);
     private final QualitySlider qualitySlider = new QualitySlider();
+    private final SplitField splitField = new SplitField();
 
     private Runnable onOperationStared;
 
@@ -145,7 +148,6 @@ public class FileView {
         splitCheckBox.setAlignment(Pos.CENTER_RIGHT);
         splitCheckBox.setPadding(new Insets(0,10,0,0));
 
-        SplitField splitField = new SplitField();
         splitField.disableProperty().bind(splitAllPages.selectedProperty());
 
         splitOptions.getChildren().addAll(splitInfo, splitField, splitCheckBox);
@@ -302,5 +304,7 @@ public class FileView {
     void setOperationName(String name, String description){
         operationName.setText(name.toUpperCase());
         descriptionName.setText(description);
+        operationName.setTextAlignment(TextAlignment.CENTER);
+        descriptionName.setTextAlignment(TextAlignment.CENTER);
     }
 }
