@@ -153,6 +153,7 @@ public class FileView {
         splitOptions.getChildren().addAll(splitInfo, splitField, splitCheckBox);
         splitOptions.setPadding(new Insets(0,20,0,20));
         splitOptions.setAlignment(Pos.CENTER);
+        splitOptions.managedProperty().bind(splitOptions.visibleProperty());
         splitOptions.setVisible(false);
     }
 
