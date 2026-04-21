@@ -115,6 +115,7 @@ public class ViewController {
                 fileView.setUnlockFieldVisible(false);
             }
             case PDFTOJPEG -> fileView.setConverterOptionsVisibile(true);
+            case SPLIT -> fileView.setSplitOptionsVisible(true);
         }
     }
 
