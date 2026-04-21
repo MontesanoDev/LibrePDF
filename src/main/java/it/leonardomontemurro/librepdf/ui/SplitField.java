@@ -66,7 +66,7 @@ public class SplitField extends TextField{
             int start = Integer.parseInt(parts[0]);
             int end = Integer.parseInt(parts[1]);
 
-            if(start < 1 ) {
+            if(start < 1 || end < 1) {
                 return false;
             }
 
