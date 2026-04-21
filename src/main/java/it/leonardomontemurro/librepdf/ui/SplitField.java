@@ -23,7 +23,12 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SplitField extends TextField{
+
+    private final List<int[]> ranges = new ArrayList<>();
 
     public SplitField() {
 
@@ -45,4 +50,34 @@ public class SplitField extends TextField{
         this.setTextFormatter(rangeFormatter);
     }
 
+    boolean isRangeValid() {
+        String input = this.getText().replaceAll("\\s+", "");
+
+        if (!input.matches("\\d+-\\d+(,\\d+-\\d+)*")) {
+            return false;
+        }
+
+        String[] groups = input.split(",");
+
+        for (String group : groups) {
+            String[] parts = group.split("-");
+
+            int start = Integer.parseInt(parts[0]);
+            int end = Integer.parseInt(parts[1]);
+
+            if(start < 1 ) {
+                return false;
+            }
+
+            ranges.add(new int[]{start, end});
+
+        }
+
+        return !ranges.isEmpty();
+    }
+
+    public List<int[]> getRanges() {
+        isRangeValid();
+        return ranges;
+    }
 }
