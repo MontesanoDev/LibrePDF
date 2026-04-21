@@ -115,6 +115,7 @@ public class ViewController {
                 fileView.setUnlockFieldVisible(false);
             }
             case PDFTOJPEG -> fileView.setConverterOptionsVisibile(true);
+            case SPLIT -> fileView.setSplitOptionsVisible(true);
         }
     }
 
@@ -154,6 +155,7 @@ public class ViewController {
             case UNLOCK -> pdfEngine.unprotectFile(pdfFiles, fileView.getPassword());
             case PDFTOJPEG -> pdfEngine.convertToJpeg(pdfFiles, fileView.getDpi());
             case MERGE -> pdfEngine.mergeFile(pdfFiles);
+            case SPLIT -> pdfEngine.splitFile(pdfFiles, fileView.getSplitRange(), fileView.isSplitAllPagesSelected());
         }
     }
 

@@ -25,8 +25,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.TextAlignment;
 
 import java.io.File;
+import java.util.List;
 
 public class FileView {
     private final BorderPane borderPane = new BorderPane();
@@ -46,7 +48,11 @@ public class FileView {
     private final PasswordField confirmPassword = new PasswordField();
     private final HBox converterBox = new HBox();
     private final VBox converterOptions = new VBox(15);
+    private final VBox splitOptions = new VBox(15);
+    private final CheckBox splitAllPages = new CheckBox();
+    private final HBox splitCheckBox = new HBox(15);
     private final QualitySlider qualitySlider = new QualitySlider();
+    private final SplitField splitField = new SplitField();
 
     private Runnable onOperationStared;
 
@@ -74,6 +80,7 @@ public class FileView {
         buildMetadataInputFields();
         buildPasswordInputFields();
         buildConverterOptions();
+        buildSplitRange();
 
         operationButton.getStyleClass().add("operationButton");
         operationButton.setText(I18N.get("ui.execute"));
@@ -86,7 +93,7 @@ public class FileView {
         VBox.setVgrow(topSpacer, Priority.ALWAYS);
 
         sideRight.getChildren().addAll(operationName, descriptionName, topSpacer, metadataFields,
-                passwordField, converterOptions, spacer, operationButton);
+                passwordField, converterOptions, splitOptions, spacer, operationButton);
 
         sideRight.setPadding(new Insets(50, 20, 50, 20));
     }
@@ -130,6 +137,26 @@ public class FileView {
         passwordField.managedProperty().bind(passwordField.visibleProperty());
     }
 
+    private void buildSplitRange() {
+        Label splitInfo = new Label(I18N.get("split.global.info"));
+        splitInfo.getStyleClass().add("LabelInfo");
+        splitInfo.setAlignment(Pos.CENTER);
+
+        Label splitAllLabel = new Label("Estrai tutte le pagine");
+
+        splitCheckBox.getChildren().addAll(splitAllLabel, splitAllPages);
+        splitCheckBox.setAlignment(Pos.CENTER_RIGHT);
+        splitCheckBox.setPadding(new Insets(0,10,0,0));
+
+        splitField.disableProperty().bind(splitAllPages.selectedProperty());
+
+        splitOptions.getChildren().addAll(splitInfo, splitField, splitCheckBox);
+        splitOptions.setPadding(new Insets(0,20,0,20));
+        splitOptions.setAlignment(Pos.CENTER);
+        splitOptions.managedProperty().bind(splitOptions.visibleProperty());
+        splitOptions.setVisible(false);
+    }
+
     private void buildMetadataInputFields() {
         title.setAlignment(Pos.CENTER);
         title.setPromptText(I18N.get("ui.metadata.title"));
@@ -158,7 +185,7 @@ public class FileView {
 
     private void buildConverterOptions() {
         Label label = new Label(I18N.get("slider.info"));
-        label.getStyleClass().add("qualityLabelInfo");
+        label.getStyleClass().add("LabelInfo");
         converterBox.getChildren().add(qualitySlider);
         converterBox.setAlignment(Pos.CENTER);
         converterOptions.setAlignment(Pos.CENTER);
@@ -185,6 +212,11 @@ public class FileView {
         setPasswordFieldVisible(false);
         setMetadataInfoVisible(false);
         setConverterOptionsVisibile(false);
+        setSplitOptionsVisible(false);
+    }
+
+    void setSplitOptionsVisible(boolean visible) {
+        splitOptions.setVisible(visible);
     }
 
     void setPasswordFieldVisible(Boolean visible) {
@@ -235,6 +267,14 @@ public class FileView {
         confirmPassword.setText("");
     }
 
+    List<int[]> getSplitRange() {
+        return splitField.getRanges();
+    }
+
+    boolean isSplitAllPagesSelected() {
+        return splitAllPages.isSelected();
+    }
+
     public char[] getPassword() {
         return password.getText().toCharArray();
     }
@@ -271,5 +311,7 @@ public class FileView {
     void setOperationName(String name, String description){
         operationName.setText(name.toUpperCase());
         descriptionName.setText(description);
+        operationName.setTextAlignment(TextAlignment.CENTER);
+        descriptionName.setTextAlignment(TextAlignment.CENTER);
     }
 }

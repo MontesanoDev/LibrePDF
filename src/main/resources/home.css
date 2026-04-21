@@ -230,7 +230,7 @@
     -fx-font-weight: bold;
 }
 
-.qualityLabelInfo {
+.LabelInfo {
     -fx-font-size: 16px;
     -fx-text-fill: #bd93f9;
 }
