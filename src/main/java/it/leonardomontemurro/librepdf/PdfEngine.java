@@ -101,6 +101,16 @@ public class PdfEngine {
         }
     }
 
+    public void splitFile(List<File> pdfs, List<int[]> ranges, boolean isSplitAllPagesSelected){
+        Thread.startVirtualThread(() -> {
+            try{
+                new Split(pdfs, ranges, isSplitAllPagesSelected).execute();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
     private boolean isValidPassword(char[] password) {
         if (password == null) return false;
 
