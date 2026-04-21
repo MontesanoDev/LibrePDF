@@ -18,6 +18,7 @@
 
 package it.leonardomontemurro.librepdf.ui;
 
+import it.leonardomontemurro.librepdf.util.AlertService;
 import it.leonardomontemurro.librepdf.util.I18N;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
@@ -77,7 +78,9 @@ public class SplitField extends TextField{
     }
 
     public List<int[]> getRanges() {
-        isRangeValid();
+        if(!isRangeValid()) {
+            AlertService.error(I18N.get("alert.split.range"));
+        }
         return ranges;
     }
 }
