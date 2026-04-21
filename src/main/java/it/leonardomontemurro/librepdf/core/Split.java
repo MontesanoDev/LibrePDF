@@ -60,10 +60,16 @@ public class Split {
                         }
                     }
                 } else {
+
                     for (int[] range : ranges) {
 
                         int from = range[0];
                         int to = range[1];
+                        int fileBound = pdDocument.getNumberOfPages();
+
+                        if(to > fileBound){
+                            to = fileBound;
+                        }
 
                         try (PDDocument output = new PDDocument()) {
 
