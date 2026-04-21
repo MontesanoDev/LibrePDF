@@ -18,11 +18,7 @@
 
 package it.leonardomontemurro.librepdf;
 
-import it.leonardomontemurro.librepdf.core.Merge;
-import it.leonardomontemurro.librepdf.core.Metadata;
-import it.leonardomontemurro.librepdf.core.PdfToJpeg;
-import it.leonardomontemurro.librepdf.core.Protect;
-import it.leonardomontemurro.librepdf.core.Unprotect;
+import it.leonardomontemurro.librepdf.core.*;
 import it.leonardomontemurro.librepdf.util.AlertService;
 import it.leonardomontemurro.librepdf.util.I18N;
 
