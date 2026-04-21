@@ -153,6 +153,7 @@ public class FileView {
         splitOptions.getChildren().addAll(splitInfo, splitField, splitCheckBox);
         splitOptions.setPadding(new Insets(0,20,0,20));
         splitOptions.setAlignment(Pos.CENTER);
+        splitOptions.setVisible(false);
     }
 
     private void buildMetadataInputFields() {
@@ -210,6 +211,11 @@ public class FileView {
         setPasswordFieldVisible(false);
         setMetadataInfoVisible(false);
         setConverterOptionsVisibile(false);
+        setSplitOptionsVisible(false);
+    }
+
+    void setSplitOptionsVisible(boolean visible) {
+        splitOptions.setVisible(visible);
     }
 
     void setPasswordFieldVisible(Boolean visible) {
