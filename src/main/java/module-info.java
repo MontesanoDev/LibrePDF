@@ -1,12 +1,9 @@
 module it.leonardomontemurro.librepdf.localpdf {
     requires javafx.controls;
-    requires javafx.fxml;
 
-    requires org.controlsfx.controls;
     requires atlantafx.base;
     requires org.apache.pdfbox;
     requires org.apache.pdfbox.io;
-    requires java.xml;
     requires java.desktop;
 
     opens it.leonardomontemurro.librepdf to javafx.fxml;
