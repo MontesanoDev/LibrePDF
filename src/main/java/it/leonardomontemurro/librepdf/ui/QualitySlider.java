@@ -34,8 +34,6 @@ public class QualitySlider extends Slider {
 
         this.setSnapToTicks(true);
 
-        this.setMinorTickCount(0);
-
         this.setBlockIncrement(1);
         bindSliderTickLabel(this);
         this.setShowTickLabels(true);
