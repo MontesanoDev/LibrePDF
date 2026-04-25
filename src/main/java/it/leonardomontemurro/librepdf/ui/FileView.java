@@ -142,7 +142,7 @@ public class FileView {
         splitInfo.getStyleClass().add("LabelInfo");
         splitInfo.setAlignment(Pos.CENTER);
 
-        Label splitAllLabel = new Label("Estrai tutte le pagine");
+        Label splitAllLabel = new Label(I18N.get("split.all.pages"));
 
         splitCheckBox.getChildren().addAll(splitAllLabel, splitAllPages);
         splitCheckBox.setAlignment(Pos.CENTER_RIGHT);
