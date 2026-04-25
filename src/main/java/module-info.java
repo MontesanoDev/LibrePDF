@@ -1,4 +1,4 @@
-module it.leonardomontemurro.librepdf.localpdf {
+module it.leonardomontemurro.librepdf {
     requires javafx.controls;
 
     requires atlantafx.base;
