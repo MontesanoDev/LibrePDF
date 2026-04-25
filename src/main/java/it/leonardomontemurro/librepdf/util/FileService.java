@@ -70,7 +70,7 @@ public class FileService {
                 File pdfDocument = new File(path);
                 Desktop.getDesktop().open(pdfDocument);
             } catch (IOException e) {
-                AlertService.error(I18N.get("alert.open.pdf.error="));
+                AlertService.error(I18N.get("alert.open.pdf.error"));
             }
         }
     }
