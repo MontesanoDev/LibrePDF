@@ -53,6 +53,7 @@ public class SplitField extends TextField{
 
     boolean isRangeValid() {
         String input = this.getText().replaceAll("\\s+", "");
+        ranges.clear();
 
         if (!input.matches("\\d+-\\d+(,\\d+-\\d+)*")) {
             return false;
