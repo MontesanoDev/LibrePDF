@@ -102,7 +102,7 @@ public class PdfEngine {
             try{
                 new Split(pdfs, ranges, isSplitAllPagesSelected).execute();
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                AlertService.error(I18N.get("alert.split.error") + ": " + e.getMessage());
             }
         });
     }
