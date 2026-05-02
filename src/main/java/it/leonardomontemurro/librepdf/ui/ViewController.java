@@ -184,7 +184,13 @@ public class ViewController {
             case UNLOCK -> pdfEngine.unprotectFile(pdfFiles, fileView.getPassword());
             case PDFTOJPEG -> pdfEngine.convertToJpeg(pdfFiles, fileView.getDpi());
             case MERGE -> pdfEngine.mergeFile(pdfFiles);
-            case SPLIT -> pdfEngine.splitFile(pdfFiles, fileView.getSplitRange(), fileView.isSplitAllPagesSelected());
+            case SPLIT -> {
+                if(fileView.isSplitAllPagesSelected()) {
+                    pdfEngine.splitFile(pdfFiles, null, fileView.isSplitAllPagesSelected());
+                } else {
+                    pdfEngine.splitFile(pdfFiles, fileView.getSplitRange(), fileView.isSplitAllPagesSelected());
+                }
+            }
         }
     }
 
