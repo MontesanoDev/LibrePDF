@@ -28,18 +28,24 @@ import java.util.List;
 
 public class PdfEngine {
 
+    private Runnable onFileRendered;
     public void convertToJpeg(List<File> pdfs, int dpi) {
+        onFileRendered.run();
         Thread.startVirtualThread(() -> {
             try {
                 new PdfToJpeg(pdfs, dpi).execute();
             } catch (Exception e) {
                 AlertService.error(I18N.get("alert.convert.jpg.error") + ": " + e.getMessage());
+            } finally {
+                onFileRendered.run();
             }
         });
     }
 
     public void protectFile(List<File> pdfs, char[] password) {
+
         if (isValidPassword(password)) {
+            onFileRendered.run();
             Thread.startVirtualThread(() -> {
                 try {
                     new Protect(pdfs, password).execute();
@@ -47,6 +53,7 @@ public class PdfEngine {
                     AlertService.error(I18N.get("alert.protect.error") + ": " + e.getMessage());
                 } finally {
                     Arrays.fill(password, '\0');
+                    onFileRendered.run();
                 }
             });
         } else {
@@ -85,11 +92,14 @@ public class PdfEngine {
 
     public void mergeFile(List<File> pdfs) {
         if(pdfs.size() > 1) {
+            onFileRendered.run();
             Thread.startVirtualThread(() -> {
                 try {
                     new Merge(pdfs).execute();
                 } catch (Exception e) {
                     AlertService.error(I18N.get("alert.merge.error") + ": " + e.getMessage());
+                } finally{
+                    onFileRendered.run();
                 }
             });
         } else {
@@ -105,6 +115,10 @@ public class PdfEngine {
                 AlertService.error(I18N.get("alert.split.error") + ": " + e.getMessage());
             }
         });
+    }
+
+    public void setTheOperationCompleted(Runnable callback) {
+        this.onFileRendered = callback;
     }
 
     private boolean isValidPassword(char[] password) {
