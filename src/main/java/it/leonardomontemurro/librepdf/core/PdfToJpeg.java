@@ -18,7 +18,6 @@
 
 package it.leonardomontemurro.librepdf.core;
 
-import it.leonardomontemurro.librepdf.util.AlertService;
 import it.leonardomontemurro.librepdf.util.FileService;
 import it.leonardomontemurro.librepdf.util.I18N;
 import org.apache.pdfbox.Loader;
