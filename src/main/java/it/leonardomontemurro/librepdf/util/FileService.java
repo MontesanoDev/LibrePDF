@@ -31,6 +31,7 @@ import java.util.Set;
 
 public class FileService {
 
+    public static File currentDirectory;
     private final FileChooser fileChooser = new FileChooser();
 
     public static String getUniqueFilePath(String directory, String prefix) {
@@ -41,7 +42,7 @@ public class FileService {
             file = new File(directory, prefix + " (" + counter + ").pdf");
             counter++;
         }
-
+        currentDirectory = file;
         return file.getAbsolutePath();
     }
 
@@ -60,7 +61,7 @@ public class FileService {
             AlertService.error(I18N.get("alert.create.directory.error"));
             throw new RuntimeException(I18N.get("alert.create.directory.error") + outputDir.getAbsolutePath());
         }
-
+        currentDirectory = outputDir;
         return outputDir;
     }
 
@@ -119,5 +120,15 @@ public class FileService {
             pdfFiles.addAll(orderedFiles);
         }
         return true;
+    }
+
+    public static void openExplorer() {
+        if(Desktop.isDesktopSupported() && currentDirectory.exists()) {
+            try{
+                Desktop.getDesktop().open(new File(String.valueOf(currentDirectory.getParent())));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
