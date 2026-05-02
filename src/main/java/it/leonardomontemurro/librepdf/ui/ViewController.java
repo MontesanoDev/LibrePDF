@@ -38,6 +38,8 @@ public class ViewController {
     private final View view;
     private final DropView dropView;
     private final FileView fileView;
+    private final ResultView resultView;
+    private final PdfEngine pdfEngine;
     private final Stage stage;
     private final FileService fileService;
     private final List<File> pdfFiles = new ArrayList<>();
@@ -60,17 +62,36 @@ public class ViewController {
         this.fileView = new FileView();
         fileView.buildSideRight(view.getStackPane().widthProperty());
 
+        this.resultView = new ResultView();
+
+        this.pdfEngine = new PdfEngine();
+
+        this.pdfEngine.setTheOperationCompleted(this::showProgress);
+
         this.view.setOnOperationSelected(this::onOperationChanged);
         this.dropView.setOnFilesDropped(this::onFilesDropped);
-        this.dropView.setBackButtonAction(this::backToHome);
+        this.dropView.setBackButtonAction(this::backScene);
         this.dropView.setOnFileChooserAction(this::getFiles);
         this.fileView.setOnOperationStared(this::onOperationStarted);
+        this.resultView.setOnHomeSelected(this::backToHome);
 
-        initializeFileCardScene();
         this.fileService = new FileService();
         this.fileService.initializeFileChooser();
+
+        initializeFileCardScene();
+        buildResultView();
         buildStackPane();
-        backToHome();
+        bindBackButton();
+        backScene();
+    }
+
+    private void bindBackButton() {
+        dropView.getBackButton().disableProperty().bind(resultView.getButton().visibleProperty());
+    }
+
+    private void buildResultView() {
+        view.addToStackPane(resultView.getSceneContainer());
+        StackPane.setAlignment(resultView.getSceneContainer(), Pos.CENTER);
     }
 
     private void getFiles () {
@@ -124,15 +145,24 @@ public class ViewController {
         view.addToStackPane(dropView.getTop());
         view.addToStackPane(dropView.getFileChooserButton());
         view.addToStackPane(dropView.getBackButton());
+        view.addToStackPane(resultView.getBackToHome());
 
         StackPane.setAlignment(dropView.getBackButton(), Pos.TOP_LEFT);
         StackPane.setMargin(dropView.getBackButton(), new Insets(20, 0, 0, 20));
+        StackPane.setAlignment(resultView.getBackToHome(), Pos.TOP_RIGHT);
+        StackPane.setMargin(resultView.getBackToHome(), new Insets(20, 20, 0, 20));
         dropView.setBackButtonToFront();
+        resultView.getButton().toFront();
     }
 
     private void onFilesDropped(List<File> files) {
         pdfFiles.addAll(files);
         buildFlowPane();
+    }
+
+    private void showProgress() {
+        resultView.showProgress();
+        clearScene();
     }
 
     private void onOperationStarted() {
@@ -141,7 +171,6 @@ public class ViewController {
                 return;
             }
         }
-        PdfEngine pdfEngine = new PdfEngine();
 
         switch (currentOperation) {
             case METADATA -> pdfEngine.editMetadata(
@@ -171,6 +200,7 @@ public class ViewController {
     private void clearScene() {
         dropView.setDragAndDropVisible(false);
         view.setHomeVisible(false);
+        fileView.getBorderPane().setVisible(!resultView.isSceneVisible());
     }
 
     private void clearFile() {
@@ -180,16 +210,28 @@ public class ViewController {
         fileView.clearPassword();
     }
 
-    private void backToHome() {
+    private void backScene() {
         if(dropView.isDragAndDropPaneVisible()){
             dropView.setDropViewSceneVisible(false);
             view.setHomeVisible(true);
+        } else if(resultView.isSceneVisible()) {
+            resultView.hideScene();
+            clearScene();
         } else {
             clearFile();
             fileView.hideInputFields();
             fileView.setFileViewVisible(false);
             dropView.setDropViewSceneVisible(true);
         }
+    }
+
+    private void backToHome(){
+        clearScene();
+        clearFile();
+        fileView.setFileViewVisible(false);
+        dropView.setBackButtonVisible(false);
+        resultView.hideScene();
+        view.setHomeVisible(true);
     }
 
     public View getView() {
