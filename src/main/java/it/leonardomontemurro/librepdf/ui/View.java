@@ -55,7 +55,7 @@ public class View {
         buildStackPane();
         root.getChildren().add(stackPane);
         setScene(root);
-        getScene().getStylesheets().add("home.css");
+        getScene().getStylesheets().add(getClass().getResource("/home.css").toExternalForm());
     }
 
     private void buildStackPane(){
