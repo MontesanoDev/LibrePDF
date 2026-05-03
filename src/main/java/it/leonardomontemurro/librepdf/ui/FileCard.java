@@ -18,7 +18,6 @@
 
 package it.leonardomontemurro.librepdf.ui;
 
-import it.leonardomontemurro.librepdf.PdfEngine;
 import it.leonardomontemurro.librepdf.util.FileService;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
