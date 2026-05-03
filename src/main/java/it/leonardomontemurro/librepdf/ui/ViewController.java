@@ -75,7 +75,7 @@ public class ViewController {
         this.dropView.setBackButtonAction(this::backScene);
 
         this.dropView.setOnFileChooserAction(this::getFiles);
-        this.fileView.setOnOperationStared(this::onOperationStarted);
+        this.fileView.setOnOperationStarted(this::onOperationStarted);
         this.resultView.setOnHomeSelected(this::backToHome);
 
         this.fileService = new FileService();
@@ -89,7 +89,7 @@ public class ViewController {
     }
 
     private void bindBackButton() {
-        dropView.getBackButton().disableProperty().bind(resultView.getButton().visibleProperty());
+        dropView.getBackButton().disableProperty().bind(resultView.getProgressIndicator().visibleProperty());
     }
 
     private void buildResultView() {
@@ -138,7 +138,7 @@ public class ViewController {
                 fileView.setPasswordFieldVisible(true);
                 fileView.setUnlockFieldVisible(false);
             }
-            case PDFTOJPEG -> fileView.setConverterOptionsVisibile(true);
+            case PDFTOJPEG -> fileView.setConverterOptionsVisible(true);
             case SPLIT -> fileView.setSplitOptionsVisible(true);
         }
     }
@@ -155,7 +155,7 @@ public class ViewController {
         StackPane.setAlignment(resultView.getBackToHome(), Pos.TOP_RIGHT);
         StackPane.setMargin(resultView.getBackToHome(), new Insets(20, 20, 0, 20));
         dropView.setBackButtonToFront();
-        resultView.getButton().toFront();
+        resultView.getProgressIndicator().toFront();
     }
 
     private void onFilesDropped(List<File> files) {

@@ -52,9 +52,9 @@ public class Split {
                 if(isSplitAllPagesSelected){
                     Splitter splitter = new Splitter();
 
-                    List<PDDocument> Pages = splitter.split(pdDocument);
+                    List<PDDocument> pages = splitter.split(pdDocument);
 
-                    Iterator<PDDocument> iterator = Pages.listIterator();
+                    Iterator<PDDocument> iterator = pages.listIterator();
 
                     while(iterator.hasNext()) {
                         try(PDDocument pd = iterator.next()) {

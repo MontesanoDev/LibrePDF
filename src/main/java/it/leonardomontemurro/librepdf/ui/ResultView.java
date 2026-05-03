@@ -97,7 +97,7 @@ public class ResultView {
         this.onHomeSelected = callback;
     }
 
-    ProgressIndicator getButton() {
+    ProgressIndicator getProgressIndicator() {
         return progressIndicator;
     }
 

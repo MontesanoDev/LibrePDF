@@ -54,7 +54,7 @@ public class FileView {
     private final QualitySlider qualitySlider = new QualitySlider();
     private final SplitField splitField = new SplitField();
 
-    private Runnable onOperationStared;
+    private Runnable onOperationStarted;
 
     public FileView() {
         initializeFileViewScene();
@@ -84,7 +84,7 @@ public class FileView {
 
         operationButton.getStyleClass().add("operationButton");
         operationButton.setText(I18N.get("ui.execute"));
-        operationButton.setOnAction(_ -> onOperationStared.run());
+        operationButton.setOnAction(_ -> onOperationStarted.run());
 
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
@@ -211,7 +211,7 @@ public class FileView {
     void hideInputFields() {
         setPasswordFieldVisible(false);
         setMetadataInfoVisible(false);
-        setConverterOptionsVisibile(false);
+        setConverterOptionsVisible(false);
         setSplitOptionsVisible(false);
     }
 
@@ -284,8 +284,8 @@ public class FileView {
     String getMetadataKeywords() { return keywords.getText(); }
     boolean isNuclearMetadata() { return nuclearMetadata.isSelected(); }
 
-    void setOnOperationStared(Runnable callback) {
-        this.onOperationStared = callback;
+    void setOnOperationStarted(Runnable callback) {
+        this.onOperationStarted = callback;
     }
 
     void setFileViewVisible(Boolean visible) {
@@ -296,7 +296,7 @@ public class FileView {
         return borderPane;
     }
 
-    void setConverterOptionsVisibile(Boolean visible) {
+    void setConverterOptionsVisible(Boolean visible) {
         converterOptions.setVisible(visible);
     }
 
