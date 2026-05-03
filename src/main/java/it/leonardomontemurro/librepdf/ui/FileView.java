@@ -195,16 +195,10 @@ public class FileView {
     }
 
     private void addListenerInputFields() {
-        nuclearMetadata.selectedProperty().addListener((_, _, newValue) -> {
-            if (newValue) {
-                title.setDisable(true);
-                author.setDisable(true);
-                keywords.setDisable(true);
-            } else {
-                title.setDisable(false);
-                author.setDisable(false);
-                keywords.setDisable(false);
-            }
+        nuclearMetadata.selectedProperty().addListener((_, _, selected) -> {
+            title.setDisable(selected);
+            author.setDisable(selected);
+            keywords.setDisable(selected);
         });
     }
 
