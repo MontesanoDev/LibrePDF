@@ -56,7 +56,6 @@ public class FileService {
 
         boolean created = outputDir.mkdirs();
         if (!created) {
-            AlertService.error(I18N.get("alert.create.directory.error"));
             throw new RuntimeException(I18N.get("alert.create.directory.error") + outputDir.getAbsolutePath());
         }
         return outputDir;
