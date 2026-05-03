@@ -32,6 +32,7 @@ public class Split {
     private final List<File> sources;
     private final List<int[]> ranges;
     private final boolean isSplitAllPagesSelected;
+    private File outputDirectory;
 
     public Split(List<File> files, List<int[]> ranges, boolean isSplitAllChecked)  {
         this.sources = files;
@@ -41,7 +42,8 @@ public class Split {
 
     public void execute() {
 
-        String outputDirectory = sources.getFirst().getParent();
+        outputDirectory = sources.getFirst().getParentFile();
+        String outputDirectoryPath = outputDirectory.getAbsolutePath();
 
         for (File source : sources) {
 
@@ -56,7 +58,7 @@ public class Split {
 
                     while(iterator.hasNext()) {
                         try(PDDocument pd = iterator.next()) {
-                            pd.save(FileService.getUniqueFilePath(outputDirectory, "splitted"));
+                            pd.save(FileService.getUniqueFilePath(outputDirectoryPath, "splitted"));
                         }
                     }
                 } else {
@@ -84,7 +86,7 @@ public class Split {
                                 }
                             }
                             output.save(
-                                    FileService.getUniqueFilePath(outputDirectory, "splitted")
+                                    FileService.getUniqueFilePath(outputDirectoryPath, "splitted")
                             );
                         }
                     }
@@ -94,6 +96,10 @@ public class Split {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public File getOutputDirectory() {
+        return outputDirectory;
     }
 
 }

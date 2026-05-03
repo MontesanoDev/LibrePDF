@@ -33,6 +33,7 @@ public class Metadata {
     private final String author;
     private final String keywords;
     private final boolean nuclear;
+    private File outputDirectory;
 
     public Metadata(List<File> sources, String title, String author, String keywords, boolean nuclear) {
         this.sources = sources;
@@ -43,6 +44,9 @@ public class Metadata {
     }
 
     public void execute() {
+        outputDirectory = sources.getFirst().getParentFile();
+        String outputDirectoryPath = outputDirectory.getAbsolutePath();
+
         for (File pdf : sources) {
             try (PDDocument doc = Loader.loadPDF(pdf)) {
                 PDDocumentInformation info = nuclear ? new PDDocumentInformation() : doc.getDocumentInformation();
@@ -56,11 +60,14 @@ public class Metadata {
                 if (!keywords.isBlank()) info.setKeywords(keywords);
 
                 doc.setDocumentInformation(info);
-                String outputDirectory = sources.getFirst().getParent();
-                doc.save(FileService.getUniqueFilePath(outputDirectory, "metadata"));
+                doc.save(FileService.getUniqueFilePath(outputDirectoryPath, "metadata"));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public File getOutputDirectory() {
+        return outputDirectory;
     }
 }

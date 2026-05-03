@@ -30,6 +30,7 @@ import java.util.List;
 public class Merge {
 
     private final List<File> sources;
+    private File outputDirectory;
 
     public Merge(List<File> files)  {
         this.sources = files;
@@ -42,8 +43,8 @@ public class Merge {
                 merger.addSource(pdf);
             }
 
-            String outputDirectory = sources.getFirst().getParent();
-            String finalPath = FileService.getUniqueFilePath(outputDirectory, "merged");
+            outputDirectory = sources.getFirst().getParentFile();
+            String finalPath = FileService.getUniqueFilePath(outputDirectory.getAbsolutePath(), "merged");
             merger.setDestinationFileName(finalPath);
 
             merger.mergeDocuments(IOUtils.createMemoryOnlyStreamCache(), CompressParameters.NO_COMPRESSION);
@@ -51,6 +52,10 @@ public class Merge {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public File getOutputDirectory() {
+        return outputDirectory;
     }
 
 }

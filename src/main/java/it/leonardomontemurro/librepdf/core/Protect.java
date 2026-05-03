@@ -31,6 +31,7 @@ public class Protect {
 
     private final List<File> sources;
     private final char[] password;
+    private File outputDirectory;
 
     public Protect(List<File> files, char[] password)  {
         this.sources = files;
@@ -40,6 +41,8 @@ public class Protect {
     public void execute() {
         int keyLength = 256;
         String pwd = new String(password);
+        outputDirectory = sources.getFirst().getParentFile();
+        String outputDirectoryPath = outputDirectory.getAbsolutePath();
 
         for (File pdf : sources) {
             try (PDDocument doc = Loader.loadPDF(pdf)) {
@@ -49,11 +52,14 @@ public class Protect {
                 StandardProtectionPolicy spp = new StandardProtectionPolicy(pwd, pwd, ap);
                 spp.setEncryptionKeyLength(keyLength);
                 doc.protect(spp);
-                String outputDirectory = sources.getFirst().getParent();
-                doc.save(FileService.getUniqueFilePath(outputDirectory, "protected"));
+                doc.save(FileService.getUniqueFilePath(outputDirectoryPath, "protected"));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public File getOutputDirectory() {
+        return outputDirectory;
     }
 }

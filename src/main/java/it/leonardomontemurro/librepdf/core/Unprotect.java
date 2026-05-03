@@ -30,6 +30,7 @@ public class Unprotect {
 
     private final List<File> sources;
     private final char[] password;
+    private File outputDirectory;
 
     public Unprotect(List<File> files, char[] password)  {
         this.sources = files;
@@ -39,6 +40,9 @@ public class Unprotect {
     public boolean execute() {
         String pwd = new String(password);
         boolean anyEncrypted = false;
+        outputDirectory = sources.getFirst().getParentFile();
+        String outputDirectoryPath = outputDirectory.getAbsolutePath();
+
         for (File pdf : sources) {
 
             try(PDDocument doc = Loader.loadPDF(pdf, pwd)){
@@ -46,8 +50,7 @@ public class Unprotect {
                 if (doc.isEncrypted()) {
                     anyEncrypted = true;
                     doc.setAllSecurityToBeRemoved(true);
-                    String outputDirectory = sources.getFirst().getParent();
-                    doc.save(FileService.getUniqueFilePath(outputDirectory, "unlocked"));
+                    doc.save(FileService.getUniqueFilePath(outputDirectoryPath, "unlocked"));
                 }
 
             } catch (IOException e) {
@@ -55,5 +58,9 @@ public class Unprotect {
             }
         }
         return anyEncrypted;
+    }
+
+    public File getOutputDirectory() {
+        return outputDirectory;
     }
 }

@@ -32,6 +32,7 @@ import java.util.List;
 public class PdfToJpeg {
     private final List<File> sources;
     private final int dpi;
+    private File outputDirectory;
 
     public PdfToJpeg(List<File> files, int dpi)  {
         this.sources = files;
@@ -39,6 +40,8 @@ public class PdfToJpeg {
     }
 
     public void execute() {
+        outputDirectory = sources.getFirst().getParentFile();
+
         for (File pdf : sources) {
             String cleanName = pdf.getName().replaceFirst("(?i)\\.pdf$", "");
             File outputDir = FileService.createDir(pdf, cleanName, "_images");
@@ -59,5 +62,9 @@ public class PdfToJpeg {
                 throw new RuntimeException(I18N.get("alert.convert.jpg.error") + pdf.getName(), e);
             }
         }
+    }
+
+    public File getOutputDirectory() {
+        return outputDirectory;
     }
 }
