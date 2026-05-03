@@ -27,6 +27,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class View {
@@ -55,7 +56,7 @@ public class View {
         buildStackPane();
         root.getChildren().add(stackPane);
         setScene(root);
-        getScene().getStylesheets().add(getClass().getResource("/home.css").toExternalForm());
+        getScene().getStylesheets().add(Objects.requireNonNull(getClass().getResource("/home.css")).toExternalForm());
     }
 
     private void buildStackPane(){
