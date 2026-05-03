@@ -25,6 +25,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.VBox;
 
+import java.io.File;
+
 public class ResultView {
 
     private final VBox sceneContainer = new VBox(30);
@@ -32,6 +34,7 @@ public class ResultView {
     private final Button backToHome = new Button();
     private final ProgressIndicator progressIndicator = new ProgressIndicator();
     private Runnable onHomeSelected;
+    private File outputDirectory;
 
     public ResultView() {
         buildScene();
@@ -49,7 +52,7 @@ public class ResultView {
         openExplorer.maxHeightProperty().bind(sceneContainer.widthProperty().divide(20));
         openExplorer.minWidthProperty().bind(sceneContainer.widthProperty().divide(10));
         openExplorer.managedProperty().bind(progressIndicator.visibleProperty().not());
-        openExplorer.setOnAction(_ -> FileService.openExplorer());
+        openExplorer.setOnAction(_ -> FileService.openExplorer(outputDirectory));
 
         backToHome.setText("Home ->");
         backToHome.getStyleClass().add("backButton");
@@ -64,13 +67,14 @@ public class ResultView {
         sceneContainer.setVisible(false);
     }
 
-    void showProgress() {
-        if(!sceneContainer.isVisible()) {
-            sceneContainer.setVisible(true);
-            progressIndicator.setVisible(true);
-        } else{
-            progressIndicator.setVisible(false);
-        }
+    void start() {
+        sceneContainer.setVisible(true);
+        progressIndicator.setVisible(true);
+    }
+
+    void complete(File outputDirectory) {
+        this.outputDirectory = outputDirectory;
+        progressIndicator.setVisible(false);
     }
 
     void hideScene() {

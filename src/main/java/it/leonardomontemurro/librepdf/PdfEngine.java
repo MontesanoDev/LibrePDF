@@ -21,39 +21,48 @@ package it.leonardomontemurro.librepdf;
 import it.leonardomontemurro.librepdf.core.*;
 import it.leonardomontemurro.librepdf.util.AlertService;
 import it.leonardomontemurro.librepdf.util.I18N;
+import javafx.application.Platform;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class PdfEngine {
 
-    private Runnable onFileRendered;
+    private Runnable onOperationStarted;
+    private Consumer<File> onOperationCompleted;
+
     public void convertToJpeg(List<File> pdfs, int dpi) {
-        onFileRendered.run();
+        onOperationStarted.run();
         Thread.startVirtualThread(() -> {
+            File output = null;
             try {
-                new PdfToJpeg(pdfs, dpi).execute();
+                PdfToJpeg op = new PdfToJpeg(pdfs, dpi);
+                op.execute();
+                output = op.getOutputDirectory();
             } catch (Exception e) {
                 AlertService.error(I18N.get("alert.convert.jpg.error") + ": " + e.getMessage());
             } finally {
-                onFileRendered.run();
+                notifyCompleted(output);
             }
         });
     }
 
     public void protectFile(List<File> pdfs, char[] password) {
-
         if (isValidPassword(password)) {
-            onFileRendered.run();
+            onOperationStarted.run();
             Thread.startVirtualThread(() -> {
+                File output = null;
                 try {
-                    new Protect(pdfs, password).execute();
+                    Protect op = new Protect(pdfs, password);
+                    op.execute();
+                    output = op.getOutputDirectory();
                 } catch (Exception e) {
                     AlertService.error(I18N.get("alert.protect.error") + ": " + e.getMessage());
                 } finally {
                     Arrays.fill(password, '\0');
-                    onFileRendered.run();
+                    notifyCompleted(output);
                 }
             });
         } else {
@@ -92,14 +101,17 @@ public class PdfEngine {
 
     public void mergeFile(List<File> pdfs) {
         if(pdfs.size() > 1) {
-            onFileRendered.run();
+            onOperationStarted.run();
             Thread.startVirtualThread(() -> {
+                File output = null;
                 try {
-                    new Merge(pdfs).execute();
+                    Merge op = new Merge(pdfs);
+                    op.execute();
+                    output = op.getOutputDirectory();
                 } catch (Exception e) {
                     AlertService.error(I18N.get("alert.merge.error") + ": " + e.getMessage());
-                } finally{
-                    onFileRendered.run();
+                } finally {
+                    notifyCompleted(output);
                 }
             });
         } else {
@@ -117,8 +129,16 @@ public class PdfEngine {
         });
     }
 
-    public void setTheOperationCompleted(Runnable callback) {
-        this.onFileRendered = callback;
+    public void setOnOperationStarted(Runnable callback) {
+        this.onOperationStarted = callback;
+    }
+
+    public void setOnOperationCompleted(Consumer<File> callback) {
+        this.onOperationCompleted = callback;
+    }
+
+    private void notifyCompleted(File outputDirectory) {
+        Platform.runLater(() -> onOperationCompleted.accept(outputDirectory));
     }
 
     private boolean isValidPassword(char[] password) {

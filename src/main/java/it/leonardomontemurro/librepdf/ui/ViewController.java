@@ -66,7 +66,8 @@ public class ViewController {
 
         this.pdfEngine = new PdfEngine();
 
-        this.pdfEngine.setTheOperationCompleted(this::showProgress);
+        this.pdfEngine.setOnOperationStarted(this::handleOperationStart);
+        this.pdfEngine.setOnOperationCompleted(this::handleOperationComplete);
 
         this.view.setOnOperationSelected(this::onOperationChanged);
         this.dropView.setOnFilesDropped(this::onFilesDropped);
@@ -160,9 +161,13 @@ public class ViewController {
         buildFlowPane();
     }
 
-    private void showProgress() {
-        resultView.showProgress();
+    private void handleOperationStart() {
+        resultView.start();
         clearScene();
+    }
+
+    private void handleOperationComplete(File outputDirectory) {
+        resultView.complete(outputDirectory);
     }
 
     private void onOperationStarted() {
