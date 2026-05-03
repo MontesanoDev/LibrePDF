@@ -129,4 +129,13 @@ public class FileService {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean isValidPassword(char[] password) {
+        if (password == null) return false;
+
+        for (char c : password) {
+            if (!Character.isWhitespace(c)) return true;
+        }
+        return false;
+    }
 }

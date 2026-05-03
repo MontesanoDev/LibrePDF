@@ -20,6 +20,7 @@ package it.leonardomontemurro.librepdf;
 
 import it.leonardomontemurro.librepdf.core.*;
 import it.leonardomontemurro.librepdf.util.AlertService;
+import it.leonardomontemurro.librepdf.util.FileService;
 import it.leonardomontemurro.librepdf.util.I18N;
 import javafx.application.Platform;
 
@@ -50,7 +51,7 @@ public class PdfEngine {
     }
 
     public void protectFile(List<File> pdfs, char[] password) {
-        if (isValidPassword(password)) {
+        if (new FileService().isValidPassword(password)) {
             onOperationStarted.run();
             Thread.startVirtualThread(() -> {
                 File output = null;
@@ -71,7 +72,7 @@ public class PdfEngine {
     }
 
     public void unprotectFile(List<File> pdfs, char[] password) {
-        if (isValidPassword(password)) {
+        if (new FileService().isValidPassword(password)) {
             onOperationStarted.run();
             Thread.startVirtualThread(() -> {
                 File output = null;
@@ -158,12 +159,4 @@ public class PdfEngine {
         Platform.runLater(() -> onOperationCompleted.accept(outputDirectory));
     }
 
-    private boolean isValidPassword(char[] password) {
-        if (password == null) return false;
-
-        for (char c : password) {
-            if (!Character.isWhitespace(c)) return true;
-        }
-        return false;
-    }
 }
