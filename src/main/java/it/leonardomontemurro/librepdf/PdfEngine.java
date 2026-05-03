@@ -72,16 +72,21 @@ public class PdfEngine {
 
     public void unprotectFile(List<File> pdfs, char[] password) {
         if (isValidPassword(password)) {
+            onOperationStarted.run();
             Thread.startVirtualThread(() -> {
+                File output = null;
                 try {
-                    boolean anyDecrypted = new Unprotect(pdfs, password).execute();
+                    Unprotect op = new Unprotect(pdfs, password);
+                    boolean anyDecrypted = op.execute();
                     if (!anyDecrypted) {
                         AlertService.warning(I18N.get("alert.not.encrypted.pdf"));
                     }
+                    output = op.getOutputDirectory();
                 } catch (Exception e) {
                     AlertService.error(I18N.get("alert.unprotect.error") + ": " + e.getMessage());
                 } finally {
                     Arrays.fill(password, '\0');
+                    notifyCompleted(output);
                 }
             });
         } else {
@@ -90,11 +95,17 @@ public class PdfEngine {
     }
 
     public void editMetadata(List<File> pdfs, String title, String author, String keywords, boolean nuclear) {
+        onOperationStarted.run();
         Thread.startVirtualThread(() -> {
+            File output = null;
             try {
-                new Metadata(pdfs, title, author, keywords, nuclear).execute();
+                Metadata op = new Metadata(pdfs, title, author, keywords, nuclear);
+                op.execute();
+                output = op.getOutputDirectory();
             } catch (Exception e) {
                 AlertService.error(I18N.get("alert.metadata.error") + ": " + e.getMessage());
+            } finally {
+                notifyCompleted(output);
             }
         });
     }
@@ -120,11 +131,17 @@ public class PdfEngine {
     }
 
     public void splitFile(List<File> pdfs, List<int[]> ranges, boolean isSplitAllPagesSelected){
+        onOperationStarted.run();
         Thread.startVirtualThread(() -> {
+            File output = null;
             try{
-                new Split(pdfs, ranges, isSplitAllPagesSelected).execute();
+                Split op = new Split(pdfs, ranges, isSplitAllPagesSelected);
+                op.execute();
+                output = op.getOutputDirectory();
             } catch (Exception e) {
                 AlertService.error(I18N.get("alert.split.error") + ": " + e.getMessage());
+            } finally {
+                notifyCompleted(output);
             }
         });
     }
