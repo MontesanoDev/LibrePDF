@@ -68,10 +68,12 @@ public class ViewController {
 
         this.pdfEngine.setOnOperationStarted(this::handleOperationStart);
         this.pdfEngine.setOnOperationCompleted(this::handleOperationComplete);
+        this.pdfEngine.setOnOperationAborted(this::backScene);
 
         this.view.setOnOperationSelected(this::onOperationChanged);
         this.dropView.setOnFilesDropped(this::onFilesDropped);
         this.dropView.setBackButtonAction(this::backScene);
+
         this.dropView.setOnFileChooserAction(this::getFiles);
         this.fileView.setOnOperationStared(this::onOperationStarted);
         this.resultView.setOnHomeSelected(this::backToHome);

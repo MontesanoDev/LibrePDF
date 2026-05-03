@@ -32,6 +32,7 @@ import java.util.function.Consumer;
 public class PdfEngine {
 
     private Runnable onOperationStarted;
+    private Runnable onOperationAborted;
     private Consumer<File> onOperationCompleted;
 
     public void convertToJpeg(List<File> pdfs, int dpi) {
@@ -43,6 +44,7 @@ public class PdfEngine {
                 op.execute();
                 output = op.getOutputDirectory();
             } catch (Exception e) {
+                notifyAborted();
                 AlertService.error(I18N.get("alert.convert.jpg.error") + ": " + e.getMessage());
             } finally {
                 notifyCompleted(output);
@@ -60,6 +62,7 @@ public class PdfEngine {
                     op.execute();
                     output = op.getOutputDirectory();
                 } catch (Exception e) {
+                    notifyAborted();
                     AlertService.error(I18N.get("alert.protect.error") + ": " + e.getMessage());
                 } finally {
                     Arrays.fill(password, '\0');
@@ -80,10 +83,12 @@ public class PdfEngine {
                     Unprotect op = new Unprotect(pdfs, password);
                     boolean anyDecrypted = op.execute();
                     if (!anyDecrypted) {
+                        notifyAborted();
                         AlertService.warning(I18N.get("alert.not.encrypted.pdf"));
                     }
                     output = op.getOutputDirectory();
                 } catch (Exception e) {
+                    notifyAborted();
                     AlertService.error(I18N.get("alert.unprotect.error") + ": " + e.getMessage());
                 } finally {
                     Arrays.fill(password, '\0');
@@ -104,6 +109,7 @@ public class PdfEngine {
                 op.execute();
                 output = op.getOutputDirectory();
             } catch (Exception e) {
+                notifyAborted();
                 AlertService.error(I18N.get("alert.metadata.error") + ": " + e.getMessage());
             } finally {
                 notifyCompleted(output);
@@ -121,6 +127,7 @@ public class PdfEngine {
                     op.execute();
                     output = op.getOutputDirectory();
                 } catch (Exception e) {
+                    notifyAborted();
                     AlertService.error(I18N.get("alert.merge.error") + ": " + e.getMessage());
                 } finally {
                     notifyCompleted(output);
@@ -140,11 +147,16 @@ public class PdfEngine {
                 op.execute();
                 output = op.getOutputDirectory();
             } catch (Exception e) {
+                notifyAborted();
                 AlertService.error(I18N.get("alert.split.error") + ": " + e.getMessage());
             } finally {
                 notifyCompleted(output);
             }
         });
+    }
+
+    private void notifyAborted() {
+        Platform.runLater(() -> onOperationAborted.run());
     }
 
     public void setOnOperationStarted(Runnable callback) {
@@ -159,4 +171,7 @@ public class PdfEngine {
         Platform.runLater(() -> onOperationCompleted.accept(outputDirectory));
     }
 
+    public void setOnOperationAborted(Runnable callback) {
+        this.onOperationAborted = callback;
+    }
 }
