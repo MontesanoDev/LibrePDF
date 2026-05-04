@@ -19,6 +19,7 @@
 package it.leonardomontemurro.librepdf.ui;
 
 import it.leonardomontemurro.librepdf.util.FileService;
+import it.leonardomontemurro.librepdf.util.I18N;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -41,11 +42,11 @@ public class ResultView {
     }
 
     private void buildScene() {
-        Label label = new Label("Operazione Conclusa!");
+        Label label = new Label(I18N.get("result.info"));
         label.getStyleClass().add("LabelRenderedFile");
         label.visibleProperty().bind(progressIndicator.visibleProperty().not());
         label.managedProperty().bind(progressIndicator.visibleProperty().not());
-        openExplorer.setText("Apri percorso file");
+        openExplorer.setText(I18N.get("result.button"));
         openExplorer.getStyleClass().add("buttonRenderedFile");
         openExplorer.visibleProperty().bind(progressIndicator.visibleProperty().not());
         openExplorer.minHeightProperty().bind(sceneContainer.widthProperty().divide(24));
