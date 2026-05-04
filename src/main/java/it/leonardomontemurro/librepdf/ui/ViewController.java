@@ -242,6 +242,7 @@ public class ViewController {
         clearScene();
         clearFile();
         fileView.setFileViewVisible(false);
+        fileView.hideInputFields();
         dropView.setBackButtonVisible(false);
         resultView.hideScene();
         view.setHomeVisible(true);
