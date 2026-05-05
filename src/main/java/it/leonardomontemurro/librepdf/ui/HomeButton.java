@@ -19,19 +19,19 @@
 package it.leonardomontemurro.librepdf.ui;
 
 import it.leonardomontemurro.librepdf.PdfOperation;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.Region;
+import javafx.scene.text.TextAlignment;
 
 public class HomeButton extends Button {
 
-    private final static int BUTTON_WIDTH = 240;
-    private final static int BUTTON_HEIGHT = 210;
-
-    public HomeButton(PdfOperation icon){
+    public HomeButton(PdfOperation icon, double mainWidth, double mainHeight){
 
         this.getStyleClass().add("homeButton");
         this.setWrapText(true);
+        this.setTextAlignment(TextAlignment.CENTER);
         this.setPickOnBounds(false);
 
         Region region = new Region();
@@ -41,6 +41,6 @@ public class HomeButton extends Button {
         this.setGraphic(region);
         this.setText(icon.getDescription());
 
-        this.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        this.setPrefSize(mainWidth * 0.2, mainHeight * 0.3);
     }
 }

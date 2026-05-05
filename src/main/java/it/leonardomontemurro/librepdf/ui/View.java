@@ -33,6 +33,10 @@ import java.util.function.Consumer;
 
 public class View {
 
+    private final Screen mainScreen = Screen.getPrimary();
+    private final double mainWidth = mainScreen.getVisualBounds().getWidth() * 0.8;
+    private final double mainHeight = mainScreen.getVisualBounds().getHeight() * 0.9;
+
     private final static int GRID_GAP = 20;
     private final static byte GRID_MAX_COLUMN = 4;
 
@@ -89,7 +93,7 @@ public class View {
         for(PdfOperation icon : PdfOperation.values()){
             int col = i % GRID_MAX_COLUMN;
             int row = i / GRID_MAX_COLUMN;
-            HomeButton button = new HomeButton(icon);
+            HomeButton button = new HomeButton(icon, mainWidth, mainHeight);
             button.setOnAction(_ -> onOperationSelected.accept(icon));
             gridPane.add(button,col,row);
             i++;
@@ -105,10 +109,6 @@ public class View {
     }
 
     void setScene(AnchorPane root){
-        Screen mainScreen = Screen.getPrimary();
-
-        double mainWidth = mainScreen.getVisualBounds().getWidth() * 0.8;
-        double mainHeight = mainScreen.getVisualBounds().getHeight() * 0.9;
         this.scene = new Scene(root, mainWidth, mainHeight);
     }
 
