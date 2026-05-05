@@ -36,6 +36,8 @@ public class View {
     private final Screen mainScreen = Screen.getPrimary();
     private final double mainWidth = mainScreen.getVisualBounds().getWidth() * 0.8;
     private final double mainHeight = mainScreen.getVisualBounds().getHeight() * 0.9;
+    private final double minWidth = mainScreen.getVisualBounds().getWidth() * 0.6;
+    private final double minHeight = mainScreen.getVisualBounds().getHeight() * 0.65;
 
     private final static int GRID_GAP = 20;
     private final static byte GRID_MAX_COLUMN = 4;
@@ -119,5 +121,13 @@ public class View {
 
     public Scene getScene(){
         return scene;
+    }
+
+    public double getMinHeight() {
+        return minHeight;
+    }
+
+    public double getMinWidth() {
+        return minWidth;
     }
 }

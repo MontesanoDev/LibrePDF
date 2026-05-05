@@ -27,6 +27,8 @@ public class App extends Application {
         ViewController viewController = new ViewController(primaryStage);
         primaryStage.setTitle("LibrePDF");
         primaryStage.setScene(viewController.getView().getScene());
+        primaryStage.setMinWidth(viewController.getView().getMinWidth());
+        primaryStage.setMinHeight(viewController.getView().getMinHeight());
         primaryStage.centerOnScreen();
         primaryStage.show();
     }
