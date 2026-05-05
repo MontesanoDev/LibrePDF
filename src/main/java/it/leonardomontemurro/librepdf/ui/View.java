@@ -106,7 +106,11 @@ public class View {
     }
 
     void setScene(AnchorPane root){
-        this.scene = new Scene(root, WIDTH_SIZE, HEIGHT_SIZE);
+        Screen mainScreen = Screen.getPrimary();
+
+        double mainWidth = mainScreen.getVisualBounds().getWidth() * 0.8;
+        double mainHeight = mainScreen.getVisualBounds().getHeight() * 0.9;
+        this.scene = new Scene(root, mainWidth, mainHeight);
     }
 
     void setHomeVisible(Boolean visible) {
