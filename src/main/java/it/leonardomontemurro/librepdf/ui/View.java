@@ -26,6 +26,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.stage.Screen;
 
 import java.util.Objects;
 import java.util.function.Consumer;
