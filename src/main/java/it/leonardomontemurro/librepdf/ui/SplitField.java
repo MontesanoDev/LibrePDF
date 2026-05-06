@@ -80,6 +80,7 @@ public class SplitField extends TextField{
 
     public List<int[]> getRanges() {
         if(!isRangeValid()) {
+            ranges.clear();
             AlertService.error(I18N.get("alert.split.range"));
         }
         return ranges;

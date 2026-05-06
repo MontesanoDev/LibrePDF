@@ -194,7 +194,7 @@ public class ViewController {
             case SPLIT -> {
                 if(fileView.isSplitAllPagesSelected()) {
                     pdfEngine.splitFile(pdfFiles, null, fileView.isSplitAllPagesSelected());
-                } else {
+                } else if (!fileView.getSplitRange().isEmpty()){
                     pdfEngine.splitFile(pdfFiles, fileView.getSplitRange(), fileView.isSplitAllPagesSelected());
                 }
             }
