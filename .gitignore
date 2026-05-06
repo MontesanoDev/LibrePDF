@@ -37,3 +37,12 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# Escludi le librerie compilate
+*.jar
+targetlibs/
+
+# Escludi i file di build e script se non li vuoi nel repo
+build-windows.bat
+scripts/*.bat
+scripts/*.sh
