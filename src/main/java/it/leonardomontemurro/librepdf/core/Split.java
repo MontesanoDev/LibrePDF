@@ -71,6 +71,8 @@ public class Split {
 
                         if(to > fileBound){
                             to = fileBound;
+                        } else if(from > fileBound){
+                            from = fileBound;
                         }
 
                         try (PDDocument output = new PDDocument()) {
