@@ -52,29 +52,31 @@ public class SplitField extends TextField{
     }
 
     boolean isRangeValid() {
-        String input = this.getText().replaceAll("\\s+", "");
-        ranges.clear();
+        try {
+            String input = this.getText().replaceAll("\\s+", "");
+            ranges.clear();
 
-        if (!input.matches("\\d+-\\d+(,\\d+-\\d+)*")) {
-            return false;
-        }
-
-        String[] groups = input.split(",");
-
-        for (String group : groups) {
-            String[] parts = group.split("-");
-
-            int start = Integer.parseInt(parts[0]);
-            int end = Integer.parseInt(parts[1]);
-
-            if(start < 1 || end < 1) {
+            if (!input.matches("\\d+-\\d+(,\\d+-\\d+)*")) {
                 return false;
             }
 
-            ranges.add(new int[]{start, end});
+            String[] groups = input.split(",");
 
+            for (String group : groups) {
+                String[] parts = group.split("-");
+
+                int start = Integer.parseInt(parts[0]);
+                int end = Integer.parseInt(parts[1]);
+
+                if (start < 1 || end < 1) {
+                    return false;
+                }
+
+                ranges.add(new int[]{start, end});
+            }
+        } catch (Exception e) {
+            return false;
         }
-
         return !ranges.isEmpty();
     }
 
