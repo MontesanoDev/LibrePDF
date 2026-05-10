@@ -36,7 +36,7 @@ Everything runs **100% locally on your machine**. No internet connection require
 * **PDF to JPEG:** High-quality conversion of your documents into images.
 * **Protect:** Secure your documents with strong encryption and passwords.
 * **Unlock:** Remove passwords from PDFs (if you have the original password, of course).
-* 
+
 Passwords are always masked and cannot be copied to clipboard. This is not a missing feature — it's a deliberate choice. If you're encrypting sensitive documents, you probably don't want your password visible on screen.
 
 ### Coming Feature  (Not Sure)
