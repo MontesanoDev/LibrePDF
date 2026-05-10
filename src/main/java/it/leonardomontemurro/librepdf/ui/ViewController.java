@@ -187,7 +187,7 @@ public class ViewController {
                     fileView.getMetadataKeywords(),
                     fileView.isNuclearMetadata()
             );
-            case PROTECT -> pdfEngine.protectFile(pdfFiles, fileView.getPassword());
+            case PROTECT -> pdfEngine.protectFile(pdfFiles, fileView.getPassword(), fileView.canPrintable(), fileView.canExtract());
             case UNLOCK -> pdfEngine.unprotectFile(pdfFiles, fileView.getPassword());
             case PDFTOJPEG -> pdfEngine.convertToJpeg(pdfFiles, fileView.getDpi());
             case MERGE -> pdfEngine.mergeFile(pdfFiles);

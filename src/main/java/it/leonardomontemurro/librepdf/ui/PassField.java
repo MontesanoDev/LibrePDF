@@ -23,12 +23,22 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 
 public class PassField {
 
     private final VBox passwordField = new VBox(15);
+    private final HBox canPrintableBox = new HBox(20);
+    private final HBox canExtractableBox = new HBox(20);
+    private final CheckBox canPrintable = new CheckBox();
+    private final CheckBox canExtractable = new CheckBox();
+    private final Label canPrintableLabel = new Label();
+    private final Label canExtractableLabel = new Label();
     private final PasswordField password;
     private final PasswordField confirmPassword;
 
@@ -37,6 +47,24 @@ public class PassField {
         this.confirmPassword = new PasswordField();
 
         buildPasswordInputFields();
+        buildCheckBoxes();
+    }
+
+    private void buildCheckBoxes() {
+        canPrintableBox.setPadding(new Insets(0,10,0,0));
+        canExtractableBox.setPadding(new Insets(0,10,0,0));
+
+        canPrintableLabel.setText(I18N.get("pass.can.print"));
+        canPrintableLabel.setTextAlignment(TextAlignment.CENTER);
+        canPrintableBox.getChildren().addAll(canPrintableLabel, canPrintable);
+        canPrintableBox.setAlignment(Pos.CENTER_RIGHT);
+
+        canExtractableLabel.setText(I18N.get("pass.can.extract"));
+        canExtractableLabel.setTextAlignment(TextAlignment.CENTER);
+        canExtractableBox.getChildren().addAll(canExtractableLabel, canExtractable);
+        canExtractableBox.setAlignment(Pos.CENTER_RIGHT);
+
+        passwordField.getChildren().addAll(canPrintableBox, canExtractableBox);
     }
 
     private void buildPasswordInputFields() {
@@ -90,6 +118,14 @@ public class PassField {
 
     VBox getPasswordField() {
         return passwordField;
+    }
+
+    boolean canPrintable() {
+        return !canPrintable.isSelected();
+    }
+
+    boolean canExtract() {
+        return !canExtractable.isSelected();
     }
 
     public char[] getPassword() {
