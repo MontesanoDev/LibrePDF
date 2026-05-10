@@ -19,7 +19,6 @@
 package it.leonardomontemurro.librepdf.ui;
 
 import it.leonardomontemurro.librepdf.util.I18N;
-import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -43,9 +42,6 @@ public class FileView {
     private final TextField title = new TextField();
     private final TextField keywords = new TextField();
     private final CheckBox nuclearMetadata = new CheckBox();
-    private final VBox passwordField = new VBox(15);
-    private final PasswordField password = new PasswordField();
-    private final PasswordField confirmPassword = new PasswordField();
     private final HBox converterBox = new HBox();
     private final VBox converterOptions = new VBox(15);
     private final VBox splitOptions = new VBox(15);
@@ -53,7 +49,7 @@ public class FileView {
     private final HBox splitCheckBox = new HBox(15);
     private final QualitySlider qualitySlider = new QualitySlider();
     private final SplitField splitField = new SplitField();
-
+    private final PassField passwordField = new PassField();
     private Runnable onOperationStarted;
 
     public FileView() {
@@ -78,7 +74,6 @@ public class FileView {
         operationName.getStyleClass().add("operationName");
         descriptionName.setWrapText(true);
         buildMetadataInputFields();
-        buildPasswordInputFields();
         buildConverterOptions();
         buildSplitRange();
 
@@ -93,7 +88,7 @@ public class FileView {
         VBox.setVgrow(topSpacer, Priority.ALWAYS);
 
         sideRight.getChildren().addAll(operationName, descriptionName, topSpacer, metadataFields,
-                passwordField, converterOptions, splitOptions, spacer, operationButton);
+                passwordField.getPasswordField(), converterOptions, splitOptions, spacer, operationButton);
 
         sideRight.setPadding(new Insets(50, 20, 50, 20));
     }
@@ -123,18 +118,6 @@ public class FileView {
         flowPane.setAlignment(Pos.CENTER);
         flowPane.setHgap(30);
         flowPane.setVgap(30);
-    }
-
-    private void buildPasswordInputFields() {
-        password.setPromptText(I18N.get("ui.password.prompt"));
-        password.setAlignment(Pos.CENTER);
-        confirmPassword.setPromptText(I18N.get("ui.password.confirm"));
-        confirmPassword.setAlignment(Pos.CENTER);
-        confirmPassword.managedProperty().bind(confirmPassword.visibleProperty());
-        passwordField.getChildren().addAll(password, confirmPassword);
-        passwordField.setPadding(new Insets(0,20,0,20));
-        passwordField.setVisible(false);
-        passwordField.managedProperty().bind(passwordField.visibleProperty());
     }
 
     private void buildSplitRange() {
@@ -203,7 +186,7 @@ public class FileView {
     }
 
     void hideInputFields() {
-        setPasswordFieldVisible(false);
+        passwordField.setPasswordFieldVisible(false);
         setMetadataInfoVisible(false);
         setConverterOptionsVisible(false);
         setSplitOptionsVisible(false);
@@ -213,13 +196,6 @@ public class FileView {
         splitOptions.setVisible(visible);
     }
 
-    void setPasswordFieldVisible(Boolean visible) {
-        passwordField.setVisible(visible);
-    }
-
-    void setUnlockFieldVisible(Boolean visible){
-        confirmPassword.setVisible(visible);
-    }
 
     void setMetadataInfoVisible(Boolean visible) {
         metadataFields.setVisible(visible);
@@ -234,31 +210,8 @@ public class FileView {
 
     private void handleBlankPassword() {
         operationButton.disableProperty().bind(
-        Bindings.createBooleanBinding(() -> {
-
-            String p1 = password.getText();
-            String p2 = confirmPassword.getText();
-
-            if (!confirmPassword.isVisible() && passwordField.isVisible()) {
-                return p1.isBlank();
-            }
-
-            if(passwordField.isVisible()){
-                return !p1.equals(p2) || p1.isBlank() || p2.isBlank();
-            }
-
-            return false;
-        },
-            password.textProperty(),
-            confirmPassword.textProperty(),
-            confirmPassword.visibleProperty(),
-            passwordField.visibleProperty()
-        ));
-    }
-
-    void clearPassword() {
-        password.setText("");
-        confirmPassword.setText("");
+            passwordField.bindBlankPassword()
+        );
     }
 
     List<int[]> getSplitRange() {
@@ -267,10 +220,6 @@ public class FileView {
 
     boolean isSplitAllPagesSelected() {
         return splitAllPages.isSelected();
-    }
-
-    public char[] getPassword() {
-        return password.getText().toCharArray();
     }
 
     String getMetadataTitle() { return title.getText(); }
@@ -300,6 +249,22 @@ public class FileView {
 
     void clearFlowPane() {
         flowPane.getChildren().clear();
+    }
+
+    void setPasswordFieldVisible(boolean visible) {
+        passwordField.setPasswordFieldVisible(visible);
+    }
+
+    void setUnlockFieldVisible(boolean visible) {
+        passwordField.setUnlockFieldVisible(visible);
+    }
+
+    char[] getPassword() {
+        return passwordField.getPassword();
+    }
+
+    void clearPassword() {
+        passwordField.clearPassword();
     }
 
     void setOperationName(String name, String description){
