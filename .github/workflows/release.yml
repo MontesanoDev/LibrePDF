@@ -104,19 +104,21 @@ jobs:
 
           STRICT FORMAT RULES (follow exactly):
           - Write in English only.
-          - Group commits under section headers from this list when applicable: '✨ Features', '🐛 Bug Fixes', '🧹 Chores & Maintenance'.
-          - Every entry MUST be a Markdown bullet starting with "- " (dash + space).
+          - Group commits under section headers from this list when applicable: '## ✨ Features', '## 🐛 Bug Fixes', '## 🧹 Chores & Maintenance'.
+          - Section headers MUST start with '## ' (two hash marks + space) so they render as H2 Markdown headings.
+          - Every entry MUST be a top-level Markdown bullet starting with "- " (dash + space) at column 0, NEVER indented.
+          - Do NOT nest bullets under other bullets. Bullets go directly under the section heading, not inside a list.
           - Use imperative present tense: "Add", "Fix", "Update" — NOT "Added", "Fixed", "Updated".
           - No trailing periods on bullet lines.
           - One bullet per commit, do not skip commits, do not merge two commits into one bullet.
-          - Output ONLY the changelog itself. No preamble, no epilogue, no explanations.
+          - Output ONLY the changelog itself. No preamble, no epilogue, no explanations, no code fences.
 
-          EXAMPLE OF VALID OUTPUT:
-          ✨ Features
+          EXAMPLE OF VALID OUTPUT (copy this structure exactly):
+          ## ✨ Features
           - Add flatten operation to make form fields static
           - Wire flatten operation to UI controller
 
-          🧹 Chores & Maintenance
+          ## 🧹 Chores & Maintenance
           - Add timeout and raw-commit fallback to release notes step
 
           Commits to summarize:
