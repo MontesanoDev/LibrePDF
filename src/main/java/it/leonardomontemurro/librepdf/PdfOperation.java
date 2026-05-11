@@ -23,7 +23,7 @@ import it.leonardomontemurro.librepdf.util.I18N;
 public enum PdfOperation {
     MERGE("op.merge"),
     SPLIT("op.split"),
-    ROTATE("op.rotate"),
+    FLATTEN("op.flatten"),
     SWAP("op.swap"),
     METADATA("op.metadata"),
     PDFTOJPEG("op.pdftojpeg"),

@@ -191,6 +191,7 @@ public class ViewController {
             case UNLOCK -> pdfEngine.unprotectFile(pdfFiles, fileView.getPassword());
             case PDFTOJPEG -> pdfEngine.convertToJpeg(pdfFiles, fileView.getDpi());
             case MERGE -> pdfEngine.mergeFile(pdfFiles);
+            case FLATTEN -> pdfEngine.flattenFile(pdfFiles);
             case SPLIT -> {
                 if(fileView.isSplitAllPagesSelected()) {
                     pdfEngine.splitFile(pdfFiles, null, fileView.isSplitAllPagesSelected());

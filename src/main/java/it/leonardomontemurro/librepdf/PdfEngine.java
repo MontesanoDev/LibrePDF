@@ -138,6 +138,27 @@ public class PdfEngine {
         }
     }
 
+    public void flattenFile(List<File> pdfs) {
+        onOperationStarted.run();
+        Thread.startVirtualThread(() -> {
+            File output = null;
+            try {
+                Flatten op = new Flatten(pdfs);
+                boolean anyFlattened = op.execute();
+                if (!anyFlattened) {
+                    notifyAborted();
+                    AlertService.warning(I18N.get("alert.no.form.pdf"));
+                }
+                output = op.getOutputDirectory();
+            } catch (Exception e) {
+                notifyAborted();
+                AlertService.error(I18N.get("alert.flatten.error") + ": " + e.getMessage());
+            } finally {
+                notifyCompleted(output);
+            }
+        });
+    }
+
     public void splitFile(List<File> pdfs, List<int[]> ranges, boolean isSplitAllPagesSelected){
         onOperationStarted.run();
         Thread.startVirtualThread(() -> {
