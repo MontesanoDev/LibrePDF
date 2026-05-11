@@ -32,6 +32,7 @@ Everything runs **100% locally on your machine**. No internet connection require
 ### Feature
 * **Merge:** Combine multiple PDF files into a single document effortlessly.
 * **Split:** Extract specific pages or divide a document into multiple independent files.
+* **Flatten:** Make filled form fields static, so values can't be modified after sharing — ideal for sealing completed forms and contracts.
 * **Clean Metadata:** Strip out sensitive or tracking metadata (Author, Software, OS) before sharing.
 * **PDF to JPEG:** High-quality conversion of your documents into images.
 * **Protect:** Secure your documents with strong encryption and passwords.
@@ -40,7 +41,6 @@ Everything runs **100% locally on your machine**. No internet connection require
 Passwords are always masked and cannot be copied to clipboard. This is not a missing feature — it's a deliberate choice. If you're encrypting sensitive documents, you probably don't want your password visible on screen.
 
 ### Coming Feature  (Not Sure)
-* **Rotate:** Fix the orientation of your pages.
 * **Swap:** Reorder pages exactly how you want them.
 
 ---
