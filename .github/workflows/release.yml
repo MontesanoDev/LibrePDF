@@ -99,7 +99,29 @@ jobs:
             $commits = "Initial updates."
           }
           
-          $prompt = "You are an expert software engineer. Summarize the following commit messages into a professional changelog for an open-source app. You MUST write the output in English. Group the changes logically under standard changelog headings (e.g., '✨ Features', '🐛 Bug Fixes', '🧹 Chores & Maintenance'). Format it as a clean Markdown list. Do not add introductory or concluding remarks, output ONLY the changelog.`n`nCommits:`n$commits"
+          $prompt = @"
+          You are an expert software engineer writing a changelog for an open-source desktop app.
+
+          STRICT FORMAT RULES (follow exactly):
+          - Write in English only.
+          - Group commits under section headers from this list when applicable: '✨ Features', '🐛 Bug Fixes', '🧹 Chores & Maintenance'.
+          - Every entry MUST be a Markdown bullet starting with "- " (dash + space).
+          - Use imperative present tense: "Add", "Fix", "Update" — NOT "Added", "Fixed", "Updated".
+          - No trailing periods on bullet lines.
+          - One bullet per commit, do not skip commits, do not merge two commits into one bullet.
+          - Output ONLY the changelog itself. No preamble, no epilogue, no explanations.
+
+          EXAMPLE OF VALID OUTPUT:
+          ✨ Features
+          - Add flatten operation to make form fields static
+          - Wire flatten operation to UI controller
+
+          🧹 Chores & Maintenance
+          - Add timeout and raw-commit fallback to release notes step
+
+          Commits to summarize:
+          $commits
+          "@
           
           $headers = @{
             "Authorization" = "Bearer ${{ secrets.IA_SECRET_KEY }}"
