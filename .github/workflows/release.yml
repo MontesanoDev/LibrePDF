@@ -136,3 +136,78 @@ jobs:
             LibrePDF-*-windows-x64-portable.zip
             LibrePDF-*-windows-x64-portable.zip.sha256
           generate_release_notes: false
+
+  build-linux:
+    needs: build-windows
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: liberica
+          java-version: '25'
+          cache: maven
+
+      - name: Set version from tag
+        run: echo "APP_VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+
+      - name: Download JavaFX JMODS
+        run: |
+          set -e
+          curl -fL -o jfx.zip "https://download2.gluonhq.com/openjfx/25.0.3/openjfx-25.0.3_linux-x64_bin-jmods.zip"
+          unzip -q jfx.zip -d jfx
+          echo "JAVAFX_JMODS=$(ls -d jfx/*/ | head -1)" >> "$GITHUB_ENV"
+
+      - name: Build jar
+        run: ./mvnw -B clean package -DskipTests
+
+      - name: Shrink JRE (jlink)
+        run: |
+          set -e
+          rm -rf dist/runtime
+          mkdir -p dist
+          jlink \
+            --module-path "$JAVA_HOME/jmods:$JAVAFX_JMODS" \
+            --add-modules javafx.controls \
+            --output dist/runtime \
+            --strip-debug \
+            --strip-native-commands \
+            --no-header-files \
+            --no-man-pages \
+            --compress=zip-9
+
+      - name: Build app-image (jpackage)
+        run: |
+          set -e
+          rm -rf dist/input
+          mkdir -p dist/input
+          cp target/LibrePDF-1.0-SNAPSHOT.jar dist/input/
+          cp target/libs/*.jar dist/input/
+          rm -rf dist/app-image
+          mkdir -p dist/app-image
+          jpackage \
+            --name LibrePDF \
+            --input dist/input \
+            --main-jar LibrePDF-1.0-SNAPSHOT.jar \
+            --main-class it.leonardomontemurro.librepdf.App \
+            --runtime-image dist/runtime \
+            --type app-image \
+            --vendor "Leonardo Montemurro" \
+            --app-version "$APP_VERSION" \
+            --dest dist/app-image
+
+      - name: Tar.gz portable + sha256
+        run: |
+          set -e
+          TARBALL="LibrePDF-${APP_VERSION}-linux-x64-portable.tar.gz"
+          tar -czf "$TARBALL" -C dist/app-image LibrePDF
+          sha256sum "$TARBALL" > "${TARBALL}.sha256"
+
+      - name: Upload Linux artifacts to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            LibrePDF-*-linux-x64-portable.tar.gz
+            LibrePDF-*-linux-x64-portable.tar.gz.sha256
+          generate_release_notes: false
