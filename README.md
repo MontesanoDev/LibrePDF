@@ -40,7 +40,7 @@ Everything runs **100% locally on your machine**. No internet connection require
 
 Passwords are always masked and cannot be copied to clipboard. This is not a missing feature — it's a deliberate choice. If you're encrypting sensitive documents, you probably don't want your password visible on screen.
 
-### Coming Feature  (Not Sure)
+### Coming Feature
 * **PDF Info:** Inspect a PDF's metadata, security settings, embedded JavaScript, attachments, form fields and more — so you can actually verify what's inside before signing, sharing or trusting it.
 
 ---
