@@ -16,31 +16,24 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.leonardomontemurro.librepdf;
+package it.leonardomontemurro.librepdf.core;
 
-import it.leonardomontemurro.librepdf.util.I18N;
-
-public enum PdfOperation {
-    MERGE("op.merge"),
-    SPLIT("op.split"),
-    FLATTEN("op.flatten"),
-    PDFINFO("op.pdfinfo"),
-    METADATA("op.metadata"),
-    PDFTOJPEG("op.pdftojpeg"),
-    PROTECT("op.protect"),
-    UNLOCK("op.unlock");
-
-    private final String key;
-
-    PdfOperation(String key) {
-        this.key = key;
-    }
-
-    public String getName() {
-        return I18N.get(key + ".name");
-    }
-
-    public String getDescription() {
-        return I18N.get(key + ".desc");
-    }
-}
+public record PdfInfoData(
+    String fileName,
+    long fileSizeBytes,
+    int pages,
+    String pdfVersion,
+    String title,
+    String author,
+    String subject,
+    String keywords,
+    String creator,
+    String producer,
+    String creationDate,
+    String modificationDate,
+    boolean encrypted,
+    boolean hasJavaScript,
+    boolean hasAttachments,
+    boolean hasFormFields,
+    boolean hasAnnotations
+) {}

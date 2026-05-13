@@ -27,7 +27,7 @@ public class I18NTest {
 
     @Test
     void testAllOperationKeysExist() {
-        String[] ops = {"merge", "split", "flatten", "swap", "metadata", "pdftojpeg", "protect", "unlock"};
+        String[] ops = {"merge", "split", "flatten", "pdfinfo", "metadata", "pdftojpeg", "protect", "unlock"};
         for (String op : ops) {
             String nameKey = "op." + op + ".name";
             String descKey = "op." + op + ".desc";

@@ -18,19 +18,27 @@
 
 package it.leonardomontemurro.librepdf.ui;
 
+import it.leonardomontemurro.librepdf.core.PdfInfoData;
 import it.leonardomontemurro.librepdf.util.FileService;
 import it.leonardomontemurro.librepdf.util.I18N;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
+import java.util.List;
 
 public class ResultView {
 
     private final VBox sceneContainer = new VBox(30);
+    private final ScrollPane scrollPane = new ScrollPane();
+    private final FlowPane flowPane = new FlowPane();
     private final Button openExplorer = new Button();
     private final Button backToHome = new Button();
     private final ProgressIndicator progressIndicator = new ProgressIndicator();
@@ -39,22 +47,25 @@ public class ResultView {
 
     public ResultView() {
         buildScene();
+        buildPdfInfo();
+        buildFlowPane();
     }
 
     private void buildScene() {
         Label label = new Label(I18N.get("result.info"));
         label.getStyleClass().add("LabelRenderedFile");
-        label.visibleProperty().bind(progressIndicator.visibleProperty().not());
-        label.managedProperty().bind(progressIndicator.visibleProperty().not());
+        label.visibleProperty().bind(progressIndicator.visibleProperty().not().and(scrollPane.visibleProperty().not()));
+        label.managedProperty().bind(progressIndicator.visibleProperty().not().and(scrollPane.visibleProperty().not()));
+
         openExplorer.setText(I18N.get("result.button"));
         openExplorer.getStyleClass().add("buttonRenderedFile");
-        openExplorer.visibleProperty().bind(progressIndicator.visibleProperty().not());
+        openExplorer.visibleProperty().bind(progressIndicator.visibleProperty().not().and(scrollPane.visibleProperty().not()));
         openExplorer.minHeightProperty().bind(sceneContainer.widthProperty().divide(24));
         openExplorer.maxHeightProperty().bind(sceneContainer.widthProperty().divide(20));
         openExplorer.minWidthProperty().bind(sceneContainer.widthProperty().divide(10));
-        openExplorer.managedProperty().bind(progressIndicator.visibleProperty().not());
-        openExplorer.setOnAction(_ -> FileService.openExplorer(outputDirectory));
+        openExplorer.managedProperty().bind(progressIndicator.visibleProperty().not().and(scrollPane.visibleProperty().not()));
 
+        openExplorer.setOnAction(_ -> FileService.openExplorer(outputDirectory));
         backToHome.setText("Home ->");
         backToHome.getStyleClass().add("backButton");
         backToHome.visibleProperty().bind(sceneContainer.visibleProperty());
@@ -66,6 +77,41 @@ public class ResultView {
 
         progressIndicator.setVisible(false);
         sceneContainer.setVisible(false);
+    }
+
+    private void buildPdfInfo() {
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        scrollPane.setPadding(new Insets(70,10,10,10));
+
+        scrollPane.managedProperty().bind(scrollPane.visibleProperty());
+        scrollPane.setVisible(false);
+
+        sceneContainer.getChildren().add(scrollPane);
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+    }
+
+    void setPdfInfoVisible() {
+        scrollPane.setVisible(true);
+    }
+
+    void buildFlowPane() {
+        flowPane.setAlignment(Pos.CENTER);
+        flowPane.setHgap(30);
+        flowPane.setVgap(30);
+
+        scrollPane.setContent(flowPane);
+    }
+
+    void buildInfoCards(List<PdfInfoData> data) {
+        flowPane.getChildren().clear();
+        for (PdfInfoData d : data) {
+            flowPane.getChildren().add(new PdfInfoCard(d));
+        }
     }
 
     void start() {
@@ -80,6 +126,7 @@ public class ResultView {
 
     void hideScene() {
         sceneContainer.setVisible(false);
+        scrollPane.setVisible(false);
     }
 
     boolean isSceneVisible() {
