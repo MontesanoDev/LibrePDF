@@ -58,11 +58,15 @@ public class PassField {
         canPrintableLabel.setTextAlignment(TextAlignment.CENTER);
         canPrintableBox.getChildren().addAll(canPrintableLabel, canPrintable);
         canPrintableBox.setAlignment(Pos.CENTER_RIGHT);
+        canPrintableBox.visibleProperty().bind(confirmPassword.visibleProperty());
+        canPrintableBox.managedProperty().bind(confirmPassword.visibleProperty());
 
         canExtractableLabel.setText(I18N.get("pass.can.extract"));
         canExtractableLabel.setTextAlignment(TextAlignment.CENTER);
         canExtractableBox.getChildren().addAll(canExtractableLabel, canExtractable);
         canExtractableBox.setAlignment(Pos.CENTER_RIGHT);
+        canExtractableBox.visibleProperty().bind(confirmPassword.visibleProperty());
+        canExtractableBox.managedProperty().bind(confirmPassword.visibleProperty());
 
         passwordField.getChildren().addAll(canPrintableBox, canExtractableBox);
     }
