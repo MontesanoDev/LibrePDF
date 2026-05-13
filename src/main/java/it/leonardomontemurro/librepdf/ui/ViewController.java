@@ -69,6 +69,7 @@ public class ViewController {
         this.pdfEngine.setOnOperationStarted(this::handleOperationStart);
         this.pdfEngine.setOnOperationCompleted(this::handleOperationComplete);
         this.pdfEngine.setOnOperationAborted(this::backScene);
+        this.pdfEngine.setOnPdfInfoReady(this.resultView::buildInfoCards);
 
         this.view.setOnOperationSelected(this::onOperationChanged);
         this.dropView.setOnFilesDropped(this::onFilesDropped);
@@ -198,6 +199,10 @@ public class ViewController {
                 } else if (!fileView.getSplitRange().isEmpty()){
                     pdfEngine.splitFile(pdfFiles, fileView.getSplitRange(), fileView.isSplitAllPagesSelected());
                 }
+            }
+            case PDFINFO -> {
+                resultView.setPdfInfoVisible();
+                pdfEngine.pdfInfo(pdfFiles);
             }
         }
     }

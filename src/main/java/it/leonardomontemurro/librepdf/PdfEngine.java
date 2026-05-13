@@ -25,6 +25,7 @@ import it.leonardomontemurro.librepdf.util.I18N;
 import javafx.application.Platform;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
@@ -34,6 +35,7 @@ public class PdfEngine {
     private Runnable onOperationStarted;
     private Runnable onOperationAborted;
     private Consumer<File> onOperationCompleted;
+    private Consumer<List<PdfInfoData>> onPdfInfoReady;
 
     public void convertToJpeg(List<File> pdfs, int dpi) {
         onOperationStarted.run();
@@ -176,6 +178,21 @@ public class PdfEngine {
         });
     }
 
+    public void pdfInfo(List<File> pdfs) {
+        onOperationStarted.run();
+        Thread.startVirtualThread(() -> {
+            try {
+                List<PdfInfoData> result = new PdfInfo(pdfs).execute();
+                Platform.runLater(() -> onPdfInfoReady.accept(result));
+            } catch (Exception e) {
+                notifyAborted();
+                AlertService.error(I18N.get("alert.pdfinfo.error") + ": " + e.getMessage());
+            } finally {
+                notifyCompleted(null);
+            }
+        });
+    }
+
     private void notifyAborted() {
         Platform.runLater(() -> onOperationAborted.run());
     }
@@ -194,5 +211,9 @@ public class PdfEngine {
 
     public void setOnOperationAborted(Runnable callback) {
         this.onOperationAborted = callback;
+    }
+
+    public void setOnPdfInfoReady(Consumer<List<PdfInfoData>> callback) {
+        this.onPdfInfoReady = callback;
     }
 }
