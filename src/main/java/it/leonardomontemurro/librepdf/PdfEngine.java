@@ -103,20 +103,24 @@ public class PdfEngine {
     }
 
     public void editMetadata(List<File> pdfs, String title, String author, String keywords, boolean nuclear) {
-        onOperationStarted.run();
-        Thread.startVirtualThread(() -> {
-            File output = null;
-            try {
-                Metadata op = new Metadata(pdfs, title, author, keywords, nuclear);
-                op.execute();
-                output = op.getOutputDirectory();
-            } catch (Exception e) {
-                notifyAborted();
-                AlertService.error(I18N.get("alert.metadata.error") + ": " + e.getMessage());
-            } finally {
-                notifyCompleted(output);
-            }
-        });
+        if(nuclear || checkOperation(title, author, keywords)) {
+            onOperationStarted.run();
+            Thread.startVirtualThread(() -> {
+                File output = null;
+                try {
+                    Metadata op = new Metadata(pdfs, title, author, keywords, nuclear);
+                    op.execute();
+                    output = op.getOutputDirectory();
+                } catch (Exception e) {
+                    notifyAborted();
+                    AlertService.error(I18N.get("alert.metadata.error") + ": " + e.getMessage());
+                } finally {
+                    notifyCompleted(output);
+                }
+            });
+        } else {
+            AlertService.warning(I18N.get("alert.blank.metadata.input"));
+        }
     }
 
     public void mergeFile(List<File> pdfs) {
@@ -191,6 +195,10 @@ public class PdfEngine {
                 notifyCompleted(null);
             }
         });
+    }
+
+    private boolean checkOperation(String title, String author, String keywords){
+        return !title.isBlank() || !author.isBlank() || !keywords.isBlank();
     }
 
     private void notifyAborted() {
