@@ -46,3 +46,8 @@ targetlibs/
 build-windows.bat
 scripts/*.bat
 scripts/*.sh
+
+# Local notes
+tocheck.md
+BUG.md
+bug.md
