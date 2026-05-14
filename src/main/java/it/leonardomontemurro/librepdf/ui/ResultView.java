@@ -127,6 +127,7 @@ public class ResultView {
     void hideScene() {
         sceneContainer.setVisible(false);
         scrollPane.setVisible(false);
+        progressIndicator.setVisible(false);
     }
 
     boolean isSceneVisible() {
