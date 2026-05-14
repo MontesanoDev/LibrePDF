@@ -19,7 +19,6 @@
 package it.leonardomontemurro.librepdf.ui;
 
 import it.leonardomontemurro.librepdf.util.FileService;
-import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -27,7 +26,6 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
-import javafx.util.Duration;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.io.File;
@@ -81,15 +79,8 @@ public class FileCard extends VBox{
     }
 
     private void doubleClickOpenPdf() {
-        PauseTransition singleClickDelay = new PauseTransition(Duration.millis(200));
         this.setOnMouseClicked(event -> {
-            int clickCount = event.getClickCount();
-
-            if (clickCount == 1) {
-                singleClickDelay.play();
-
-            } else if (clickCount == 2) {
-                singleClickDelay.stop();
+            if (event.getClickCount() == 2) {
                 FileService.openDefaultPdfViewer(file.getAbsolutePath());
             }
         });
