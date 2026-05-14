@@ -22,6 +22,7 @@ import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
+import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDNameTreeNode;
 
 import java.io.File;
@@ -52,9 +53,13 @@ public class PdfInfo {
                 }
                 boolean hasForms = catalog.getAcroForm() != null
                         && !catalog.getAcroForm().getFields().isEmpty();
-                boolean hasAnnotations = doc.getPages().iterator().hasNext()
-                        && doc.getPages().iterator().next().getAnnotations() != null
-                        && !doc.getPages().iterator().next().getAnnotations().isEmpty();
+                boolean hasAnnotations = false;
+                for (PDPage page : doc.getPages()) {
+                    if (page.getAnnotations() != null && !page.getAnnotations().isEmpty()) {
+                        hasAnnotations = true;
+                        break;
+                    }
+                }
 
                 result.add(new PdfInfoData(
                     f.getName(),
