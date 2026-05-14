@@ -71,7 +71,8 @@ public class Split {
 
                         if(to > fileBound){
                             to = fileBound;
-                        } else if(from > fileBound){
+                        }
+                        if(from > fileBound){
                             from = fileBound;
                         }
 
