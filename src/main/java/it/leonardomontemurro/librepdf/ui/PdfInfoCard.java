@@ -39,7 +39,7 @@ public class PdfInfoCard extends VBox {
             fileName,
             row(I18N.get("pdfinfo.size"), humanSize(data.fileSizeBytes())),
             row(I18N.get("pdfinfo.pages"), String.valueOf(data.pages())),
-            row(I18N.get("pdfinfo.version"), data.pdfVersion()),
+            row(I18N.get("pdfinfo.version"), nullSafe(data.pdfVersion())),
             row(I18N.get("pdfinfo.title"), nullSafe(data.title())),
             row(I18N.get("pdfinfo.author"), nullSafe(data.author())),
             row(I18N.get("pdfinfo.subject"), nullSafe(data.subject())),

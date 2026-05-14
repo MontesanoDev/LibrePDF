@@ -24,6 +24,7 @@ import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDNameTreeNode;
+import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -79,6 +80,17 @@ public class PdfInfo {
                     hasAttachments,
                     hasForms,
                     hasAnnotations
+                ));
+            } catch (InvalidPasswordException e) {
+                result.add(new PdfInfoData(
+                    f.getName(),
+                    f.length(),
+                    0,
+                    null,
+                    null, null, null, null, null, null,
+                    null, null,
+                    true,
+                    false, false, false, false
                 ));
             } catch (Exception e) {
                 throw new RuntimeException(e);
