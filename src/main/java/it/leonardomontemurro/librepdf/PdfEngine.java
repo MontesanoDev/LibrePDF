@@ -40,16 +40,13 @@ public class PdfEngine {
     public void convertToJpeg(List<File> pdfs, int dpi) {
         onOperationStarted.run();
         Thread.startVirtualThread(() -> {
-            File output = null;
             try {
                 PdfToJpeg op = new PdfToJpeg(pdfs, dpi);
                 op.execute();
-                output = op.getOutputDirectory();
+                notifyCompleted(op.getOutputDirectory());
             } catch (Exception e) {
                 notifyAborted();
                 AlertService.error(I18N.get("alert.convert.jpg.error") + ": " + e.getMessage());
-            } finally {
-                notifyCompleted(output);
             }
         });
     }
@@ -58,17 +55,15 @@ public class PdfEngine {
         if (new FileService().isValidPassword(password)) {
             onOperationStarted.run();
             Thread.startVirtualThread(() -> {
-                File output = null;
                 try {
                     Protect op = new Protect(pdfs, password, canPrint, canExtract);
                     op.execute();
-                    output = op.getOutputDirectory();
+                    notifyCompleted(op.getOutputDirectory());
                 } catch (Exception e) {
                     notifyAborted();
                     AlertService.error(I18N.get("alert.protect.error") + ": " + e.getMessage());
                 } finally {
                     Arrays.fill(password, '\0');
-                    notifyCompleted(output);
                 }
             });
         } else {
@@ -80,21 +75,20 @@ public class PdfEngine {
         if (new FileService().isValidPassword(password)) {
             onOperationStarted.run();
             Thread.startVirtualThread(() -> {
-                File output = null;
                 try {
                     Unprotect op = new Unprotect(pdfs, password);
                     boolean anyDecrypted = op.execute();
-                    if (!anyDecrypted) {
+                    if (anyDecrypted) {
+                        notifyCompleted(op.getOutputDirectory());
+                    } else {
                         notifyAborted();
                         AlertService.warning(I18N.get("alert.not.encrypted.pdf"));
                     }
-                    output = op.getOutputDirectory();
                 } catch (Exception e) {
                     notifyAborted();
                     AlertService.error(I18N.get("alert.unprotect.error") + ": " + e.getMessage());
                 } finally {
                     Arrays.fill(password, '\0');
-                    notifyCompleted(output);
                 }
             });
         } else {
@@ -106,16 +100,13 @@ public class PdfEngine {
         if(nuclear || checkOperation(title, author, keywords)) {
             onOperationStarted.run();
             Thread.startVirtualThread(() -> {
-                File output = null;
                 try {
                     Metadata op = new Metadata(pdfs, title, author, keywords, nuclear);
                     op.execute();
-                    output = op.getOutputDirectory();
+                    notifyCompleted(op.getOutputDirectory());
                 } catch (Exception e) {
                     notifyAborted();
                     AlertService.error(I18N.get("alert.metadata.error") + ": " + e.getMessage());
-                } finally {
-                    notifyCompleted(output);
                 }
             });
         } else {
@@ -127,16 +118,13 @@ public class PdfEngine {
         if(pdfs.size() > 1) {
             onOperationStarted.run();
             Thread.startVirtualThread(() -> {
-                File output = null;
                 try {
                     Merge op = new Merge(pdfs);
                     op.execute();
-                    output = op.getOutputDirectory();
+                    notifyCompleted(op.getOutputDirectory());
                 } catch (Exception e) {
                     notifyAborted();
                     AlertService.error(I18N.get("alert.merge.error") + ": " + e.getMessage());
-                } finally {
-                    notifyCompleted(output);
                 }
             });
         } else {
@@ -147,20 +135,18 @@ public class PdfEngine {
     public void flattenFile(List<File> pdfs) {
         onOperationStarted.run();
         Thread.startVirtualThread(() -> {
-            File output = null;
             try {
                 Flatten op = new Flatten(pdfs);
                 boolean anyFlattened = op.execute();
-                if (!anyFlattened) {
+                if (anyFlattened) {
+                    notifyCompleted(op.getOutputDirectory());
+                } else {
                     notifyAborted();
                     AlertService.warning(I18N.get("alert.no.form.pdf"));
                 }
-                output = op.getOutputDirectory();
             } catch (Exception e) {
                 notifyAborted();
                 AlertService.error(I18N.get("alert.flatten.error") + ": " + e.getMessage());
-            } finally {
-                notifyCompleted(output);
             }
         });
     }
@@ -168,16 +154,13 @@ public class PdfEngine {
     public void splitFile(List<File> pdfs, List<int[]> ranges, boolean isSplitAllPagesSelected){
         onOperationStarted.run();
         Thread.startVirtualThread(() -> {
-            File output = null;
             try{
                 Split op = new Split(pdfs, ranges, isSplitAllPagesSelected);
                 op.execute();
-                output = op.getOutputDirectory();
+                notifyCompleted(op.getOutputDirectory());
             } catch (Exception e) {
                 notifyAborted();
                 AlertService.error(I18N.get("alert.split.error") + ": " + e.getMessage());
-            } finally {
-                notifyCompleted(output);
             }
         });
     }
@@ -188,11 +171,10 @@ public class PdfEngine {
             try {
                 List<PdfInfoData> result = new PdfInfo(pdfs).execute();
                 Platform.runLater(() -> onPdfInfoReady.accept(result));
+                notifyCompleted(null);
             } catch (Exception e) {
                 notifyAborted();
                 AlertService.error(I18N.get("alert.pdfinfo.error") + ": " + e.getMessage());
-            } finally {
-                notifyCompleted(null);
             }
         });
     }
