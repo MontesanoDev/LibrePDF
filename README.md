@@ -68,7 +68,9 @@ mvn javafx:run
 | macOS | ❌ Not supported |
 
 ## Contributing
-Since this is an open-source labor of love, PRs are extremely welcome! Whether it's optimizing the PDF engine, adding new features, or just tweaking the UI, feel free to open an issue or submit a pull request.
+PRs are welcome — but the feature scope is closed. Bug fixes, UX polish, translations, performance tweaks and Linux fixes are all fair game. New PDF operations and anything that talks to the network are not.
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a PR.
 
 ## AI Disclosure
 The project isn't "vibe-coded". I used AI to help with translations, review some logic (since I was busy failing my Calculus exam), and polish a few bits here and there—so you know who to blame if you lose your thesis! 
