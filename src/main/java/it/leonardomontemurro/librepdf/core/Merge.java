@@ -47,7 +47,7 @@ public class Merge {
             String finalPath = FileService.getUniqueFilePath(outputDirectory.getAbsolutePath(), "merged");
             merger.setDestinationFileName(finalPath);
 
-            merger.mergeDocuments(IOUtils.createMemoryOnlyStreamCache(), CompressParameters.NO_COMPRESSION);
+            merger.mergeDocuments(IOUtils.createMemoryOnlyStreamCache(), CompressParameters.DEFAULT_COMPRESSION);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
