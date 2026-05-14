@@ -33,7 +33,7 @@ Everything runs **100% locally on your machine**. No internet connection require
 * **Merge:** Combine multiple PDF files into a single document effortlessly.
 * **Split:** Extract specific pages or divide a document into multiple independent files.
 * **Flatten:** Make filled form fields static, so values can't be modified after sharing — ideal for sealing completed forms and contracts.
-* * **PDF Info:** Inspect a PDF's metadata, security settings, embedded JavaScript, attachments, form fields and more — so you can actually verify what's inside before signing, sharing or trusting it.
+* **PDF Info:** Inspect a PDF's metadata, security settings, embedded JavaScript, attachments, form fields and more — so you can actually verify what's inside before signing, sharing or trusting it.
 * **Clean Metadata:** Strip out sensitive or tracking metadata (Author, Software, OS) before sharing.
 * **PDF to JPEG:** High-quality conversion of your documents into images.
 * **Protect:** Secure your documents with strong encryption and passwords.
