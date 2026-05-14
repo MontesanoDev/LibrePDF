@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions / general contact
+    url: mailto:info@leonardomontemurro.it
+    about: For anything that isn't a bug report, please email instead of opening an issue.

@@ -53,6 +53,20 @@ To keep things light, LibrePDF uses vector iconography directly embedded in the 
 ### Prerequisites
 * JDK 25+
 
+### Getting Started
+Clone the repo and run:
+
+```bash
+mvn javafx:run
+```
+
+### Platform support
+| OS | Status |
+|---|---|
+| Windows | ✅ Primary dev platform |
+| Linux | ⚠️ Should work but unverified — please [open an issue](../../issues) if it doesn't |
+| macOS | ❌ Not supported |
+
 ## Contributing
 Since this is an open-source labor of love, PRs are extremely welcome! Whether it's optimizing the PDF engine, adding new features, or just tweaking the UI, feel free to open an issue or submit a pull request.
 
