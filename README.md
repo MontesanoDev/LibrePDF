@@ -11,7 +11,7 @@
 </div>
 
 <div align="center">
-  <!--<img src="link_to_your_awesome_ui_gif.gif" alt="LibrePDF UI Demo" width="800"/>--->
+  <img src="https://github.com/user-attachments/assets/f335d4cb-08c5-428e-aaeb-16b096465c2d" alt="LibrePDF UI Demo" width="800"/>
   <p><i>Yes, this is a Java desktop app. No, really.</i></p>
 </div>
 
