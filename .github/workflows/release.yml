@@ -29,6 +29,7 @@ jobs:
         run: |
           $v = "${{ github.ref_name }}".TrimStart('v')
           "APP_VERSION=$v" | Out-File -FilePath $env:GITHUB_ENV -Append
+          ./mvnw -B versions:set -DnewVersion=$v -DgenerateBackupPoms=false
 
       - name: Download JavaFX JMODS
         shell: pwsh
@@ -62,14 +63,14 @@ jobs:
         run: |
           if (Test-Path dist\input) { Remove-Item -Recurse -Force dist\input }
           New-Item -ItemType Directory -Force -Path dist\input | Out-Null
-          Copy-Item target\LibrePDF-1.0-SNAPSHOT.jar dist\input\
+          Copy-Item "target\LibrePDF-$env:APP_VERSION.jar" dist\input\
           Copy-Item target\libs\*.jar dist\input\
           if (Test-Path dist\app-image) { Remove-Item -Recurse -Force dist\app-image }
           New-Item -ItemType Directory -Force -Path dist\app-image | Out-Null
           jpackage `
             --name LibrePDF `
             --input dist\input `
-            --main-jar LibrePDF-1.0-SNAPSHOT.jar `
+            --main-jar "LibrePDF-$env:APP_VERSION.jar" `
             --main-class it.leonardomontemurro.librepdf.App `
             --runtime-image dist\runtime `
             --type app-image `
@@ -174,7 +175,9 @@ jobs:
           cache: maven
 
       - name: Set version from tag
-        run: echo "APP_VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+        run: |
+          echo "APP_VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+          ./mvnw -B versions:set -DnewVersion="${GITHUB_REF_NAME#v}" -DgenerateBackupPoms=false
 
       - name: Download JavaFX JMODS
         run: |
@@ -206,14 +209,14 @@ jobs:
           set -e
           rm -rf dist/input
           mkdir -p dist/input
-          cp target/LibrePDF-1.0-SNAPSHOT.jar dist/input/
+          cp "target/LibrePDF-${APP_VERSION}.jar" dist/input/
           cp target/libs/*.jar dist/input/
           rm -rf dist/app-image
           mkdir -p dist/app-image
           jpackage \
             --name LibrePDF \
             --input dist/input \
-            --main-jar LibrePDF-1.0-SNAPSHOT.jar \
+            --main-jar "LibrePDF-${APP_VERSION}.jar" \
             --main-class it.leonardomontemurro.librepdf.App \
             --runtime-image dist/runtime \
             --type app-image \
