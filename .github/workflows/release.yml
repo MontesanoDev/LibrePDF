@@ -108,6 +108,8 @@ jobs:
           - Group commits under section headers from this list when applicable: '## ✨ Features', '## 🐛 Bug Fixes', '## 🧹 Chores & Maintenance'.
           - Section headers MUST start with '## ' (two hash marks + space) so they render as H2 Markdown headings.
           - Every entry MUST be a top-level Markdown bullet starting with "- " (dash + space) at column 0, NEVER indented.
+          - Each bullet MUST start with the short commit SHA (7-char hex from the input) followed by a space, then the description. Example: "- abc1234 Add flatten operation".
+          - Copy the SHA exactly as it appears in the input. NEVER invent, alter, or shorten/extend SHAs — GitHub auto-links them only if they match real commits.
           - Do NOT nest bullets under other bullets. Bullets go directly under the section heading, not inside a list.
           - Use imperative present tense: "Add", "Fix", "Update" — NOT "Added", "Fixed", "Updated".
           - No trailing periods on bullet lines.
@@ -116,11 +118,11 @@ jobs:
 
           EXAMPLE OF VALID OUTPUT (copy this structure exactly):
           ## ✨ Features
-          - Add flatten operation to make form fields static
-          - Wire flatten operation to UI controller
+          - abc1234 Add flatten operation to make form fields static
+          - def5678 Wire flatten operation to UI controller
 
           ## 🧹 Chores & Maintenance
-          - Add timeout and raw-commit fallback to release notes step
+          - 9876fed Add timeout and raw-commit fallback to release notes step
 
           Commits to summarize:
           $commits
