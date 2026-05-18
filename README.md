@@ -47,8 +47,7 @@ Passwords are always masked and cannot be copied to clipboard. This is not a mis
 LibrePDF is written in **Pure Java 25**, uses **JavaFX** (yes, in 2026), and [AtlantaFX](https://github.com/mkpaz/atlantafx) for the UI. The engine powering the PDF logic is **Apache PDFBox**. 
 
 To keep things light, LibrePDF uses vector iconography directly embedded in the CSS (`-fx-shape`): 
-* Icons: [Material Symbols](https://fonts.google.com/icons) by Google.
-* License: Distributed under the Apache License 2.0.
+* Icons: [Material Symbols](https://fonts.google.com/icons) by Google (licensed under Apache 2.0).
 
 ### Prerequisites
 * JDK 25+
