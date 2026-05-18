@@ -62,14 +62,7 @@ public class FileService {
     }
 
     public static void openDefaultPdfViewer(String path) {
-        if (Desktop.isDesktopSupported()) {
-            try {
-                File pdfDocument = new File(path);
-                Desktop.getDesktop().open(pdfDocument);
-            } catch (IOException e) {
-                AlertService.error(I18N.get("alert.open.pdf.error"));
-            }
-        }
+        openWithSystem(new File(path));
     }
 
     public void initializeFileChooser() {
@@ -119,13 +112,20 @@ public class FileService {
     }
 
     public static void openExplorer(File directory) {
-        if (directory == null || !Desktop.isDesktopSupported() || !directory.exists()) {
-            return;
-        }
+        openWithSystem(directory);
+    }
+
+    private static void openWithSystem(File target) {
+        if (target == null || !target.exists()) return;
+        String os = System.getProperty("os.name").toLowerCase();
         try {
-            Desktop.getDesktop().open(directory);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            if (os.contains("linux")) {
+                new ProcessBuilder("xdg-open", target.getAbsolutePath()).start();
+            } else if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(target);
+            }
+        } catch (IOException e) {
+            AlertService.error(I18N.get("alert.open.pdf.error"));
         }
     }
 
