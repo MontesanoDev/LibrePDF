@@ -204,9 +204,7 @@ public class ViewController {
                     pdfEngine.splitFile(pdfFiles, fileView.getSplitRange(), fileView.isSplitAllPagesSelected());
                 }
             }
-            case PDFINFO -> {
-                pdfEngine.pdfInfo(pdfFiles);
-            }
+            case PDFINFO -> pdfEngine.pdfInfo(pdfFiles);
         }
     }
 
