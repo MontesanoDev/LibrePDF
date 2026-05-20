@@ -25,7 +25,6 @@ import it.leonardomontemurro.librepdf.util.I18N;
 import javafx.application.Platform;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
@@ -34,6 +33,7 @@ public class PdfEngine {
 
     private Runnable onOperationStarted;
     private Runnable onOperationAborted;
+    private Runnable onPdfInfoCompleted;
     private Consumer<File> onOperationCompleted;
     private Consumer<List<PdfInfoData>> onPdfInfoReady;
 
@@ -175,6 +175,8 @@ public class PdfEngine {
             } catch (Exception e) {
                 notifyAborted();
                 AlertService.error(I18N.get("alert.pdfinfo.error") + ": " + e.getMessage());
+            } finally {
+                Platform.runLater(() -> onPdfInfoCompleted.run());
             }
         });
     }
@@ -205,5 +207,9 @@ public class PdfEngine {
 
     public void setOnPdfInfoReady(Consumer<List<PdfInfoData>> callback) {
         this.onPdfInfoReady = callback;
+    }
+
+    public void setOnPdfInfoCompleted(Runnable onPdfInfoCompleted) {
+        this.onPdfInfoCompleted = onPdfInfoCompleted;
     }
 }
