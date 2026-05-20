@@ -50,7 +50,7 @@ public class I18NTest {
 
     @Test
     void testAllLocalesHaveSameKeysAsEnglish() throws IOException {
-        Set<String> referenceKeys = loadKeys("/i18n/messages_en.properties");
+        Set<String> referenceKeys = loadKeys("/i18n/messages.properties");
         for (String locale : new String[]{"it", "fr", "de", "es"}) {
             Set<String> keys = loadKeys("/i18n/messages_" + locale + ".properties");
 
