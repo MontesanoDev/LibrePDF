@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -15,14 +14,14 @@ public class I18NTest {
 
     @Test
     void testCoreKeysExist() {
-        assertDoesNotThrow(() -> I18N.get("op.merge.name"));
-        assertDoesNotThrow(() -> I18N.get("op.merge.desc"));
-        assertDoesNotThrow(() -> I18N.get("ui.execute"));
-        assertDoesNotThrow(() -> I18N.get("alert.title.error"));
-        assertDoesNotThrow(() -> I18N.get("alert.title.warning"));
-        assertDoesNotThrow(() -> I18N.get("alert.blank.password"));
-        assertDoesNotThrow(() -> I18N.get("ui.drop.info"));
-        assertDoesNotThrow(() -> I18N.get("ui.back"));
+        assertNotEquals("!op.merge.name!", I18N.get("op.merge.name"));
+        assertNotEquals("!op.merge.desc!", I18N.get("op.merge.desc"));
+        assertNotEquals("!ui.execute!", I18N.get("ui.execute"));
+        assertNotEquals("!alert.title.error!", I18N.get("alert.title.error"));
+        assertNotEquals("!alert.title.warning!", I18N.get("alert.title.warning"));
+        assertNotEquals("!alert.blank.password!", I18N.get("alert.blank.password"));
+        assertNotEquals("!ui.drop.info!", I18N.get("ui.drop.info"));
+        assertNotEquals("!ui.back!", I18N.get("ui.back"));
     }
 
     @Test
@@ -31,14 +30,14 @@ public class I18NTest {
         for (String op : ops) {
             String nameKey = "op." + op + ".name";
             String descKey = "op." + op + ".desc";
-            assertDoesNotThrow(() -> I18N.get(nameKey), "Missing " + nameKey);
-            assertDoesNotThrow(() -> I18N.get(descKey), "Missing " + descKey);
+            assertNotEquals("!" + nameKey + "!", I18N.get(nameKey), "Missing " + nameKey);
+            assertNotEquals("!" + descKey + "!", I18N.get(descKey), "Missing " + descKey);
         }
     }
 
     @Test
-    void testMissingKeyThrows() {
-        assertThrows(MissingResourceException.class, () -> I18N.get("chiave.inesistente.xyz"));
+    void testMissingKeyReturn() {
+        assertEquals("!chiave.inesistente.xyz!", I18N.get("chiave.inesistente.xyz"));
     }
 
     @Test
