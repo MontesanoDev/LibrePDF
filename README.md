@@ -1,4 +1,4 @@
-# 📄 LibrePDF
+# LibrePDF
 
 <div align="center">
   <p><strong>Your offline, privacy-first PDF swiss army knife.</strong></p>
