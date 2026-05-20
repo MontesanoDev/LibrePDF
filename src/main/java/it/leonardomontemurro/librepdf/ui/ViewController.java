@@ -70,7 +70,7 @@ public class ViewController {
         this.pdfEngine.setOnOperationCompleted(this::handleOperationComplete);
         this.pdfEngine.setOnOperationAborted(this::backScene);
         this.pdfEngine.setOnPdfInfoReady(this.resultView::buildInfoCards);
-
+        this.pdfEngine.setOnPdfInfoCompleted(this::showInfo);
         this.view.setOnOperationSelected(this::onOperationChanged);
         this.dropView.setOnFilesDropped(this::onFilesDropped);
         this.dropView.setBackButtonAction(this::backScene);
@@ -126,6 +126,10 @@ public class ViewController {
             count++;
         }
         clearScene();
+    }
+
+    private void showInfo() {
+        resultView.setPdfInfoVisible();
     }
 
     private void checkOperation() {
@@ -201,7 +205,6 @@ public class ViewController {
                 }
             }
             case PDFINFO -> {
-                resultView.setPdfInfoVisible();
                 pdfEngine.pdfInfo(pdfFiles);
             }
         }
