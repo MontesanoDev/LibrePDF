@@ -16,7 +16,8 @@
 </div>
 
 > [!WARNING]
-> **Disclaimer:** LibrePDF is provided "as is", without warranty of any kind. I’m a student working on this in my spare time, not a corporation with a legal team. While I do my best to make it stable and safe, I cannot be held responsible for any data loss, corrupted PDFs, or if the app decide to take a nap while processing your thesis. **Always keep a backup of your original files.**
+> **Disclaimer:** LibrePDF is provided "as is", without warranty of any kind. I’m a student working on this in my spare time, not a corporation with a legal team. While I do my best to make it stable and safe, I cannot be held responsible for any data loss or corrupted PDFs.
+>  **Always keep a backup of your original files.**
 
 ## Why does it exist? 
 
