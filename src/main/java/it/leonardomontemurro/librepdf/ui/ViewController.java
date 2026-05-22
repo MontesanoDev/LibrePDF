@@ -21,6 +21,7 @@ import it.leonardomontemurro.librepdf.PdfEngine;
 import it.leonardomontemurro.librepdf.PdfOperation;
 import it.leonardomontemurro.librepdf.util.FileService;
 
+import it.leonardomontemurro.librepdf.util.InputSC;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -81,6 +82,10 @@ public class ViewController {
 
         this.fileService = new FileService();
         this.fileService.initializeFileChooser();
+
+        InputSC inputSC = new InputSC(getView().getScene());
+        inputSC.setOnBackMousePressed(this::catchBack);
+        inputSC.setOnFrontMousePressed(this::catchFront);
 
         initializeFileCardScene();
         buildResultView();
@@ -242,6 +247,18 @@ public class ViewController {
             fileView.hideInputFields();
             fileView.setFileViewVisible(false);
             dropView.setDropViewSceneVisible(true);
+        }
+    }
+
+    private void catchFront() {
+        if(currentOperation != null && view.isHomeVisible()) {
+            onOperationChanged(currentOperation);
+        }
+    }
+
+    private void catchBack() {
+        if(!view.isHomeVisible()) {
+            backScene();
         }
     }
 

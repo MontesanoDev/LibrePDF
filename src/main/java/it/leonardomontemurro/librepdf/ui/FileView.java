@@ -196,6 +196,9 @@ public class FileView {
         splitOptions.setVisible(visible);
     }
 
+    boolean isFileViewVisible() {
+        return borderPane.isVisible();
+    }
 
     void setMetadataInfoVisible(Boolean visible) {
         metadataFields.setVisible(visible);

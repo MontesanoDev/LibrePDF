@@ -119,6 +119,10 @@ public class View {
         gridPane.setDisable(!visible);
     }
 
+    boolean isHomeVisible(){
+        return gridPane.isVisible();
+    }
+
     public Scene getScene(){
         return scene;
     }
