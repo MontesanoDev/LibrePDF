@@ -26,11 +26,12 @@ I’ve always used cloud-based sites to manage my PDFs out of laziness and for s
 LibrePDF doesn’t pretend to take on the cloud giants (I’m just one guy, after all). It was born during a winter semester by a university student who was tired of software spying on his documents, tuition payments, and private data. That’s why, in my spare time and without any grand ambitions, I started working on a project aimed at respecting the user. 
 
 ## The Solution: LibrePDF
-**LibrePDF** is a native, lightning-fast desktop application designed to do one thing perfectly: manipulate PDFs without compromising your privacy. 
 
-Everything runs **100% locally on your machine**. No internet connection required. Your files never leave your disk.
+  **LibrePDF** is a native, lightweight desktop application designed to handle common PDF tasks without compromising your privacy.
 
-### Feature
+  Everything runs **100% locally on your machine**. No internet connection required. Your files never leave your disk.
+
+### Features
 * **Merge:** Combine multiple PDF files into a single document effortlessly.
 * **Split:** Extract specific pages or divide a document into multiple independent files.
 * **Flatten:** Make filled form fields static, so values can't be modified after sharing — ideal for sealing completed forms and contracts.
@@ -43,6 +44,29 @@ Everything runs **100% locally on your machine**. No internet connection require
 Passwords are always masked and cannot be copied to clipboard. This is not a missing feature — it's a deliberate choice. If you're encrypting sensitive documents, you probably don't want your password visible on screen.
 
 ---
+
+  ## Data & Privacy
+
+  LibrePDF itself does not collect, transmit, or persist user data.
+
+  By design, LibrePDF includes:
+
+  - No telemetry
+  - No analytics
+  - No crash reporting
+  - No update checks
+  - No accounts
+  - No cloud upload
+  - No background services
+  - No application database
+  - No document history
+  - No persistent LibrePDF log files
+
+  LibrePDF only accesses files explicitly selected by the user through the file chooser or drag-and-drop. All operations run locally and write new output files without overwriting
+  the originals.
+
+  Note: the Java runtime, JavaFX, the operating system, or PDFBox may create their own technical caches or diagnostics outside LibrePDF's application logic.
+
 
 ## Under the Hood
 LibrePDF is written in **Pure Java 25**, uses **JavaFX** (yes, in 2026), and [AtlantaFX](https://github.com/mkpaz/atlantafx) for the UI. The engine powering the PDF logic is **Apache PDFBox**. 
