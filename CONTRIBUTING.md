@@ -32,7 +32,7 @@ Better 8 polished features than 15 half-broken ones.
 
 ## Adding a translation
 
-1. Copy `src/main/resources/i18n/messages_en.properties` to `messages_<lang>.properties` (e.g. `messages_pt.properties` for Portuguese).
+1. Copy `src/main/resources/i18n/messages_it.properties` to `messages_<lang>.properties` (e.g. `messages_pt.properties` for Portuguese).
 2. Translate the values, keep the keys unchanged.
 3. Make sure the file is saved as UTF-8.
 4. Open a PR.
