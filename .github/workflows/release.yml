@@ -41,7 +41,7 @@ jobs:
           "JAVAFX_JMODS=$jmods" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Build jar
-        run: ./mvnw -B clean package -DskipTests
+        run: ./mvnw -B clean package
 
       - name: Shrink JRE (jlink)
         shell: pwsh
@@ -189,7 +189,7 @@ jobs:
           echo "JAVAFX_JMODS=$(ls -d jfx/*/ | head -1)" >> "$GITHUB_ENV"
 
       - name: Build jar
-        run: ./mvnw -B clean package -DskipTests
+        run: ./mvnw -B clean package
 
       - name: Shrink JRE (jlink)
         run: |
