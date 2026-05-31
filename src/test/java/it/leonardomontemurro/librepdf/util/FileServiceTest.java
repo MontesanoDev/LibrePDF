@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileServiceTest {
 
@@ -74,5 +76,17 @@ public class FileServiceTest {
         File dir = FileService.createDir(pdf, "test", "_images");
         assertTrue(dir.exists());
         assertEquals("test(2)_images", dir.getName());
+    }
+
+    @Test
+    void testReorderFilesUsesEnteredValuesAsDestinationPositions() {
+        File first = tempDir.resolve("first.pdf").toFile();
+        File second = tempDir.resolve("second.pdf").toFile();
+        File third = tempDir.resolve("third.pdf").toFile();
+        List<File> files = new ArrayList<>(List.of(first, second, third));
+
+        FileService.reorderFiles(files, List.of(2, 3, 1));
+
+        assertEquals(List.of(third, first, second), files);
     }
 }

@@ -99,16 +99,21 @@ public class FileService {
             }
         }
 
-        List<File> orderedFiles = new ArrayList<>();
-        for (TextField textField : textFields) {
-            orderedFiles.add(pdfFiles.get(Integer.parseInt(textField.getText()) - 1));
+        List<Integer> positions = textFields.stream()
+                .map(textField -> Integer.parseInt(textField.getText()))
+                .toList();
+        reorderFiles(pdfFiles, positions);
+        return true;
+    }
+
+    static void reorderFiles(List<File> pdfFiles, List<Integer> positions) {
+        List<File> orderedFiles = new ArrayList<>(pdfFiles);
+        for (int i = 0; i < positions.size(); i++) {
+            orderedFiles.set(positions.get(i) - 1, pdfFiles.get(i));
         }
 
-        if (!orderedFiles.equals(pdfFiles)) {
-            pdfFiles.clear();
-            pdfFiles.addAll(orderedFiles);
-        }
-        return true;
+        pdfFiles.clear();
+        pdfFiles.addAll(orderedFiles);
     }
 
     public static void openExplorer(File directory) {
