@@ -149,7 +149,11 @@
     -fx-padding: 15px;
     -fx-min-width: 200px;
     -fx-max-width: 600px;
-  }
+}
+
+.infoCardWarning {
+    -fx-border-color: #FF0000;
+}
 
 .fileCard:hover {
     -fx-border-color: #bd93f9;

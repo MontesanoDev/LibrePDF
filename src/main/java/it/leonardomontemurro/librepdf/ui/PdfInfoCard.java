@@ -54,6 +54,9 @@ public class PdfInfoCard extends VBox {
             row(I18N.get("pdfinfo.formFields"), data.hasFormFields() ? I18N.get("pdfinfo.present") : I18N.get("pdfinfo.notPresent")),
             row(I18N.get("pdfinfo.annotations"), data.hasAnnotations() ? I18N.get("pdfinfo.present") : I18N.get("pdfinfo.notPresent"))
         );
+        if (data.hasJavaScript()) {
+            this.getStyleClass().add("infoCardWarning");
+        }
     }
 
     private HBox row(String key, String value) {
