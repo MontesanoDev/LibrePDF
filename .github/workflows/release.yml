@@ -105,8 +105,9 @@ jobs:
 
           STRICT FORMAT RULES (follow exactly):
           - Write in English only.
-          - Group commits under section headers from this list when applicable: '## ✨ Features', '## 🐛 Bug Fixes', '## 🧹 Chores & Maintenance'.
+          - Group commits under section headers from this list when applicable: '## ✨ Features', '## 🐛 Bug Fixes', '## 🎨 UI & UX', '## ⚡ Performance', '## 🔒 Security & Privacy', '## 🌐 Translations', '## 🧪 Tests', '## 📚 Documentation', '## 🏗️ Build & CI', '## 📦 Dependencies', '## ♻️ Refactoring', '## 🧹 Chores & Maintenance'.
           - Section headers MUST start with '## ' (two hash marks + space) so they render as H2 Markdown headings.
+          - Place each commit under exactly one most relevant section.
           - Every entry MUST be a top-level Markdown bullet starting with "- " (dash + space) at column 0, NEVER indented.
           - Each bullet MUST start with the short commit SHA (7-char hex from the input) followed by a space, then the description. Example: "- abc1234 Add flatten operation".
           - Copy the SHA exactly as it appears in the input. NEVER invent, alter, or shorten/extend SHAs — GitHub auto-links them only if they match real commits.
@@ -121,7 +122,7 @@ jobs:
           - abc1234 Add flatten operation to make form fields static
           - def5678 Wire flatten operation to UI controller
 
-          ## 🧹 Chores & Maintenance
+          ## 🏗️ Build & CI
           - 9876fed Add timeout and raw-commit fallback to release notes step
 
           Commits to summarize:
