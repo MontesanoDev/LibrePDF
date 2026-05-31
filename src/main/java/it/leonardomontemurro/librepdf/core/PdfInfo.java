@@ -23,7 +23,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.common.PDNameTreeNode;
 import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 
 import java.io.File;
@@ -45,11 +44,9 @@ public class PdfInfo {
                 PDDocumentInformation meta = doc.getDocumentInformation();
                 PDDocumentCatalog catalog = doc.getDocumentCatalog();
 
-                boolean hasJs = false;
+                boolean hasJs = PdfCosTree.containsJavaScript(doc.getDocument().getTrailer());
                 boolean hasAttachments = false;
                 if (catalog.getNames() != null) {
-                    PDNameTreeNode<?> js = catalog.getNames().getJavaScript();
-                    hasJs = js != null;
                     hasAttachments = catalog.getNames().getEmbeddedFiles() != null;
                 }
                 boolean hasForms = catalog.getAcroForm() != null
