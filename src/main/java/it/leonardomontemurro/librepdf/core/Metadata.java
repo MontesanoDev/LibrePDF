@@ -52,7 +52,7 @@ public class Metadata {
                 PDDocumentInformation info = nuclear ? new PDDocumentInformation() : doc.getDocumentInformation();
 
                 if (nuclear) {
-                    doc.getDocumentCatalog().setMetadata(null);
+                    PdfCosTree.removeMetadata(doc.getDocument().getTrailer());
                 }
 
                 if (!title.isBlank()) info.setTitle(title);

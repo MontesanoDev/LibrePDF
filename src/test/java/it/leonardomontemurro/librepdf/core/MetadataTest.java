@@ -4,8 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -14,6 +16,7 @@ import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.common.PDMetadata;
 
 public class MetadataTest {
 
@@ -58,6 +61,18 @@ public class MetadataTest {
             assertNull(info.getAuthor());
             assertNull(info.getKeywords());
             assertNull(doc.getDocumentCatalog().getMetadata());
+        }
+    }
+
+    @Test
+    void testNuclearClearsNestedMetadata() throws IOException {
+        File pdf = createPdfWithNestedMetadata("nested.pdf");
+        new Metadata(List.of(pdf), "", "", "", true).execute();
+
+        File output = getOutput();
+        try (PDDocument doc = Loader.loadPDF(output)) {
+            assertNull(doc.getDocumentCatalog().getMetadata());
+            assertNull(doc.getPage(0).getMetadata());
         }
     }
 
@@ -123,6 +138,22 @@ public class MetadataTest {
             doc.save(f);
         }
         return f;
+    }
+
+    private File createPdfWithNestedMetadata(String name) throws IOException {
+        File f = new File(tempDir.toFile(), name);
+        try (PDDocument doc = new PDDocument()) {
+            PDPage page = new PDPage();
+            page.setMetadata(createMetadata(doc, "page"));
+            doc.addPage(page);
+            doc.getDocumentCatalog().setMetadata(createMetadata(doc, "catalog"));
+            doc.save(f);
+        }
+        return f;
+    }
+
+    private PDMetadata createMetadata(PDDocument doc, String value) throws IOException {
+        return new PDMetadata(doc, new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)));
     }
 
     private File getOutput() throws IOException {
