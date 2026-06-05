@@ -87,7 +87,8 @@ public class DropView {
                 List<File> pdfs = new ArrayList<>();
                 boolean success = false;
                 if (db.hasFiles()) {
-                    for (File file : db.getFiles()) {
+                    // JavaFX/OS dragboard may provide files in reverse visual selection order.
+                    for (File file : db.getFiles().reversed()) {
                         if (file.getName().toLowerCase().endsWith(".pdf")) {
                             pdfs.add(file);
                             success = true;
