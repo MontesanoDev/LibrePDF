@@ -58,7 +58,7 @@ public class Split {
 
                     while(iterator.hasNext()) {
                         try(PDDocument pd = iterator.next()) {
-                            pd.save(FileService.getUniqueFilePath(outputDirectoryPath, "splitted"));
+                            pd.save(FileService.getUniqueFilePath(outputDirectoryPath, "split"));
                         }
                     }
                 } else {
@@ -89,7 +89,7 @@ public class Split {
                                 }
                             }
                             output.save(
-                                    FileService.getUniqueFilePath(outputDirectoryPath, "splitted")
+                                    FileService.getUniqueFilePath(outputDirectoryPath, "split")
                             );
                         }
                     }
