@@ -35,6 +35,16 @@ public class PdfInfoCard extends VBox {
         Label fileName = new Label("📄 " + data.fileName());
         fileName.getStyleClass().add("cardTitle");
 
+        if (data.passwordRequired()) {
+            getChildren().addAll(
+                fileName,
+                row(I18N.get("pdfinfo.size"), humanSize(data.fileSizeBytes())),
+                row(I18N.get("pdfinfo.encrypted"), I18N.get("pdfinfo.yes"))
+            );
+            this.getStyleClass().add("infoCardPasswordRequired");
+            return;
+        }
+
         getChildren().addAll(
             fileName,
             row(I18N.get("pdfinfo.size"), humanSize(data.fileSizeBytes())),

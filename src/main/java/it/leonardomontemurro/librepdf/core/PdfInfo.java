@@ -73,6 +73,7 @@ public class PdfInfo {
                     meta.getCreationDate() != null ? meta.getCreationDate().getTime().toString() : null,
                     meta.getModificationDate() != null ? meta.getModificationDate().getTime().toString() : null,
                     doc.isEncrypted(),
+                    false,
                     hasJs,
                     hasAttachments,
                     hasForms,
@@ -86,6 +87,7 @@ public class PdfInfo {
                     null,
                     null, null, null, null, null, null,
                     null, null,
+                    true,
                     true,
                     false, false, false, false
                 ));

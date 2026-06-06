@@ -12,6 +12,8 @@ import java.util.Objects;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
+import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 import org.apache.pdfbox.pdmodel.interactive.action.PDActionJavaScript;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,7 +54,12 @@ public class PdfInfoTest {
     void testPdfIsEncrypted() throws URISyntaxException {
         File pdf = new File(Objects.requireNonNull(getClass().getResource("/pdfs/encrypted.pdf")).toURI());
         PdfInfoData pdfMetadata = new PdfInfo(List.of(pdf)).execute().getFirst();
-        assertTrue(pdfMetadata.encrypted());
+        assertAll(
+                () -> assertTrue(pdfMetadata.encrypted()),
+                () -> assertTrue(pdfMetadata.passwordRequired()),
+                () -> assertEquals(0, pdfMetadata.pages()),
+                () -> assertNull(pdfMetadata.title())
+        );
     }
 
     @Test
@@ -60,6 +67,26 @@ public class PdfInfoTest {
         File pdf = new File(Objects.requireNonNull(getClass().getResource("/pdfs/with_attachment.pdf")).toURI());
         PdfInfoData pdfAttachment = new PdfInfo(List.of(pdf)).execute().getFirst();
         assertTrue(pdfAttachment.hasAttachments());
+    }
+
+    @Test
+    void testEncryptedPdfWithoutRequiredPasswordIsInspectable() throws IOException {
+        File pdf = tempDir.resolve("encrypted-without-user-password.pdf").toFile();
+        try (PDDocument doc = new PDDocument()) {
+            doc.addPage(new PDPage());
+            StandardProtectionPolicy policy = new StandardProtectionPolicy("owner", "", new AccessPermission());
+            policy.setEncryptionKeyLength(256);
+            doc.protect(policy);
+            doc.save(pdf);
+        }
+
+        PdfInfoData info = new PdfInfo(List.of(pdf)).execute().getFirst();
+
+        assertAll(
+                () -> assertTrue(info.encrypted()),
+                () -> assertFalse(info.passwordRequired()),
+                () -> assertEquals(1, info.pages())
+        );
     }
 
     @Test

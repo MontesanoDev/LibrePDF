@@ -155,6 +155,10 @@
     -fx-border-color: #FF0000;
 }
 
+.infoCardPasswordRequired {
+    -fx-border-color: #FFD700;
+}
+
 .fileCard:hover {
     -fx-border-color: #bd93f9;
     -fx-background-color: rgba(189, 147, 249, 0.1);

@@ -32,6 +32,7 @@ public record PdfInfoData(
     String creationDate,
     String modificationDate,
     boolean encrypted,
+    boolean passwordRequired,
     boolean hasJavaScript,
     boolean hasAttachments,
     boolean hasFormFields,
