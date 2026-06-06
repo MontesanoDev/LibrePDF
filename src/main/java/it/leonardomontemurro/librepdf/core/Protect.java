@@ -31,15 +31,11 @@ public class Protect {
 
     private final List<File> sources;
     private final char[] password;
-    private final boolean canPrint;
-    private final boolean canExtract;
     private File outputDirectory;
 
-    public Protect(List<File> files, char[] password, boolean canPrint, boolean canExtract)  {
+    public Protect(List<File> files, char[] password)  {
         this.sources = files;
         this.password = password;
-        this.canPrint = canPrint;
-        this.canExtract = canExtract;
     }
 
     public void execute() {
@@ -51,8 +47,6 @@ public class Protect {
         for (File pdf : sources) {
             try (PDDocument doc = Loader.loadPDF(pdf)) {
                 AccessPermission ap = new AccessPermission();
-                ap.setCanPrint(canPrint);
-                ap.setCanExtractContent(canExtract);
                 StandardProtectionPolicy spp = new StandardProtectionPolicy(pwd, pwd, ap);
                 spp.setEncryptionKeyLength(keyLength);
                 doc.protect(spp);

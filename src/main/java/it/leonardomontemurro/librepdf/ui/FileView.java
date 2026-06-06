@@ -270,14 +270,6 @@ public class FileView {
         passwordField.clearPassword();
     }
 
-    boolean canPrintable() {
-        return passwordField.canPrintable();
-    }
-
-    boolean canExtract() {
-        return passwordField.canExtract();
-    }
-
     void setOperationName(String name, String description){
         operationName.setText(name.toUpperCase());
         descriptionName.setText(description);

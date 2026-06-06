@@ -51,12 +51,12 @@ public class PdfEngine {
         });
     }
 
-    public void protectFile(List<File> pdfs, char[] password, boolean canPrint, boolean canExtract) {
+    public void protectFile(List<File> pdfs, char[] password) {
         if (new FileService().isValidPassword(password)) {
             onOperationStarted.run();
             Thread.startVirtualThread(() -> {
                 try {
-                    Protect op = new Protect(pdfs, password, canPrint, canExtract);
+                    Protect op = new Protect(pdfs, password);
                     op.execute();
                     notifyCompleted(op.getOutputDirectory());
                 } catch (Exception e) {
