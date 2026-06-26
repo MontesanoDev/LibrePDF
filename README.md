@@ -7,6 +7,7 @@
   <img src="https://img.shields.io/badge/Java-25-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 25" />
   <img src="https://img.shields.io/badge/JavaFX-Modern-478C2C?style=for-the-badge&logo=java&logoColor=white" alt="JavaFX" />
   <img src="https://img.shields.io/badge/Privacy-First-blue?style=for-the-badge&logo=shield&logoColor=white" alt="Privacy First" />
+  <img src="https://img.shields.io/github/actions/workflow/status/MontesanoDev/LibrePDF/ci.yml?branch=main&style=for-the-badge&logo=github&label=CI" alt="CI" />
   <img src="https://img.shields.io/badge/License-GPL_3.0-lightgrey?style=for-the-badge" alt="License" />
 </div>
 
@@ -81,7 +82,13 @@ To keep things light, LibrePDF uses vector iconography directly embedded in the 
 Clone the repo and run:
 
 ```bash
-mvn javafx:run
+./mvnw javafx:run
+```
+
+On Windows:
+
+```powershell
+.\mvnw.cmd javafx:run
 ```
 
 ### Platform support
