@@ -84,7 +84,7 @@ public class ViewController {
         this.fileService.initializeFileChooser();
 
         InputSC inputSC = new InputSC(getView().getScene());
-        inputSC.setOnBackMousePressed(this::catchBack);
+        inputSC.setOnBackAction(this::catchBack);
         inputSC.setOnFrontMousePressed(this::catchFront);
 
         initializeFileCardScene();
@@ -236,6 +236,10 @@ public class ViewController {
     }
 
     private void backScene() {
+        if(resultView.getProgressIndicator().isVisible()) {
+            return;
+        }
+
         if(dropView.isDragAndDropPaneVisible()){
             dropView.setDropViewSceneVisible(false);
             view.setHomeVisible(true);
